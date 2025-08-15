@@ -210,20 +210,23 @@ body {
 }
 
 .galeri {
-  width: 80%;
-  margin: 100px auto 50px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 30px;
+  column-count: 2;
+  column-gap: 10px;
+  padding: 0 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
+@media (min-width: 576px) { .galeri { column-count: 3; } }
+@media (min-width: 768px) { .galeri { column-count: 4; } }
+@media (min-width: 1200px){ .galeri { column-count: 5; } }
+
 .galeri img {
-  height: 280px;
-  object-fit: cover;
   width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  break-inside: avoid;
   cursor: pointer;
-  border-radius: 20px;
-  box-shadow: 1px 2px 3px #ddd;
   transition: transform 0.3s ease;
 }
 
