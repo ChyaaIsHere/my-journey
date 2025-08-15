@@ -30,10 +30,10 @@
 
 
 
-    
-    <!-- mengaktifkan mode maintenance --> -->
+
+    <!-- mengaktifkan mode maintenance -->
     <meta http-equiv="refresh" content="0;url=maintenance.html">
-    <!-- mengaktifkan mode maintenance
+    <!-- mengaktifkan mode maintenance -->
 
 
 
@@ -57,7 +57,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top navbar-transparent" id="navbar">
+        <nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
             <div class="container-fluid">
                 <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
                     My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
@@ -84,35 +84,62 @@
                 </div>
             </div>
         </nav>
-        
+
         <style>
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-        }
-        .dropdown-menu {
-            position: absolute;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            display: none;
-            float: left;
-            min-width: 160px;
-            padding: 0.5rem 0;
-            margin: 0.125rem 0 0;
-            font-size: 1rem;
-            color: #212529;
-            text-align: left;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.25rem;
-        }
-        .dropdown-menu {
-            z-index: 1050;
-        }
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: absolute;
+                will-change: transform;
+                transform: translate3d(0, 0, 0);
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                display: none;
+                float: left;
+                min-width: 160px;
+                padding: 0.5rem 0;
+                margin: 0.125rem 0 0;
+                font-size: 1rem;
+                color: #212529;
+                text-align: left;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-radius: 0.25rem;
+            }
+
+            .dropdown-menu {
+                z-index: 1050;
+            }
         </style>
+        <style>
+            /* Awal transparan */
+            .navbar-transparent {
+                background-color: rgba(255, 255, 255, 0);
+                transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+            }
+
+            /* Saat discroll */
+            .navbar.scrolled {
+                background: linear-gradient(90deg, rgba(255, 236, 182, 0.3), rgba(117, 105, 113, 0.3));
+                backdrop-filter: blur(10px);
+            }
+        </style>
+
+        <script>
+            document.addEventListener("scroll", function () {
+                const navbar = document.getElementById("navbar");
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+        </script>
+
         <!-- End Navbar -->
 
         <section id="jumbotron" style="overflow-y: hidden !important; overflow-x: hidden !important;">
