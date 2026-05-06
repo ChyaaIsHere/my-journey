@@ -188,7 +188,8 @@
                         <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nunito" href="#" role="button">
+                        <!-- FIX NAVBAR: Menambahkan class active dan ubah href agar spesifik -->
+                        <a class="nav-link nunito active" href="./album.html" role="button">
                             Albumku
                         </a>
                     </li>
@@ -242,30 +243,41 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Active nav link styling */
+        /* ===== FIX HIGHLIGHT NAVBAR (KOTAK BAWAH) ===== */
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
         }
 
+        /* Teks Bold untuk menu yang aktif */
+        .nav-link.active {
+            font-weight: 900 !important;
+        }
+
+        /* Styling box underline */
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: -8px; /* Jarak dijauhkan sedikit dari teks */
+            left: 50%; /* Taruh di tengah */
+            transform: translateX(-50%); /* Geser agar persis center */
             width: 0;
-            height: 2px;
+            height: 5px; /* Box lebih tebal */
+            border-radius: 3px; /* Ujung box agak membulat */
             background-color: currentColor;
             transition: width 0.3s ease;
         }
 
+        /* Ukuran box saat aktif (kecil di tengah) */
         .nav-link.active::after {
-            width: 100%;
+            width: 25px;
         }
 
+        /* Warna saat terscroll */
         .navbar.scrolled .nav-link.active::after {
             background-color: white;
         }
+        /* ============================================== */
     </style>
 
     <script>
@@ -279,14 +291,15 @@
             }
         });
 
-        // Highlight active nav link based on current page
+        // Highlight active nav link based on current page (Backup script)
         document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll(".nav-link");
             const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
             navLinks.forEach(link => {
                 const href = link.getAttribute("href");
-                if (href === currentPage || (currentPage === "" && href === "index.html")) {
+                // Pengecekan aman agar tidak conflict dengan menu Albumku yang sudah kita hardcode
+                if (href && href !== "./album.html" && href !== "#" && (href.includes(currentPage) || (currentPage === "" && href.includes("index.html")))) {
                     link.classList.add("active");
                 }
             });
@@ -635,7 +648,6 @@
         </div>
     </section>
 
-    <!-- FIX: Ditambahkan ID dan display:none sejak awal biar aman -->
     <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 20px; display: none;">Miss this moment..</h1>
 
     <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000" style="display: none;">
@@ -686,6 +698,12 @@
 
     <!-- styling section -->
     <style>
+        /* ===== FIX PENGHALANG NAVBAR (SCROLL OFFSET) ===== */
+        /* Menambahkan jarak semu di atas elemen agar saat di-scroll tidak tertutup navbar yang sticky */
+        #galleryTitle, #achievements {
+            scroll-margin-top: 100px;
+        }
+
         /* Kembali ke Masonry / Pinterest Style */
         .galeri {
             column-count: 2;
@@ -701,16 +719,16 @@
 
         .galeri img {
             width: 100%;
-            height: auto; /* FIX: Jaga proporsi agar pas masuk Masonry */
+            height: auto;
             display: block;
             margin-bottom: 10px;
             border-radius: 12px;
-            break-inside: avoid; /* Ini yang bikin gaya pinterest rapi */
-            -webkit-column-break-inside: avoid; /* Safari fix untuk masonry */
+            break-inside: avoid;
+            -webkit-column-break-inside: avoid;
             cursor: pointer;
-            background-color: #f0f0f0; /* Pengganti skeleton ringan */
+            background-color: #f0f0f0;
             min-height: 120px;
-            opacity: 0; /* Fade in saat gambar load */
+            opacity: 0;
             transition: transform 0.3s ease, opacity 0.6s ease;
         }
 
@@ -882,11 +900,9 @@
             const prevBtn = document.getElementById("prevBtn");
             const nextBtn = document.getElementById("nextBtn");
             const gallery = document.querySelector("#galeriCuy");
-
-            // FIX: Langsung ambil berdasarkan ID yang sudah dipasang di HTML tadi
             const galleryText = document.getElementById("galleryTitle");
 
-            // Script Lazy Image enteng: hanya ganti opacity tanpa manipulasi DOM berat
+            // Script Lazy Image enteng
             const images = gallery.querySelectorAll("img");
             images.forEach(img => {
                 if (img.complete) {
@@ -928,31 +944,27 @@
 
             // FUNGSI CROSSFADE: Transisi hilangnya super mulus
             function crossfade(hideElem1, hideElem2, showElem1, showElem2) {
-                // 1. Fade Out yang lagi aktif
                 if(hideElem1) hideElem1.style.opacity = "0";
                 if(hideElem2) hideElem2.style.opacity = "0";
 
-                // 2. Tunggu sebentar sampai fade out selesai, baru hilangkan dari layar (display: none)
                 setTimeout(() => {
                     if(hideElem1) hideElem1.style.display = "none";
                     if(hideElem2) hideElem2.style.display = "none";
 
-                    // FIX: Gunakan 'block' untuk semuanya agar layout Masonry tidak tertimpa Grid
                     if(showElem1) showElem1.style.display = "block";
                     if(showElem2) showElem2.style.display = "block";
 
-                    // 4. Kasih jeda sepersekian milidetik biar browser nge-render dulu, baru Fade In
                     setTimeout(() => {
                         if(showElem1) showElem1.style.opacity = "1";
                         if(showElem2) showElem2.style.opacity = "1";
                     }, 50);
-                }, 400); // Waktu 400ms disesuaikan dengan transition CSS
+                }, 400); 
             }
 
             function showAchievements() {
                 crossfade(galleryText, gallery, null, achievementsSection);
-                // Scrollnya di delay juga biar ngikutin jeda fade in
-                setTimeout(() => achievementsSection.scrollIntoView({ behavior: "smooth", block: "start" }), 450);
+                // Waktu delay pengereman di set 410 supaya lebih presisi dan ngebut sedikit
+                setTimeout(() => achievementsSection.scrollIntoView({ behavior: "smooth", block: "start" }), 410);
                 startAutoScroll();
             }
 
@@ -961,7 +973,7 @@
                 setTimeout(() => {
                     if (galleryText) galleryText.scrollIntoView({ behavior: "smooth", block: "start" });
                     else document.getElementById("galeriCuy").scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 450);
+                }, 410);
                 clearInterval(autoScrollInterval);
             }
 
@@ -988,21 +1000,16 @@
     <!-- Modal Preview Script -->
     <script>
         function showPreview(imgElement) {
-            // Ambil src dari atribut data-full-src
             const fullSrc = imgElement.getAttribute("data-full-src");
-            // Ambil deskripsi dari atribut data-description
             const description = imgElement.getAttribute("data-description");
 
-            // Temukan elemen gambar preview dan deskripsi
             const previewImg = document.getElementById("previewImg");
             const previewDescription = document.getElementById("previewDescription");
             const previewImageContainer = document.getElementById("previewImage");
 
-            // Set src gambar preview dan deskripsi
             previewImg.src = fullSrc;
             previewDescription.textContent = description;
 
-            // Tampilkan gambar preview
             previewImageContainer.style.display = "flex";
         }
 
