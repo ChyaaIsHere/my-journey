@@ -567,15 +567,17 @@
     <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000" style="display: none;">
         <div class="container">
             <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
-<p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
+            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
                 Untuk saat ini, sertifikat belum dapat ditampilkan. Coming Soon! ~
             </p>
-<!-- 
+
+            <!-- KOMENTAR DIMULAI DARI SINI: Element ini disembunyikan -->
+            <!-- 
             <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
                 Semua sertifikat yang sudah aku dapatkan ditampilkan di sini.
-            </p> -->
+            </p>
 
-            <!-- <div class="achievement-carousel" id="achievementCarousel">
+            <div class="achievement-carousel" id="achievementCarousel">
                 <button class="carousel-btn prev-btn" id="prevBtn">&lt;</button>
                 <div class="achievement-track" id="achievementTrack">
                     <article class="achievement-card">
@@ -648,8 +650,11 @@
                         <p>Sertifikasi foundational untuk memahami layanan AWS dan praktik cloud yang baik.</p>
                     </div>
                 </div>
-            </div>
-        </div> -->
+            </div> 
+            -->
+            <!-- KOMENTAR SELESAI -->
+
+        </div> <!-- Tag penutup ini dikembalikan agar layout tidak bocor -->
     </section>
 
     <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 20px; display: none;">Miss this moment..</h1>
@@ -916,29 +921,35 @@
                 }
             });
 
+            // Trik Supaya JS Kebal Error Kalau Element Di-Comment
             let currentIndex = 0;
-            const totalCards = achievementTrack.children.length;
+            const totalCards = achievementTrack ? achievementTrack.children.length : 0;
             let autoScrollInterval;
 
             function updateCarousel() {
+                if (!achievementTrack) return; // Kalau element dicomment, fungsi ini minggir dulu
                 const cardWidth = 280 + 18;
                 achievementTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
             }
 
             function nextCard() {
+                if (totalCards === 0) return;
                 currentIndex = (currentIndex + 1) % totalCards;
                 updateCarousel();
                 resetAutoScroll();
             }
 
             function prevCard() {
+                if (totalCards === 0) return;
                 currentIndex = (currentIndex - 1 + totalCards) % totalCards;
                 updateCarousel();
                 resetAutoScroll();
             }
 
             function startAutoScroll() {
-                autoScrollInterval = setInterval(nextCard, 6000);
+                if (totalCards > 0) {
+                    autoScrollInterval = setInterval(nextCard, 6000);
+                }
             }
 
             function resetAutoScroll() {
@@ -982,9 +993,9 @@
             }
 
             // Default State yang bersih
-            achievementsSection.style.display = "none";
-            gallery.style.display = "none";
-            if (galleryText) galleryText.style.display = "none";
+            if(achievementsSection) achievementsSection.style.display = "none";
+            if(gallery) gallery.style.display = "none";
+            if(galleryText) galleryText.style.display = "none";
 
             btnAchievements?.addEventListener("click", (event) => {
                 event.preventDefault();
