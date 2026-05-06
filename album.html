@@ -175,15 +175,19 @@
                 <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
+                            <a class="nav-link nunito" aria-current="page" href="./index.html">
+                                Beranda
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nunito" href="./album.html" role="button">
+                            <a class="nav-link nunito" href="#" role="button">
                                 Albumku
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="#">Videoku</a>
+                            <a class="nav-link nunito" aria-current="page" href="./video.html">
+                                Videoku
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -249,27 +253,133 @@
         <!-- End Navbar -->
 
         <!-- jumbotron -->
-        <section id="albumBG" style="overflow-y: hidden !important; overflow-x: hidden !important;">
-            <div class="container">
-                <div class="row">
-                    <h1 class="nunito text-white text-center"
-                        style="font-weight: 755; font-style: italic; margin-top: 3em;" data-aos="fade-right" id="textS"
-                        data-aos-duration="1000">
-                        My Photos
-                    </h1>
-                    <p class="nunito text-white text-center" id="textS" data-aos="fade-left" data-aos-duration="1000"
-                        style="font-size: 15px; margin-bottom: 3em;">Perjalanan saya selama ini ...</p>
+<section id="albumBG">
+    <div class="hero-bg-image"></div>
+    
+    <div class="container hero-text-wrapper">
+        <div class="row align-items-center">
+            
+            <div class="col-lg-6 col-md-12 hero-copy text-center text-lg-start" data-aos="fade-right" data-aos-duration="1200">
+                <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
+                <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
+                    <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop" 
+                         alt="Vintage Camera Aesthetic" 
+                         class="img-fluid camera-img">
+                </div>
+                <p class="hero-subtitle">
+                    Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi, dan sertifikasi yang telah kuraih.
+                </p>
+                <div class="d-flex gap-3 mt-4 mb-5 hero-btns justify-content-center justify-content-lg-start">
+                    <a href="#achievements" class="btn-upgrade" id="btnAchievements">Pencapaian</a>
+                    <a href="#galeriCuy" class="btn-upgrade" id="btnGallery">Lihat Galeri</a>
                 </div>
             </div>
-            <div class="svg-container">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
-                    <path fill="#ffffff" fill-opacity="1"
-                        d="M0,32L48,32C96,32,192,32,288,69.3C384,107,480,181,576,176C672,171,768,85,864,85.3C960,85,1056,171,1152,186.7C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                    </path>
-                </svg>
+
+            <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left" data-aos-duration="1200">
+                <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
+                    <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop" 
+                         alt="Vintage Camera Aesthetic" 
+                         class="img-fluid camera-img">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="wave-bottom">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,154.7C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+</section>
+        <!-- end jumbotron -->
+<!-- achievement -->
+        <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000">
+            <div class="container">
+                <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
+                <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px; color: #e4e4e4;">
+                    Semua sertifikat yang sudah aku dapatkan ditampilkan di sini. Geser otomatis untuk melihat koleksi pencapaian terbaru.
+                </p>
+
+                <div class="achievement-carousel" id="achievementCarousel">
+                    <button class="carousel-btn prev-btn" id="prevBtn">&lt;</button>
+                    <div class="achievement-track" id="achievementTrack">
+                        <article class="achievement-card">
+                            <div class="achievement-thumbnail">
+                                <img src="https://via.placeholder.com/100x100/007bff/ffffff?text=AWS" alt="AWS Logo">
+                            </div>
+                            <div class="achievement-badge">AWS</div>
+                            <div class="achievement-card-body">
+                                <h3>AWS Certified Cloud Practitioner</h3>
+                                <p>Fundamental cloud knowledge</p>
+                                <span>2025</span>
+                            </div>
+                        </article>
+                        <article class="achievement-card">
+                            <div class="achievement-thumbnail">
+                                <img src="https://via.placeholder.com/100x100/28a745/ffffff?text=AWS" alt="AWS Logo">
+                            </div>
+                            <div class="achievement-badge">AWS</div>
+                            <div class="achievement-card-body">
+                                <h3>AWS Certified Data Engineer</h3>
+                                <p>Associate level certification</p>
+                                <span>2025</span>
+                            </div>
+                        </article>
+                        <article class="achievement-card">
+                            <div class="achievement-thumbnail">
+                                <img src="https://via.placeholder.com/100x100/ffc107/000000?text=re/Start" alt="re/Start Logo">
+                            </div>
+                            <div class="achievement-badge">re/Start</div>
+                            <div class="achievement-card-body">
+                                <h3>AWS re/Start Graduate</h3>
+                                <p>Technical training & hands-on learning</p>
+                                <span>2024</span>
+                            </div>
+                        </article>
+                        <article class="achievement-card">
+                            <div class="achievement-thumbnail">
+                                <img src="https://via.placeholder.com/100x100/dc3545/ffffff?text=AWS" alt="AWS Logo">
+                            </div>
+                            <div class="achievement-badge">AWS</div>
+                            <div class="achievement-card-body">
+                                <h3>Cloud Excellence</h3>
+                                <p>Continuous learning & growth</p>
+                                <span>2025</span>
+                            </div>
+                        </article>
+                    </div>
+                    <button class="carousel-btn next-btn" id="nextBtn">&gt;</button>
+                </div>
+
+                <div class="achievement-list row mt-5">
+                    <div class="col-md-4">
+                        <div class="achievement-detail-card">
+                            <h4>AWS re/Start Graduate</h4>
+                            <p>Program pelatihan intensif Amazon Web Services yang membangun keterampilan cloud dan technical mindset.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="achievement-detail-card">
+                            <h4>AWS Certified Data Engineer – Associate</h4>
+                            <p>Sertifikasi ini membuktikan kemampuan dalam membangun, memproses, dan mengamankan data di AWS.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="achievement-detail-card">
+                            <h4>AWS Certified Cloud Practitioner</h4>
+                            <p>Sertifikasi foundational untuk memahami layanan AWS dan praktik cloud yang baik.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <!-- end jumbotron -->
+<!-- end achievement -->
+        <h1 class="josefin text-center" style="margin-bottom: 50px;">Miss this moment...</h1>
+
+        <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000"> 
+    <img src="album/berdebat-perbanas.jpg" data-full-src="album/berdebat-perbanas.jpg" loading="lazy" data-description="" onclick="showPreview(this)">
+</div>
 
         <h1 class="josefin text-center" style="margin-bottom: 50px;">Miss this moment...</h1>
 
