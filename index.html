@@ -38,21 +38,132 @@
 
 
 
-    <!-- Navbar -->
+       <!-- Navbar -->
     <style>
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-        }
+/* Navbar Fix: Seamless ke Glassmorphism */
+.navbar {
+    transition: all 0.4s ease-in-out;
+    background-color: white !important; /* Fix: Langsung putih di paling atas */
+}
 
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 30px;
-        }
+.navbar.scrolled {
+    background: rgba(26, 26, 46, 0.7) !important; /* Biru gelap transparan */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+}
 
-        .navbar-nav {
-            margin-right: 20px;
-        }
+.navbar.scrolled .nav-link, 
+.navbar.scrolled .navbar-brand {
+    color: white !important;
+}
+
+/* Jumbotron Fix */
+/* Penyesuaian Section Utama */
+#albumBG {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 150px; /* Ruang untuk wave agar tidak menabrak tombol */
+    background-color: #1a1a2e;
+    overflow: hidden;
+}
+
+/* Gambar Kamera agar Estetik */
+.camera-img {
+    max-width: 80%; /* Biar tidak terlalu raksasa */
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    border-radius: 20px;
+    transform: rotate(3deg); /* Sedikit miring biar estetik */
+    transition: 0.5s ease;
+}
+
+.camera-img:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+
+/* Memperbaiki Klik Tombol */
+.btn-upgrade {
+    position: relative;
+    z-index: 102; /* Harus lebih tinggi dari wave */
+    display: inline-block;
+    padding: 10px 25px;
+    text-decoration: none;
+    /* ... style tombol lainnya tetap ... */
+}
+
+/* Memperbaiki Wave agar tidak menghalangi klik */
+.wave-bottom {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Di atas background tapi di bawah tombol */
+    pointer-events: none; /* KLIK AKAN TEMBUS KE TOMBOL */
+}
+
+/* PERBAIKAN MOBILE VIEW */
+@media (max-width: 991.98px) {
+    #albumBG {
+        padding-top: 120px;
+        padding-bottom: 100px;
+        text-align: center;
+    }
+    
+    .camera-img {
+        max-width: 60%;
+        margin-top: 40px; /* Jarak dari teks ke gambar di mobile */
+        transform: rotate(0deg);
+    }
+
+    .hero-btns {
+        flex-direction: column; /* Tombol tumpuk ke bawah di HP */
+        align-items: center;
+    }
+
+    .btn-upgrade {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+.hero-bg-image {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('./album/photo8.jpg') center/cover no-repeat; 
+    filter: blur(8px) brightness(0.6); 
+    transform: scale(1.1);
+    z-index: 1; /* Paling belakang */
+}
+
+.hero-text-wrapper {
+    z-index: 10; /* Teks harus jauh di atas gambar dan wave agar bisa di-klik */
+    position: relative;
+}
+
+/* Pastikan tombol berada di lapisan paling depan */
+.btn-upgrade {
+    position: relative;
+    z-index: 20; 
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s;
+    display: inline-block;
+    border: 2px solid #fff;
+    color: white;
+    text-decoration: none;
+}
+
+.wave-bottom {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    z-index: 5; /* Wave di atas background (1) tapi di bawah teks (10) */
+    line-height: 0;
+}
     </style>
     </head>
 
@@ -70,7 +181,9 @@
                 <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="#">Beranda</a>
+                            <a class="nav-link nunito" aria-current="page" href="#">
+                                Beranda
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nunito" href="./album.html" role="button">
@@ -78,7 +191,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="./video.html">Videoku</a>
+                            <a class="nav-link nunito" aria-current="page" href="./video.html">
+                                Videoku
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -129,16 +244,17 @@
             }
         </style>
 
-        <script>
-            document.addEventListener("scroll", function () {
-                const navbar = document.getElementById("navbar");
-                if (window.scrollY > 50) {
-                    navbar.classList.add("scrolled");
-                } else {
-                    navbar.classList.remove("scrolled");
-                }
-            });
-        </script>
+<script>
+    document.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        // Jika scroll lebih dari 10 pixel, ganti ke glassmorphism
+        if (window.scrollY > 10) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+    });
+</script>
 
         <!-- End Navbar -->
 
