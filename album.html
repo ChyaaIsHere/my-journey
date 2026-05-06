@@ -551,10 +551,10 @@
     </section>
     <!-- end jumbotron -->
 
-    <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000">
+    <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000" style="display: none;">
         <div class="container">
             <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
-            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto=40px";>
+            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
                 Semua sertifikat yang sudah aku dapatkan ditampilkan di sini.
             </p>
 
@@ -635,9 +635,10 @@
         </div>
     </section>
 
-            <h1 class="josefin text-center" style="margin-bottom: 20px;">Miss this moment..</h1>
+    <!-- FIX: Ditambahkan ID dan display:none sejak awal biar aman -->
+    <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 20px; display: none;">Miss this moment..</h1>
 
-    <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000">
+    <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000" style="display: none;">
         <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)" loading="lazy">
@@ -700,10 +701,12 @@
 
         .galeri img {
             width: 100%;
+            height: auto; /* FIX: Jaga proporsi agar pas masuk Masonry */
             display: block;
             margin-bottom: 10px;
             border-radius: 12px;
             break-inside: avoid; /* Ini yang bikin gaya pinterest rapi */
+            -webkit-column-break-inside: avoid; /* Safari fix untuk masonry */
             cursor: pointer;
             background-color: #f0f0f0; /* Pengganti skeleton ringan */
             min-height: 120px;
@@ -880,14 +883,8 @@
             const nextBtn = document.getElementById("nextBtn");
             const gallery = document.querySelector("#galeriCuy");
 
-            // Amankan tag "Miss this moment..." dan tambahkan class fade
-            let galleryText = null;
-            document.querySelectorAll("h1.josefin.text-center").forEach(h1 => {
-                if (h1.textContent.includes("Miss this moment...")) {
-                    galleryText = h1;
-                    galleryText.classList.add("fade-text");
-                }
-            });
+            // FIX: Langsung ambil berdasarkan ID yang sudah dipasang di HTML tadi
+            const galleryText = document.getElementById("galleryTitle");
 
             // Script Lazy Image enteng: hanya ganti opacity tanpa manipulasi DOM berat
             const images = gallery.querySelectorAll("img");
@@ -940,9 +937,9 @@
                     if(hideElem1) hideElem1.style.display = "none";
                     if(hideElem2) hideElem2.style.display = "none";
 
-                    // 3. Tampilkan elemen baru (display: block/grid)
-                    if(showElem1) showElem1.style.display = (showElem1 === gallery) ? "grid" : "block";
-                    if(showElem2) showElem2.style.display = (showElem2 === gallery) ? "grid" : "block";
+                    // FIX: Gunakan 'block' untuk semuanya agar layout Masonry tidak tertimpa Grid
+                    if(showElem1) showElem1.style.display = "block";
+                    if(showElem2) showElem2.style.display = "block";
 
                     // 4. Kasih jeda sepersekian milidetik biar browser nge-render dulu, baru Fade In
                     setTimeout(() => {
@@ -968,7 +965,7 @@
                 clearInterval(autoScrollInterval);
             }
 
-            // Default State (Pastikan sembunyi di awal)
+            // Default State yang bersih
             achievementsSection.style.display = "none";
             gallery.style.display = "none";
             if (galleryText) galleryText.style.display = "none";
