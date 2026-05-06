@@ -57,6 +57,42 @@
     color: white !important;
 }
 
+        /* ===== FIX HIGHLIGHT NAVBAR (KOTAK BAWAH) ===== */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        /* Teks Bold untuk menu yang aktif */
+        .nav-link.active {
+            font-weight: 900 !important;
+        }
+
+        /* Styling box underline */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -8px; /* Jarak dijauhkan sedikit dari teks */
+            left: 50%; /* Taruh di tengah */
+            transform: translateX(-50%); /* Geser agar persis center */
+            width: 0;
+            height: 5px; /* Box lebih tebal */
+            border-radius: 3px; /* Ujung box agak membulat */
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        /* Ukuran box saat aktif (kecil di tengah) */
+        .nav-link.active::after {
+            width: 25px;
+        }
+
+        /* Warna saat terscroll */
+        .navbar.scrolled .nav-link.active::after {
+            background-color: white;
+        }
+        /* ============================================== */
+
 /* Jumbotron Fix */
 /* Penyesuaian Section Utama */
 #albumBG {
