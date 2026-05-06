@@ -28,132 +28,148 @@
 
 <body style="overflow-x: hidden;">
 
-       <!-- Navbar -->
+    <!-- Navbar -->
     <style>
-/* Navbar Fix: Seamless ke Glassmorphism */
-.navbar {
-    transition: all 0.4s ease-in-out;
-    background-color: white !important; /* Fix: Langsung putih di paling atas */
-}
+        /* Navbar Fix: Seamless ke Glassmorphism */
+        .navbar {
+            transition: all 0.4s ease-in-out;
+            background-color: white !important;
+            /* Fix: Langsung putih di paling atas */
+        }
 
-.navbar.scrolled {
-    background: rgba(26, 26, 46, 0.7) !important; /* Biru gelap transparan */
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-}
+        .navbar.scrolled {
+            background: rgba(26, 26, 46, 0.7) !important;
+            /* Biru gelap transparan */
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+        }
 
-.navbar.scrolled .nav-link, 
-.navbar.scrolled .navbar-brand {
-    color: white !important;
-}
+        .navbar.scrolled .nav-link,
+        .navbar.scrolled .navbar-brand {
+            color: white !important;
+        }
 
-/* Jumbotron Fix */
-/* Penyesuaian Section Utama */
-#albumBG {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-top: 100px;
-    padding-bottom: 150px; /* Ruang untuk wave agar tidak menabrak tombol */
-    background-color: #1a1a2e;
-    overflow: hidden;
-}
+        /* Jumbotron Fix */
+        /* Penyesuaian Section Utama */
+        #albumBG {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 150px;
+            /* Ruang untuk wave agar tidak menabrak tombol */
+            background-color: #1a1a2e;
+            overflow: hidden;
+        }
 
-/* Gambar Kamera agar Estetik */
-.camera-img {
-    max-width: 80%; /* Biar tidak terlalu raksasa */
-    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-    border-radius: 20px;
-    transform: rotate(3deg); /* Sedikit miring biar estetik */
-    transition: 0.5s ease;
-}
+        /* Gambar Kamera agar Estetik */
+        .camera-img {
+            max-width: 80%;
+            /* Biar tidak terlalu raksasa */
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+            border-radius: 20px;
+            transform: rotate(3deg);
+            /* Sedikit miring biar estetik */
+            transition: 0.5s ease;
+        }
 
-.camera-img:hover {
-    transform: rotate(0deg) scale(1.05);
-}
+        .camera-img:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
 
-/* Memperbaiki Klik Tombol */
-.btn-upgrade {
-    position: relative;
-    z-index: 102; /* Harus lebih tinggi dari wave */
-    display: inline-block;
-    padding: 10px 25px;
-    text-decoration: none;
-    /* ... style tombol lainnya tetap ... */
-}
+        /* Memperbaiki Klik Tombol */
+        .btn-upgrade {
+            position: relative;
+            z-index: 102;
+            /* Harus lebih tinggi dari wave */
+            display: inline-block;
+            padding: 10px 25px;
+            text-decoration: none;
+            /* ... style tombol lainnya tetap ... */
+        }
 
-/* Memperbaiki Wave agar tidak menghalangi klik */
-.wave-bottom {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    z-index: 10; /* Di atas background tapi di bawah tombol */
-    pointer-events: none; /* KLIK AKAN TEMBUS KE TOMBOL */
-}
+        /* Memperbaiki Wave agar tidak menghalangi klik */
+        .wave-bottom {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            /* Di atas background tapi di bawah tombol */
+            pointer-events: none;
+            /* KLIK AKAN TEMBUS KE TOMBOL */
+        }
 
-/* PERBAIKAN MOBILE VIEW */
-@media (max-width: 991.98px) {
-    #albumBG {
-        padding-top: 120px;
-        padding-bottom: 100px;
-        text-align: center;
-    }
-    
-    .camera-img {
-        max-width: 60%;
-        margin-top: 40px; /* Jarak dari teks ke gambar di mobile */
-        transform: rotate(0deg);
-    }
+        /* PERBAIKAN MOBILE VIEW */
+        @media (max-width: 991.98px) {
+            #albumBG {
+                padding-top: 120px;
+                padding-bottom: 100px;
+                text-align: center;
+            }
 
-    .hero-btns {
-        flex-direction: column; /* Tombol tumpuk ke bawah di HP */
-        align-items: center;
-    }
+            .camera-img {
+                max-width: 60%;
+                margin-top: 40px;
+                /* Jarak dari teks ke gambar di mobile */
+                transform: rotate(0deg);
+            }
 
-    .btn-upgrade {
-        width: 100%;
-        max-width: 280px;
-    }
-}
+            .hero-btns {
+                flex-direction: column;
+                /* Tombol tumpuk ke bawah di HP */
+                align-items: center;
+            }
 
-.hero-bg-image {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: url('./album/photo8.jpg') center/cover no-repeat; 
-    filter: blur(8px) brightness(0.6); 
-    transform: scale(1.1);
-    z-index: 1; /* Paling belakang */
-}
+            .btn-upgrade {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
 
-.hero-text-wrapper {
-    z-index: 10; /* Teks harus jauh di atas gambar dan wave agar bisa di-klik */
-    position: relative;
-}
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./album/photo8.jpg') center/cover no-repeat;
+            filter: blur(8px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: 1;
+            /* Paling belakang */
+        }
 
-/* Pastikan tombol berada di lapisan paling depan */
-.btn-upgrade {
-    position: relative;
-    z-index: 20; 
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 700;
-    transition: 0.3s;
-    display: inline-block;
-    border: 2px solid #fff;
-    color: white;
-    text-decoration: none;
-}
+        .hero-text-wrapper {
+            z-index: 10;
+            /* Teks harus jauh di atas gambar dan wave agar bisa di-klik */
+            position: relative;
+        }
 
-.wave-bottom {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    z-index: 5; /* Wave di atas background (1) tapi di bawah teks (10) */
-    line-height: 0;
-}
+        /* Pastikan tombol berada di lapisan paling depan */
+        .btn-upgrade {
+            position: relative;
+            z-index: 20;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: 0.3s;
+            display: inline-block;
+            border: 2px solid #fff;
+            color: white;
+            text-decoration: none;
+        }
+
+        .wave-bottom {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            z-index: 5;
+            /* Wave di atas background (1) tapi di bawah teks (10) */
+            line-height: 0;
+        }
     </style>
     </head>
 
@@ -255,292 +271,297 @@
             }
         </style>
 
-<script>
-    document.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        // Jika scroll lebih dari 10 pixel, ganti ke glassmorphism
-        if (window.scrollY > 10) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-    });
+        <script>
+            document.addEventListener("scroll", function () {
+                const navbar = document.getElementById("navbar");
+                // Jika scroll lebih dari 10 pixel, ganti ke glassmorphism
+                if (window.scrollY > 10) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
 
-    // Highlight active nav link based on current page
-    document.addEventListener("DOMContentLoaded", function () {
-        const navLinks = document.querySelectorAll(".nav-link");
-        const currentPage = window.location.pathname.split("/").pop() || "index.html";
+            // Highlight active nav link based on current page
+            document.addEventListener("DOMContentLoaded", function () {
+                const navLinks = document.querySelectorAll(".nav-link");
+                const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-        navLinks.forEach(link => {
-            const href = link.getAttribute("href");
-            if (href === currentPage || (currentPage === "" && href === "index.html")) {
-                link.classList.add("active");
-            }
-        });
-    });
-</script>
+                navLinks.forEach(link => {
+                    const href = link.getAttribute("href");
+                    if (href === currentPage || (currentPage === "" && href === "index.html")) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+        </script>
 
         <!-- End Navbar -->
 
         <!-- jumbotron -->
         <style>
-    #albumBG {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); /* Warna deep navy yang elegan */
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding: 100px 0;
-        color: white;
-    }
+            #albumBG {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                /* Warna deep navy yang elegan */
+                min-height: 80vh;
+                display: flex;
+                align-items: center;
+                position: relative;
+                padding: 100px 0;
+                color: white;
+            }
 
-.hero-text-wrapper {
-    position: relative;
-    z-index: 99;
-}
+            .hero-text-wrapper {
+                position: relative;
+                z-index: 99;
+            }
 
-    .hero-title {
-        font-family: 'Josefin Sans', sans-serif;
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 20px;
-        background: linear-gradient(to right, #fff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+            .hero-title {
+                font-family: 'Josefin Sans', sans-serif;
+                font-size: clamp(2.5rem, 6vw, 4rem);
+                font-weight: 800;
+                line-height: 1.1;
+                margin-bottom: 20px;
+                background: linear-gradient(to right, #fff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
-    .hero-subtitle {
-        font-family: 'Nunito Sans', sans-serif;
-        font-size: 1.1rem;
-        opacity: 0.8;
-        max-width: 500px;
-        margin-bottom: 30px;
-    }
+            .hero-subtitle {
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 1.1rem;
+                opacity: 0.8;
+                max-width: 500px;
+                margin-bottom: 30px;
+            }
 
-    .btn-upgrade {
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: 700;
-        transition: 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border: 2px solid #fff;
-        color: white;
-        text-decoration: none;
-    }
+            .btn-upgrade {
+                padding: 12px 30px;
+                border-radius: 50px;
+                font-weight: 700;
+                transition: 0.3s;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: 2px solid #fff;
+                color: white;
+                text-decoration: none;
+            }
 
-    .btn-upgrade:hover {
-        background: white;
-        color: #1a1a2e;
-        transform: scale(1.05);
-    }
+            .btn-upgrade:hover {
+                background: white;
+                color: #1a1a2e;
+                transform: scale(1.05);
+            }
 
-    /* Aksen visual di background */
-    .hero-shape {
-        position: absolute;
-        right: -5%;
-        top: 10%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, rgba(0,0,0,0) 70%);
-        border-radius: 50%;
-        z-index: 1;
-    }
+            /* Aksen visual di background */
+            .hero-shape {
+                position: absolute;
+                right: -5%;
+                top: 10%;
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, rgba(0,0,0,0) 70%);
+                border-radius: 50%;
+                z-index: 1;
+            }
 
-    .hero-image-card {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        box-shadow: 0 27px 70px rgba(0, 0, 0, 0.2);
-        border-radius: 32px;
-        padding: 1.25rem;
-        max-width: 560px;
-        margin: 0 auto;
-        backdrop-filter: blur(12px);
-    }
+            .hero-image-card {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                box-shadow: 0 27px 70px rgba(0, 0, 0, 0.2);
+                border-radius: 32px;
+                padding: 1.25rem;
+                max-width: 560px;
+                margin: 0 auto;
+                backdrop-filter: blur(12px);
+            }
 
-    .hero-image-card .camera-img {
-        width: 100%;
-        max-width: 100%;
-        transform: rotate(0deg);
-        border-radius: 24px;
-        box-shadow: 0 22px 52px rgba(0, 0, 0, 0.22);
-    }
+            .hero-image-card .camera-img {
+                width: 100%;
+                max-width: 100%;
+                transform: rotate(0deg);
+                border-radius: 24px;
+                box-shadow: 0 22px 52px rgba(0, 0, 0, 0.22);
+            }
 
-    /* Override wave biar nyambung sama section putih di bawah */
-.wave-bottom {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    z-index: 5;
-    line-height: 0;
-    pointer-events: none; 
-}
+            /* Override wave biar nyambung sama section putih di bawah */
+            .wave-bottom {
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                z-index: 5;
+                line-height: 0;
+                pointer-events: none;
+            }
 
-    /* Layout hero lebih stabil dan horizontal */
-    #albumBG .row.align-items-center {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1.5rem;
-    }
+            /* Layout hero lebih stabil dan horizontal */
+            #albumBG .row.align-items-center {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1.5rem;
+            }
 
-    #albumBG .hero-copy {
-        flex: 1 1 54%;
-        max-width: 54%;
-        min-width: 260px;
-    }
+            #albumBG .hero-copy {
+                flex: 1 1 54%;
+                max-width: 54%;
+                min-width: 260px;
+            }
 
-    #albumBG .hero-visual {
-        flex: 1 1 42%;
-        max-width: 42%;
-        min-width: 180px;
-    }
+            #albumBG .hero-visual {
+                flex: 1 1 42%;
+                max-width: 42%;
+                min-width: 180px;
+            }
 
-    @media (max-width: 991.98px) {
-        #albumBG {
-            padding: 60px 1rem 40px;
-        }
+            @media (max-width: 991.98px) {
+                #albumBG {
+                    padding: 60px 1rem 40px;
+                }
 
-        #albumBG .row.align-items-center {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-        }
+                #albumBG .row.align-items-center {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 1rem;
+                }
 
-        #albumBG .hero-copy,
-        #albumBG .hero-visual {
-            flex: 1 1 100%;
-            max-width: 100%;
-            min-width: 100%;
-        }
+                #albumBG .hero-copy,
+                #albumBG .hero-visual {
+                    flex: 1 1 100%;
+                    max-width: 100%;
+                    min-width: 100%;
+                }
 
-        .hero-copy {
-            text-align: center;
-        }
+                .hero-copy {
+                    text-align: center;
+                }
 
-        .hero-title {
-            font-size: clamp(2rem, 9vw, 3rem);
-            text-align: center;
-            margin-bottom: 1.2rem;
-            line-height: 1.05;
-            overflow-wrap: break-word;
-            word-break: break-word;
-        }
+                .hero-title {
+                    font-size: clamp(2rem, 9vw, 3rem);
+                    text-align: center;
+                    margin-bottom: 1.2rem;
+                    line-height: 1.05;
+                    overflow-wrap: break-word;
+                    word-break: break-word;
+                }
 
-        .hero-subtitle {
-            font-size: 0.98rem;
-            margin: 0 auto 1.75rem;
-            max-width: 95%;
-            text-align: center;
-            overflow-wrap: break-word;
-            word-break: break-word;
-        }
+                .hero-subtitle {
+                    font-size: 0.98rem;
+                    margin: 0 auto 1.75rem;
+                    max-width: 95%;
+                    text-align: center;
+                    overflow-wrap: break-word;
+                    word-break: break-word;
+                }
 
-        .hero-btns {
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+                .hero-btns {
+                    justify-content: center;
+                    flex-wrap: wrap;
+                }
 
-        .btn-upgrade {
-            width: auto;
-            min-width: 160px;
-            padding: 10px 18px;
-        }
+                .btn-upgrade {
+                    width: auto;
+                    min-width: 160px;
+                    padding: 10px 18px;
+                }
 
-        .hero-image-card {
-            padding: 1rem;
-        }
+                .hero-image-card {
+                    padding: 1rem;
+                }
 
-        .hero-image-mobile {
-            display: block;
-        }
+                .hero-image-mobile {
+                    display: block;
+                }
 
-        .hero-image-desktop {
-            display: none !important;
-        }
-    }
+                .hero-image-desktop {
+                    display: none !important;
+                }
+            }
 
-    @media (max-width: 640px) {
-        #albumBG {
-            padding: 55px 0 30px;
-        }
+            @media (max-width: 640px) {
+                #albumBG {
+                    padding: 55px 0 30px;
+                }
 
-        #albumBG .row.align-items-center {
-            gap: 0.85rem;
-        }
+                #albumBG .row.align-items-center {
+                    gap: 0.85rem;
+                }
 
-        #albumBG .hero-copy {
-            max-width: 58%;
-        }
+                #albumBG .hero-copy {
+                    max-width: 58%;
+                }
 
-        #albumBG .hero-visual {
-            max-width: 38%;
-        }
+                #albumBG .hero-visual {
+                    max-width: 38%;
+                }
 
-        .hero-title {
-            font-size: clamp(1.9rem, 8vw, 2.6rem);
-        }
+                .hero-title {
+                    font-size: clamp(1.9rem, 8vw, 2.6rem);
+                }
 
-        .hero-subtitle {
-            font-size: 0.95rem;
-        }
+                .hero-subtitle {
+                    font-size: 0.95rem;
+                }
 
-        .camera-img {
-            max-width: 100%;
-        }
-    }
-</style>
+                .camera-img {
+                    max-width: 100%;
+                }
+            }
+        </style>
 
-<!-- jumbotron -->
-<section id="albumBG">
-    <div class="hero-bg-image"></div>
-    
-    <div class="container hero-text-wrapper">
-        <div class="row align-items-center">
-            
-            <div class="col-lg-6 col-md-12 hero-copy text-center text-lg-start" data-aos="fade-right" data-aos-duration="1200">
-                <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
-                <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
-                    <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop" 
-                         alt="Vintage Camera Aesthetic" 
-                         class="img-fluid camera-img">
-                </div>
-                <p class="hero-subtitle">
-                    Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi, dan sertifikasi yang telah kuraih.
-                </p>
-                <div class="d-flex gap-3 mt-4 mb-5 hero-btns justify-content-center justify-content-lg-start">
-                    <a href="#achievements" class="btn-upgrade" id="btnAchievements">Pencapaian</a>
-                    <a href="#galeriCuy" class="btn-upgrade" id="btnGallery">Lihat Galeri</a>
+        <!-- jumbotron -->
+        <section id="albumBG">
+            <div class="hero-bg-image"></div>
+
+            <div class="container hero-text-wrapper">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-6 col-md-12 hero-copy text-center text-lg-start" data-aos="fade-right"
+                        data-aos-duration="1200">
+                        <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
+                        <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
+                            <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop"
+                                alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
+                        </div>
+                        <p class="hero-subtitle">
+                            Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi,
+                            dan sertifikasi yang telah kuraih.
+                        </p>
+                        <div class="d-flex gap-3 mt-4 mb-5 hero-btns justify-content-center justify-content-lg-start">
+                            <a href="#achievements" class="btn-upgrade" id="btnAchievements">Pencapaian</a>
+                            <a href="#galeriCuy" class="btn-upgrade" id="btnGallery">Lihat Galeri</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left"
+                        data-aos-duration="1200">
+                        <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
+                            <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop"
+                                alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left" data-aos-duration="1200">
-                <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
-                    <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop" 
-                         alt="Vintage Camera Aesthetic" 
-                         class="img-fluid camera-img">
-                </div>
+            <div class="wave-bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill="#ffffff" fill-opacity="1"
+                        d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,154.7C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                    </path>
+                </svg>
             </div>
-
-        </div>
-    </div>
-
-    <div class="wave-bottom">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#ffffff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,154.7C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
-    </div>
-</section>
+        </section>
         <!-- end jumbotron -->
 
         <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000">
             <div class="container">
                 <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
                 <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px; color: #e4e4e4;">
-                    Semua sertifikat yang sudah aku dapatkan ditampilkan di sini. Geser otomatis untuk melihat koleksi pencapaian terbaru.
+                    Semua sertifikat yang sudah aku dapatkan ditampilkan di sini. Geser otomatis untuk melihat koleksi
+                    pencapaian terbaru.
                 </p>
 
                 <div class="achievement-carousel" id="achievementCarousel">
@@ -570,7 +591,8 @@
                         </article>
                         <article class="achievement-card">
                             <div class="achievement-thumbnail">
-                                <img src="https://via.placeholder.com/100x100/ffc107/000000?text=re/Start" alt="re/Start Logo">
+                                <img src="https://via.placeholder.com/100x100/ffc107/000000?text=re/Start"
+                                    alt="re/Start Logo">
                             </div>
                             <div class="achievement-badge">re/Start</div>
                             <div class="achievement-card-body">
@@ -598,13 +620,15 @@
                     <div class="col-md-4">
                         <div class="achievement-detail-card">
                             <h4>AWS re/Start Graduate</h4>
-                            <p>Program pelatihan intensif Amazon Web Services yang membangun keterampilan cloud dan technical mindset.</p>
+                            <p>Program pelatihan intensif Amazon Web Services yang membangun keterampilan cloud dan
+                                technical mindset.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="achievement-detail-card">
                             <h4>AWS Certified Data Engineer – Associate</h4>
-                            <p>Sertifikasi ini membuktikan kemampuan dalam membangun, memproses, dan mengamankan data di AWS.</p>
+                            <p>Sertifikasi ini membuktikan kemampuan dalam membangun, memproses, dan mengamankan data di
+                                AWS.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -619,506 +643,600 @@
 
         <h1 class="josefin text-center" style="margin-bottom: 50px;">Miss this moment...</h1>
 
-<div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000"> 
-    <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)">
-    <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)">
-    <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)">
-    <img src="./album/photo4.jpeg" data-full-src="./album/photo4.jpeg" data-description="Foto ini diambil sebelum penampilan drama jurusan saya!" onclick="showPreview(this)">
-    <img src="./album/photo5.jpeg" data-full-src="./album/photo5.jpeg" data-description="Saya dan teman-teman saya mampir ke MGT setelah kerja kelompok.. Refreshing sebelum ulangan katanya haha..." onclick="showPreview(this)">
-    <img src="./album/photo6.jpeg" data-full-src="./album/photo6.jpeg" data-description="Foto ini diambil saat saya dan teman-teman saya sedang mengerjakan tugas Bahasa Indonesia!" onclick="showPreview(this)">
-    <img src="./album/photo7.jpg" data-full-src="./album/photo7.jpg" data-description="Kami merayakan hari Ulang Tahun Nafis ditempat ini" onclick="showPreview(this)">
-    <img src="./album/photo8.jpg" data-full-src="./album/photo8.jpg" data-description="Foto bareng sama anak-anak dari SMK yang berbeda. Tapi tujuan kami semua disini sama, Untuk Mengikuti Lomba di SMK KGB 2" onclick="showPreview(this)">
-    <img src="./album/masaSMP.jpeg" data-full-src="./album/masaSMP.jpeg" data-description="Saya bersama teman-teman smp saya ..." onclick="showPreview(this)">
-    <img src="./album/photo9.jpeg" data-full-src="./album/photo9.jpeg" data-description="Saya dan teman teman saya sedang mengerjakan proposal untuk tugas PKK kami di RPS TJKT!" onclick="showPreview(this)">
-    <img src="./album/kihajarstem-photo.jpg" data-full-src="./album/kihajarstem-photo.jpg" data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!" onclick="showPreview(this)">
-    <img src="./album/perbanasmoment.jpeg" data-full-src="./album/perbanasmoment.jpeg" data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku." onclick="showPreview(this)">
-    <img src="./album/perbanas-bareng.jpg" data-full-src="./album/perbanas-bareng.jpg" data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)">
-    <img src="./album/lks2025.jpg" data-full-src="./album/lks2025.jpg" data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)">
-    <img src="./album/berdebat-perbanas.jpg" data-full-src="./album/berdebat-perbanas.jpg" data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas" onclick="showPreview(this)">
-    <img src="./album/h-1 sebelum lks.jpg" data-full-src="./album/h-1 sebelum lks.jpg" data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah." onclick="showPreview(this)">
-    <img src="./album/tugas-p5.jpg" data-full-src="./album/tugas-p5.jpg" data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)" onclick="showPreview(this)">
-    <img src="./album/diskusi-industri.jpg" data-full-src="./album/diskusi-industri.jpg" data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)" onclick="showPreview(this)">
-    <img src="./album/itcna.JPG" data-full-src="./album/itcna.JPG" data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!" onclick="showPreview(this)">
-    <img src="./album/dalam-perjalanan.jpg" data-full-src="./album/dalam-perjalanan.jpg" data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)">
-    <img src="./album/ujian-guru.jpg" data-full-src="./album/ujian-guru.jpg" data-description="Emm, ini simulasi UKOM-kah? Guruku malah yang takut sama respon aku pas tiap kali nanya waktu isi kuisionernya haha" onclick="showPreview(this)">
-    <img src="./album/penyusunan-proposal-estuel.jpg" data-full-src="./album/penyusunan-proposal-estuel.jpg" data-description="Saya dan tim pengembang ESTUEL sedang menyusun proposal untuk proyek kami!" onclick="showPreview(this)">
-    <img src="./album/foto-berempat.jpg" data-full-src="./album/foto-berempat.jpg" data-description="Tiba-tiba diajak foto sehabis lomba, ya gini deh posenya.. (ICE BSD Tanggerang) " onclick="showPreview(this)">
-    <img src="./album/nonton-svennty.jpg" data-full-src="./album/nonton-svennty.jpg" data-description="Ceritanya nonton bareng, tiba-tiba ada anomali bilang : ehh foto yok!" onclick="showPreview(this)">
-    <img src="./album/lomba-ilmupedia.jpg" data-full-src="./album/lomba-ilmupedia.jpg" data-description="Foto ketika pede padahal belum ngerjain. Kalo pas selesai ngerjain + tau hasilnya beda cerita haha." onclick="showPreview(this)">
-    <img src="./album/hari-guru.jpg" data-full-src="./album/hari-guru.jpg" data-description="Foto bersama dengan organisasi saya ketika merayakan hari guru!" onclick="showPreview(this)">
-    <img src="./album/foto-kedua-hariguru.jpg" data-full-src="./album/foto-kedua-hariguru.jpg" data-description="&quot;Eh kaa, ayo kita foto yuk!&quot; Aku berpose dengan sadar : 🤷🏻" onclick="showPreview(this)">
-    <img src="./album/lomba-mikrotik.jpg" data-full-src="./album/lomba-mikrotik.jpg" data-description="Pertama kalinya lomba di depok + diajak foto sama guru (katanya sih buat- hahaha)" onclick="showPreview(this)">
-    <img src="./album/makan-bareng-svennty.jpg" data-full-src="./album/makan-bareng-svennty.jpg" data-description="Makan bareng sebelum semuanya pada keluar kota (sebelum liburan tahun baru)" onclick="showPreview(this)">
-    <img src="./album/bakar-bakar.jpg" data-full-src="./album/bakar-bakar.jpg" data-description="Bakar-bakar Bersama Ambalan Sulhastia! w/ Angkatan 7-9" onclick="showPreview(this)">
-    <img src="./album/foto-bareng-perpusnas.jpg" data-full-src="./album/foto-bareng-perpusnas.jpg" data-description="Pertama kali pergi ke Perpustakaan Nasional Indonesia! baca buku bareng, foto bareng, hari ini seru banget! (Seenggaknya janji itu sudah ditepati, ga cuma omon-omon ajaa)" onclick="showPreview(this)">
-    <img src="./album/petugas-trisatya.jpg" data-full-src="./album/petugas-trisatya.jpg" data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)" onclick="showPreview(this)">
-    <img src="./album/buka-puasa-tkj1.jpg" data-full-src="./album/buka-puasa-tkj1.jpg" data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!" onclick="showPreview(this)">
-    <img src="./album/ebiti-2025.jpg" data-full-src="./album/ebiti-2025.jpg" data-description="Foto bareng Bapak Kaprodi dan juga 1 tim dari sekolahku! ditemenin langsung pas lomba haha.. " onclick="showPreview(this)">
-    <img src="./album/industri.jpg" data-full-src="./album/industri.jpg" data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!" onclick="showPreview(this)">
-</div>
-
-<!-- preview image -->
-<div class="previewImage" id="previewImage" style="display: none;">
-    <img id="previewImg">
-    <div id="previewDescription"></div>
-    <span onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
-</div>
-<!-- end preview image -->
-
-<!-- wrapper skeleton anim -->
-
-<style>
-.galeri {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.img-wrapper {
-    position: relative;
-    width: 100%;
-    padding-top: 75%; /* ratio 4:3 */
-    overflow: hidden;
-}
-
-.img-wrapper img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.skeleton {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-}
-
-/* Mobile-enhanced layout untuk tampilan mirip desktop */
-@media (max-width: 991.98px) {
-    #albumBG {
-        display: block;
-        min-height: auto;
-        padding: 80px 0 60px;
-        text-align: center;
-    }
-
-    .hero-bg-image {
-        opacity: 0.72;
-        filter: blur(5px) brightness(0.55);
-    }
-
-    .hero-text-wrapper {
-        z-index: 5;
-        position: relative;
-    }
-
-    .hero-title {
-        font-size: clamp(2.5rem, 8vw, 3.4rem);
-        margin-bottom: 18px;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 1rem;
-    }
-
-    .hero-btns {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn-upgrade {
-        width: 100%;
-        max-width: 280px;
-        padding: 14px 22px;
-    }
-
-    .camera-img {
-        max-width: 88%;
-        margin: 2rem auto 0;
-        transform: rotate(0deg);
-    }
-
-    /* Pastikan layout hero tetap horizontal pada mobile */
-    #albumBG .row.align-items-center {
-        flex-wrap: nowrap;
-        justify-content: space-between;
-    }
-
-    #albumBG .col-lg-6,
-    #albumBG .col-md-12,
-    #albumBG .col-md-10 {
-        flex: 0 0 48%;
-        max-width: 48%;
-    }
-
-    #albumBG .col-lg-6.text-center.text-lg-start {
-        text-align: left;
-    }
-
-    .hero-subtitle {
-        max-width: 420px;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    .hero-btns {
-        justify-content: flex-start;
-    }
-
-    .btn-upgrade {
-        width: auto;
-        min-width: 180px;
-    }
-
-    .camera-img {
-        max-width: 100%;
-        margin: 0;
-    }
-
-    .galeri {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 12px;
-        padding: 0 12px;
-    }
-
-    .img-wrapper {
-        padding-top: 70%;
-    }
-
-    .previewImage {
-        padding: 16px;
-        justify-content: flex-start;
-    }
-
-    .previewImage img {
-        max-width: 90%;
-        max-height: 78vh;
-        object-fit: contain;
-    }
-
-    #previewDescription {
-        position: static;
-        margin-top: 1rem;
-        background: rgba(0, 0, 0, 0.78);
-        width: calc(100% - 32px);
-        max-width: 640px;
-        font-size: 0.95rem;
-    }
-
-    .previewImage span {
-        right: 16px;
-        top: 18px;
-        bottom: auto;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .hero-title {
-        font-size: clamp(2rem, 9vw, 2.8rem);
-    }
-
-    .hero-subtitle {
-        font-size: 0.96rem;
-        padding: 0 1rem;
-    }
-
-    .btn-upgrade {
-        padding: 12px 20px;
-        font-size: 0.92rem;
-    }
-
-    .camera-img {
-        max-width: 100%;
-    }
-}
-
-#achievements {
-    display: none;
-    padding: 50px 0 30px;
-    background: rgba(255,255,255,0.03);
-}
-
-.achievement-carousel {
-    position: relative;
-    overflow: hidden;
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-}
-
-.achievement-track {
-    display: flex;
-    gap: 18px;
-    min-width: 100%;
-    padding-bottom: 10px;
-    transition: transform 0.5s ease;
-}
-
-.carousel-btn {
-    background: rgba(255,255,255,0.9);
-    border: 2px solid #ddd;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    transition: background 0.3s ease;
-}
-
-.carousel-btn:hover {
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.prev-btn {
-    left: -25px;
-}
-
-.next-btn {
-    right: -25px;
-}
-
-.achievement-card {
-    flex: 0 0 280px;
-    border-radius: 24px;
-    background: #ffffff;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 24px;
-    color: #333;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-}
-
-.achievement-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-}
-
-.achievement-thumbnail {
-    margin-bottom: 16px;
-}
-
-.achievement-thumbnail img {
-    width: 100px;
-    height: 100px;
-    border-radius: 12px;
-    object-fit: cover;
-    border: 2px solid #f0f0f0;
-}
-
-.achievement-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 12px;
-    background: #f8f9fa;
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #495057;
-    margin-bottom: 12px;
-}
-
-.achievement-card-body h3 {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: #212529;
-}
-
-.achievement-card-body p {
-    color: #6c757d;
-    margin-bottom: 18px;
-    line-height: 1.5;
-}
-
-.achievement-card-body span {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: #e9ecef;
-    font-size: 0.85rem;
-    color: #495057;
-}
-
-.achievement-list {
-    gap: 1.4rem;
-}
-
-.achievement-detail-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 24px;
-    min-height: 220px;
-    color: #f8f8f8;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.achievement-detail-card h4 {
-    margin-bottom: 12px;
-    font-size: 1.05rem;
-    color: #fff;
-}
-
-.achievement-detail-card p {
-    color: #d3d3d3;
-    line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-    .achievement-card {
-        flex: 0 0 80%;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .prev-btn {
-        left: -20px;
-    }
-
-    .next-btn {
-        right: -20px;
-    }
-
-    .achievement-list .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-</style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const gallery = document.querySelector("#galeriCuy");
-    const images = gallery.querySelectorAll("img");
-
-    images.forEach(img => {
-        // Buat wrapper
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("img-wrapper");
-
-        // Buat skeleton
-        const skeleton = document.createElement("div");
-        skeleton.classList.add("skeleton");
-
-        // Masukkan skeleton & img ke wrapper
-        img.parentNode.insertBefore(wrapper, img);
-        wrapper.appendChild(skeleton);
-        wrapper.appendChild(img);
-
-        // Hilangkan skeleton setelah gambar load
-        img.addEventListener("load", () => {
-            skeleton.remove();
-        });
-    });
-
-    const achievementsSection = document.getElementById("achievements");
-    const btnAchievements = document.getElementById("btnAchievements");
-    const btnGallery = document.getElementById("btnGallery");
-    const achievementCarousel = document.getElementById("achievementCarousel");
-    const achievementTrack = document.getElementById("achievementTrack");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const galleryText = document.querySelector("h1.josefin.text-center"); // "Miss this moment..."
-
-    let currentIndex = 0;
-    const totalCards = achievementTrack.children.length;
-    let autoScrollInterval;
-
-    function updateCarousel() {
-        const cardWidth = 280 + 18; // card width + gap
-        achievementTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-    }
-
-    function nextCard() {
-        currentIndex = (currentIndex + 1) % totalCards;
-        updateCarousel();
-        resetAutoScroll();
-    }
-
-    function prevCard() {
-        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateCarousel();
-        resetAutoScroll();
-    }
-
-    function startAutoScroll() {
-        autoScrollInterval = setInterval(nextCard, 6000);
-    }
-
-    function resetAutoScroll() {
-        clearInterval(autoScrollInterval);
-        startAutoScroll();
-    }
-
-    function showAchievements() {
-        achievementsSection.style.display = "block";
-        gallery.style.display = "none";
-        galleryText.style.display = "none"; // Hide "Miss this moment..."
-        achievementsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        startAutoScroll();
-    }
-
-    function showGallery() {
-        achievementsSection.style.display = "none";
-        gallery.style.display = "grid";
-        galleryText.style.display = "block"; // Show "Miss this moment..."
-        document.getElementById("galeriCuy").scrollIntoView({ behavior: "smooth", block: "start" });
-        clearInterval(autoScrollInterval);
-    }
-
-    // Default: show gallery
-    showGallery();
-
-    btnAchievements?.addEventListener("click", (event) => {
-        event.preventDefault();
-        showAchievements();
-    });
-
-    btnGallery?.addEventListener("click", (event) => {
-        event.preventDefault();
-        showGallery();
-    });
-
-    prevBtn?.addEventListener("click", prevCard);
-    nextBtn?.addEventListener("click", nextCard);
-});
-</script>
-
-<!-- wrapper skeleton anim -->
-
-<!-- preview image -->
-<div class="previewImage" id="previewImage" style="display: none;">
-    <img id="previewImg">
-    <div id="previewDescription"></div>
-    <span onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
-</div>
-<!-- end preview image -->
-
-<!-- end preview image -->
+        <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000">
+            <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg"
+                data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan"
+                onclick="showPreview(this)">
+            <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg"
+                data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!"
+                onclick="showPreview(this)">
+            <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg"
+                data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!"
+                onclick="showPreview(this)">
+            <img src="./album/photo4.jpeg" data-full-src="./album/photo4.jpeg"
+                data-description="Foto ini diambil sebelum penampilan drama jurusan saya!" onclick="showPreview(this)">
+            <img src="./album/photo5.jpeg" data-full-src="./album/photo5.jpeg"
+                data-description="Saya dan teman-teman saya mampir ke MGT setelah kerja kelompok.. Refreshing sebelum ulangan katanya haha..."
+                onclick="showPreview(this)">
+            <img src="./album/photo6.jpeg" data-full-src="./album/photo6.jpeg"
+                data-description="Foto ini diambil saat saya dan teman-teman saya sedang mengerjakan tugas Bahasa Indonesia!"
+                onclick="showPreview(this)">
+            <img src="./album/photo7.jpg" data-full-src="./album/photo7.jpg"
+                data-description="Kami merayakan hari Ulang Tahun Nafis ditempat ini" onclick="showPreview(this)">
+            <img src="./album/photo8.jpg" data-full-src="./album/photo8.jpg"
+                data-description="Foto bareng sama anak-anak dari SMK yang berbeda. Tapi tujuan kami semua disini sama, Untuk Mengikuti Lomba di SMK KGB 2"
+                onclick="showPreview(this)">
+            <img src="./album/masaSMP.jpeg" data-full-src="./album/masaSMP.jpeg"
+                data-description="Saya bersama teman-teman smp saya ..." onclick="showPreview(this)">
+            <img src="./album/photo9.jpeg" data-full-src="./album/photo9.jpeg"
+                data-description="Saya dan teman teman saya sedang mengerjakan proposal untuk tugas PKK kami di RPS TJKT!"
+                onclick="showPreview(this)">
+            <img src="./album/kihajarstem-photo.jpg" data-full-src="./album/kihajarstem-photo.jpg"
+                data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!"
+                onclick="showPreview(this)">
+            <img src="./album/perbanasmoment.jpeg" data-full-src="./album/perbanasmoment.jpeg"
+                data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku."
+                onclick="showPreview(this)">
+            <img src="./album/perbanas-bareng.jpg" data-full-src="./album/perbanas-bareng.jpg"
+                data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)">
+            <img src="./album/lks2025.jpg" data-full-src="./album/lks2025.jpg"
+                data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)">
+            <img src="./album/berdebat-perbanas.jpg" data-full-src="./album/berdebat-perbanas.jpg"
+                data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas"
+                onclick="showPreview(this)">
+            <img src="./album/h-1 sebelum lks.jpg" data-full-src="./album/h-1 sebelum lks.jpg"
+                data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah."
+                onclick="showPreview(this)">
+            <img src="./album/tugas-p5.jpg" data-full-src="./album/tugas-p5.jpg"
+                data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)"
+                onclick="showPreview(this)">
+            <img src="./album/diskusi-industri.jpg" data-full-src="./album/diskusi-industri.jpg"
+                data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)"
+                onclick="showPreview(this)">
+            <img src="./album/itcna.JPG" data-full-src="./album/itcna.JPG"
+                data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!"
+                onclick="showPreview(this)">
+            <img src="./album/dalam-perjalanan.jpg" data-full-src="./album/dalam-perjalanan.jpg"
+                data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)">
+            <img src="./album/ujian-guru.jpg" data-full-src="./album/ujian-guru.jpg"
+                data-description="Emm, ini simulasi UKOM-kah? Guruku malah yang takut sama respon aku pas tiap kali nanya waktu isi kuisionernya haha"
+                onclick="showPreview(this)">
+            <img src="./album/penyusunan-proposal-estuel.jpg" data-full-src="./album/penyusunan-proposal-estuel.jpg"
+                data-description="Saya dan tim pengembang ESTUEL sedang menyusun proposal untuk proyek kami!"
+                onclick="showPreview(this)">
+            <img src="./album/foto-berempat.jpg" data-full-src="./album/foto-berempat.jpg"
+                data-description="Tiba-tiba diajak foto sehabis lomba, ya gini deh posenya.. (ICE BSD Tanggerang) "
+                onclick="showPreview(this)">
+            <img src="./album/nonton-svennty.jpg" data-full-src="./album/nonton-svennty.jpg"
+                data-description="Ceritanya nonton bareng, tiba-tiba ada anomali bilang : ehh foto yok!"
+                onclick="showPreview(this)">
+            <img src="./album/lomba-ilmupedia.jpg" data-full-src="./album/lomba-ilmupedia.jpg"
+                data-description="Foto ketika pede padahal belum ngerjain. Kalo pas selesai ngerjain + tau hasilnya beda cerita haha."
+                onclick="showPreview(this)">
+            <img src="./album/hari-guru.jpg" data-full-src="./album/hari-guru.jpg"
+                data-description="Foto bersama dengan organisasi saya ketika merayakan hari guru!"
+                onclick="showPreview(this)">
+            <img src="./album/foto-kedua-hariguru.jpg" data-full-src="./album/foto-kedua-hariguru.jpg"
+                data-description="&quot;Eh kaa, ayo kita foto yuk!&quot; Aku berpose dengan sadar : 🤷🏻"
+                onclick="showPreview(this)">
+            <img src="./album/lomba-mikrotik.jpg" data-full-src="./album/lomba-mikrotik.jpg"
+                data-description="Pertama kalinya lomba di depok + diajak foto sama guru (katanya sih buat- hahaha)"
+                onclick="showPreview(this)">
+            <img src="./album/makan-bareng-svennty.jpg" data-full-src="./album/makan-bareng-svennty.jpg"
+                data-description="Makan bareng sebelum semuanya pada keluar kota (sebelum liburan tahun baru)"
+                onclick="showPreview(this)">
+            <img src="./album/bakar-bakar.jpg" data-full-src="./album/bakar-bakar.jpg"
+                data-description="Bakar-bakar Bersama Ambalan Sulhastia! w/ Angkatan 7-9" onclick="showPreview(this)">
+            <img src="./album/foto-bareng-perpusnas.jpg" data-full-src="./album/foto-bareng-perpusnas.jpg"
+                data-description="Pertama kali pergi ke Perpustakaan Nasional Indonesia! baca buku bareng, foto bareng, hari ini seru banget! (Seenggaknya janji itu sudah ditepati, ga cuma omon-omon ajaa)"
+                onclick="showPreview(this)">
+            <img src="./album/petugas-trisatya.jpg" data-full-src="./album/petugas-trisatya.jpg"
+                data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)"
+                onclick="showPreview(this)">
+            <img src="./album/buka-puasa-tkj1.jpg" data-full-src="./album/buka-puasa-tkj1.jpg"
+                data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!"
+                onclick="showPreview(this)">
+            <img src="./album/ebiti-2025.jpg" data-full-src="./album/ebiti-2025.jpg"
+                data-description="Foto bareng Bapak Kaprodi dan juga 1 tim dari sekolahku! ditemenin langsung pas lomba haha.. "
+                onclick="showPreview(this)">
+            <img src="./album/industri.jpg" data-full-src="./album/industri.jpg"
+                data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!"
+                onclick="showPreview(this)">
+        </div>
+
+        <!-- preview image -->
+        <div class="previewImage" id="previewImage" style="display: none;">
+            <img id="previewImg">
+            <div id="previewDescription"></div>
+            <span onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <!-- end preview image -->
+
+        <!-- wrapper skeleton anim -->
+
+        <style>
+            .galeri {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+            }
+
+            .img-wrapper {
+                position: relative;
+                width: 100%;
+                padding-top: 75%;
+                /* ratio 4:3 */
+                overflow: hidden;
+            }
+
+            .img-wrapper img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .skeleton {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+            }
+
+            /* Mobile-enhanced layout untuk tampilan mirip desktop */
+            @media (max-width: 991.98px) {
+                #albumBG {
+                    display: block;
+                    min-height: auto;
+                    padding: 80px 0 60px;
+                    text-align: center;
+                }
+
+                .hero-bg-image {
+                    opacity: 0.72;
+                    filter: blur(5px) brightness(0.55);
+                }
+
+                .hero-text-wrapper {
+                    z-index: 5;
+                    position: relative;
+                }
+
+                .hero-title {
+                    font-size: clamp(2.5rem, 8vw, 3.4rem);
+                    margin-bottom: 18px;
+                }
+
+                .hero-subtitle {
+                    font-size: 1rem;
+                    max-width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding: 0 1rem;
+                }
+
+                .hero-btns {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .btn-upgrade {
+                    width: 100%;
+                    max-width: 280px;
+                    padding: 14px 22px;
+                }
+
+                .camera-img {
+                    max-width: 88%;
+                    margin: 2rem auto 0;
+                    transform: rotate(0deg);
+                }
+
+                /* Pastikan layout hero tetap horizontal pada mobile */
+                #albumBG .row.align-items-center {
+                    flex-wrap: nowrap;
+                    justify-content: space-between;
+                }
+
+                #albumBG .col-lg-6,
+                #albumBG .col-md-12,
+                #albumBG .col-md-10 {
+                    flex: 0 0 48%;
+                    max-width: 48%;
+                }
+
+                #albumBG .col-lg-6.text-center.text-lg-start {
+                    text-align: left;
+                }
+
+                .hero-subtitle {
+                    max-width: 420px;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+
+                .hero-btns {
+                    justify-content: flex-start;
+                }
+
+                .btn-upgrade {
+                    width: auto;
+                    min-width: 180px;
+                }
+
+                .camera-img {
+                    max-width: 100%;
+                    margin: 0;
+                }
+
+                .galeri {
+                    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                    gap: 12px;
+                    padding: 0 12px;
+                }
+
+                .img-wrapper {
+                    padding-top: 70%;
+                }
+
+                .previewImage {
+                    padding: 16px;
+                    justify-content: flex-start;
+                }
+
+                .previewImage img {
+                    max-width: 90%;
+                    max-height: 78vh;
+                    object-fit: contain;
+                }
+
+                #previewDescription {
+                    position: static;
+                    margin-top: 1rem;
+                    background: rgba(0, 0, 0, 0.78);
+                    width: calc(100% - 32px);
+                    max-width: 640px;
+                    font-size: 0.95rem;
+                }
+
+                .previewImage span {
+                    right: 16px;
+                    top: 18px;
+                    bottom: auto;
+                }
+            }
+
+            @media (max-width: 575.98px) {
+                .hero-title {
+                    font-size: clamp(2rem, 9vw, 2.8rem);
+                }
+
+                .hero-subtitle {
+                    font-size: 0.96rem;
+                    padding: 0 1rem;
+                }
+
+                .btn-upgrade {
+                    padding: 12px 20px;
+                    font-size: 0.92rem;
+                }
+
+                .camera-img {
+                    max-width: 100%;
+                }
+            }
+
+            #achievements {
+                display: none;
+                padding: 50px 0 30px;
+                background: rgba(255,255,255,0.03);
+            }
+
+            .achievement-carousel {
+                position: relative;
+                overflow: hidden;
+                padding: 20px 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .achievement-track {
+                display: flex;
+                gap: 18px;
+                min-width: 100%;
+                padding-bottom: 10px;
+                transition: transform 0.5s ease;
+            }
+
+            .carousel-btn {
+                background: rgba(255,255,255,0.9);
+                border: 2px solid #ddd;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 10;
+                transition: background 0.3s ease;
+            }
+
+            .carousel-btn:hover {
+                background: #fff;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            }
+
+            .prev-btn {
+                left: -25px;
+            }
+
+            .next-btn {
+                right: -25px;
+            }
+
+            .achievement-card {
+                flex: 0 0 280px;
+                border-radius: 24px;
+                background: #ffffff;
+                border: 2px solid #e0e0e0;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                padding: 24px;
+                color: #333;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                text-align: center;
+            }
+
+            .achievement-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            }
+
+            .achievement-thumbnail {
+                margin-bottom: 16px;
+            }
+
+            .achievement-thumbnail img {
+                width: 100px;
+                height: 100px;
+                border-radius: 12px;
+                object-fit: cover;
+                border: 2px solid #f0f0f0;
+            }
+
+            .achievement-badge {
+                display: inline-block;
+                padding: 6px 12px;
+                border-radius: 12px;
+                background: #f8f9fa;
+                font-weight: 600;
+                font-size: 0.85rem;
+                color: #495057;
+                margin-bottom: 12px;
+            }
+
+            .achievement-card-body h3 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+                color: #212529;
+            }
+
+            .achievement-card-body p {
+                color: #6c757d;
+                margin-bottom: 18px;
+                line-height: 1.5;
+            }
+
+            .achievement-card-body span {
+                display: inline-block;
+                padding: 6px 12px;
+                border-radius: 20px;
+                background: #e9ecef;
+                font-size: 0.85rem;
+                color: #495057;
+            }
+
+            .achievement-list {
+                gap: 1.4rem;
+            }
+
+            .achievement-detail-card {
+                background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 20px;
+                padding: 24px;
+                min-height: 220px;
+                color: #f8f8f8;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
+            .achievement-detail-card h4 {
+                margin-bottom: 12px;
+                font-size: 1.05rem;
+                color: #fff;
+            }
+
+            .achievement-detail-card p {
+                color: #d3d3d3;
+                line-height: 1.6;
+            }
+
+            @media (max-width: 768px) {
+                .achievement-card {
+                    flex: 0 0 80%;
+                }
+
+                .carousel-btn {
+                    width: 40px;
+                    height: 40px;
+                    font-size: 20px;
+                }
+
+                .prev-btn {
+                    left: -20px;
+                }
+
+                .next-btn {
+                    right: -20px;
+                }
+
+                .achievement-list .col-md-4 {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                }
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // FIX 1: Mencegah Auto-Scroll ke bawah saat halaman dimuat (jika ada hashtag di URL)
+                if (window.location.hash) {
+                    window.history.replaceState('', document.title, window.location.pathname + window.location.search);
+                    window.scrollTo(0, 0);
+                }
+
+                const gallery = document.querySelector("#galeriCuy");
+                const images = gallery.querySelectorAll("img");
+
+                images.forEach(img => {
+                    // Buat wrapper
+                    const wrapper = document.createElement("div");
+                    wrapper.classList.add("img-wrapper");
+
+                    // Buat skeleton
+                    const skeleton = document.createElement("div");
+                    skeleton.classList.add("skeleton");
+
+                    // Masukkan skeleton & img ke wrapper
+                    img.parentNode.insertBefore(wrapper, img);
+                    wrapper.appendChild(skeleton);
+                    wrapper.appendChild(img);
+
+                    // FIX 2: Hilangkan skeleton & tampilkan gambar (atasi masalah thumbnail abu-abu)
+                    const showImg = () => {
+                        skeleton.remove();
+                        img.style.opacity = "1"; // Paksa opacity gambar jadi terlihat
+                    };
+
+                    // Cek apakah gambar sudah ter-cache oleh browser, jika belum tunggu event 'load'
+                    if (img.complete) {
+                        showImg();
+                    } else {
+                        img.addEventListener("load", showImg);
+                    }
+                });
+
+                const achievementsSection = document.getElementById("achievements");
+                const btnAchievements = document.getElementById("btnAchievements");
+                const btnGallery = document.getElementById("btnGallery");
+                const achievementCarousel = document.getElementById("achievementCarousel");
+                const achievementTrack = document.getElementById("achievementTrack");
+                const prevBtn = document.getElementById("prevBtn");
+                const nextBtn = document.getElementById("nextBtn");
+
+                // Mencari elemen teks "Miss this moment..." dengan aman
+                let galleryText = null;
+                document.querySelectorAll("h1.josefin.text-center").forEach(h1 => {
+                    if (h1.textContent.includes("Miss this moment...")) {
+                        galleryText = h1;
+                    }
+                });
+
+                let currentIndex = 0;
+                const totalCards = achievementTrack.children.length;
+                let autoScrollInterval;
+
+                function updateCarousel() {
+                    const cardWidth = 280 + 18; // card width + gap
+                    achievementTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                }
+
+                function nextCard() {
+                    currentIndex = (currentIndex + 1) % totalCards;
+                    updateCarousel();
+                    resetAutoScroll();
+                }
+
+                function prevCard() {
+                    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+                    updateCarousel();
+                    resetAutoScroll();
+                }
+
+                function startAutoScroll() {
+                    autoScrollInterval = setInterval(nextCard, 6000);
+                }
+
+                function resetAutoScroll() {
+                    clearInterval(autoScrollInterval);
+                    startAutoScroll();
+                }
+
+                function showAchievements() {
+                    achievementsSection.style.display = "block";
+                    gallery.style.display = "none";
+                    if (galleryText) galleryText.style.display = "none"; // Sembunyikan "Miss this moment..."
+
+                    // Delay sedikit agar elemen ke-render dulu sebelum browser melakukan scroll halus
+                    setTimeout(() => achievementsSection.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+                    startAutoScroll();
+                }
+
+                function showGallery() {
+                    achievementsSection.style.display = "none";
+                    gallery.style.display = "grid";
+                    if (galleryText) galleryText.style.display = "block"; // Munculkan "Miss this moment..."
+
+                    setTimeout(() => {
+                        if (galleryText) galleryText.scrollIntoView({ behavior: "smooth", block: "start" });
+                        else document.getElementById("galeriCuy").scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 50);
+
+                    clearInterval(autoScrollInterval);
+                }
+
+                // FIX 3: Default State (Tetap di atas, sebelum tombol diklik tidak ada yang muncul)
+                achievementsSection.style.display = "none";
+                gallery.style.display = "none";
+                if (galleryText) galleryText.style.display = "none";
+
+                btnAchievements?.addEventListener("click", (event) => {
+                    event.preventDefault(); // Mencegah URL berubah dan layar meloncat
+                    showAchievements();
+                });
+
+                btnGallery?.addEventListener("click", (event) => {
+                    event.preventDefault(); // Mencegah URL berubah dan layar meloncat
+                    showGallery();
+                });
+
+                prevBtn?.addEventListener("click", prevCard);
+                nextBtn?.addEventListener("click", nextCard);
+            });
+        </script>
+
+        <!-- wrapper skeleton anim -->
+
+        <!-- preview image -->
+        <div class="previewImage" id="previewImage" style="display: none;">
+            <img id="previewImg">
+            <div id="previewDescription"></div>
+            <span onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <!-- end preview image -->
+
+        <!-- end preview image -->
 
 
         <!-- javascript -->
@@ -1128,27 +1246,27 @@
                 const fullSrc = imgElement.getAttribute("data-full-src");
                 // Ambil deskripsi dari atribut data-description
                 const description = imgElement.getAttribute("data-description");
-                
+
                 // Temukan elemen gambar preview dan deskripsi
                 const previewImg = document.getElementById("previewImg");
                 const previewDescription = document.getElementById("previewDescription");
                 const previewImageContainer = document.getElementById("previewImage");
-                
+
                 // Set src gambar preview dan deskripsi
                 previewImg.src = fullSrc;
                 previewDescription.textContent = description;
-                
+
                 // Tampilkan gambar preview
                 previewImageContainer.style.display = "flex";
             }
-            
+
             function closePreviewImg() {
                 const previewImageContainer = document.getElementById("previewImage");
                 previewImageContainer.style.display = "none";
             }
         </script>
-        
-         
+
+
         <!-- end javascript -->
 
 
