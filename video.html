@@ -28,6 +28,159 @@
 
 <body style="overflow-x: hidden;">
 
+<!-- Pakai class priority-img untuk gambar yang harus dimuat dulu -->
+<!-- loading -->
+<style>
+/* Wrapper dibuat lebih gelap (Hitam transparan 65%) */
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Container untuk menumpuk teks dan dot */
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Jarak antara teks dan animasi titik */
+}
+
+/* Styling teks Loading */
+.loading-text {
+    color: #e0e0e0; /* Warna putih abu-abu agar kontras */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 2px;
+    animation: pulse-text 1.5s infinite ease-in-out;
+}
+
+/* Animasi kelap-kelip halus untuk teks */
+@keyframes pulse-text {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Animasi Titik (Dots) */
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot {
+    height: 15px; /* Dikecilin dikit biar proporsional dengan teks */
+    width: 15px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background-color: #d0d0d0; /* Titik dibuat lebih terang */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child { margin-right: 0; }
+.dot:nth-child(1) { animation-delay: -0.3s; }
+.dot:nth-child(2) { animation-delay: -0.1s; }
+.dot:nth-child(3) { animation-delay: 0.1s; }
+.dot:nth-child(4) { animation-delay: 0.3s; }
+.dot:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(0.8);
+        background-color: #a0a0a0;
+        box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4);
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #ffffff;
+        box-shadow: 0 0 0 6px rgba(208, 208, 208, 0);
+    }
+}
+</style>
+ 
+<div id="loader-wrapper">
+    <div class="loading-content">
+        <div class="loading-text">Membuka Halaman Albumku...</div>
+        <section class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </section>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loader = document.getElementById('loader-wrapper');
+        
+        const priorityImages = document.querySelectorAll('.priority-img');
+        let loadedCount = 0;
+        let isLoaded = false; 
+
+        function hideLoader() {
+            if (isLoaded) return; 
+            isLoaded = true;
+            
+            loader.classList.add('loader-hidden');
+            loader.addEventListener('transitionend', function() {
+                if(loader.parentNode) {
+                    loader.parentNode.removeChild(loader);
+                }
+            });
+        }
+
+        if (priorityImages.length === 0) {
+            window.addEventListener('load', hideLoader);
+        } else {
+            priorityImages.forEach(img => {
+                if (img.complete) {
+                    loadedCount++;
+                    checkAllLoaded();
+                } else {
+                    img.addEventListener('load', () => { 
+                        loadedCount++; 
+                        checkAllLoaded(); 
+                    });
+                    img.addEventListener('error', () => { 
+                        loadedCount++; 
+                        checkAllLoaded(); 
+                    });
+                }
+            });
+        }
+
+        function checkAllLoaded() {
+            if (loadedCount >= priorityImages.length) {
+                hideLoader();
+            }
+        }
+
+
+        setTimeout(hideLoader, 5000); 
+    });
+</script>
+<!-- end loading -->
+
        <!-- Navbar -->
     <style>
 /* Navbar Fix: Seamless ke Glassmorphism */

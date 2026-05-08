@@ -28,6 +28,159 @@
 
 <body style="overflow-x: hidden;">
 
+<!-- Pakai class priority-img untuk gambar yang harus dimuat dulu -->
+<!-- loading -->
+<style>
+/* Wrapper dibuat lebih gelap (Hitam transparan 65%) */
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Container untuk menumpuk teks dan dot */
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Jarak antara teks dan animasi titik */
+}
+
+/* Styling teks Loading */
+.loading-text {
+    color: #e0e0e0; /* Warna putih abu-abu agar kontras */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 2px;
+    animation: pulse-text 1.5s infinite ease-in-out;
+}
+
+/* Animasi kelap-kelip halus untuk teks */
+@keyframes pulse-text {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Animasi Titik (Dots) */
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot {
+    height: 15px; /* Dikecilin dikit biar proporsional dengan teks */
+    width: 15px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background-color: #d0d0d0; /* Titik dibuat lebih terang */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child { margin-right: 0; }
+.dot:nth-child(1) { animation-delay: -0.3s; }
+.dot:nth-child(2) { animation-delay: -0.1s; }
+.dot:nth-child(3) { animation-delay: 0.1s; }
+.dot:nth-child(4) { animation-delay: 0.3s; }
+.dot:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(0.8);
+        background-color: #a0a0a0;
+        box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4);
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #ffffff;
+        box-shadow: 0 0 0 6px rgba(208, 208, 208, 0);
+    }
+}
+</style>
+ 
+<div id="loader-wrapper">
+    <div class="loading-content">
+        <div class="loading-text">Membuka Halaman Albumku...</div>
+        <section class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </section>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loader = document.getElementById('loader-wrapper');
+        
+        const priorityImages = document.querySelectorAll('.priority-img');
+        let loadedCount = 0;
+        let isLoaded = false; 
+
+        function hideLoader() {
+            if (isLoaded) return; 
+            isLoaded = true;
+            
+            loader.classList.add('loader-hidden');
+            loader.addEventListener('transitionend', function() {
+                if(loader.parentNode) {
+                    loader.parentNode.removeChild(loader);
+                }
+            });
+        }
+
+        if (priorityImages.length === 0) {
+            window.addEventListener('load', hideLoader);
+        } else {
+            priorityImages.forEach(img => {
+                if (img.complete) {
+                    loadedCount++;
+                    checkAllLoaded();
+                } else {
+                    img.addEventListener('load', () => { 
+                        loadedCount++; 
+                        checkAllLoaded(); 
+                    });
+                    img.addEventListener('error', () => { 
+                        loadedCount++; 
+                        checkAllLoaded(); 
+                    });
+                }
+            });
+        }
+
+        function checkAllLoaded() {
+            if (loadedCount >= priorityImages.length) {
+                hideLoader();
+            }
+        }
+
+
+        setTimeout(hideLoader, 5000); 
+    });
+</script>
+<!-- end loading -->
+
     <!-- Navbar -->
     <style>
         /* Navbar Fix: Seamless ke Glassmorphism */
@@ -487,7 +640,7 @@
     </style>
 
     <section id="albumBG">
-        <div class="hero-bg-image"></div>
+        <div class="hero-bg-image priority-img"></div>
 
         <div class="container hero-text-wrapper">
             <div class="row align-items-center">
@@ -496,8 +649,7 @@
                     data-aos-duration="1200">
                     <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
                     <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
-                        <img src="./foto/foto.png"
-                            alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
+                        <img src="./foto/foto.png" class="img-fluid camera-img priority-img">
                     </div>
                     <p class="hero-subtitle">
                         Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi,
@@ -512,8 +664,7 @@
                 <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left"
                     data-aos-duration="1200">
                     <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
-                        <img src="./foto/foto.png"
-                            alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
+                        <img src="./foto/foto.png" class="img-fluid camera-img priority-img">
                     </div>
                 </div>
 
@@ -623,27 +774,40 @@
         </div> <!-- Tag penutup ini dikembalikan agar layout tidak bocor -->
     </section>
 
-    <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 20px; display: none;">Miss this moment..</h1>
+    <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 70px; display: none;">Miss this moment..</h1>
 
     <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000" style="display: none;">
-        <img src="./album/pingol.jpg" data-full-src="./album/pingol.jpg data-description="Saya dengan adik kelas saya ketika menjadi tim panitia Pindah Golongan dari Penggalang ke Penegak tahun 2025." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/pingol.jpg" data-full-src="./album/pingol.jpg" data-description="Saya dengan adik kelas saya ketika menjadi tim panitia Pindah Golongan dari Penggalang ke Penegak tahun 2025." onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo4.jpeg" data-full-src="./album/photo4.jpeg" data-description="Foto ini diambil sebelum penampilan drama jurusan saya!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo5.jpeg" data-full-src="./album/photo5.jpeg" data-description="Saya dan teman-teman saya mampir ke MGT setelah kerja kelompok.. Refreshing sebelum ulangan katanya haha..." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/bukber-bareng.jpg" data-full-src="./album/bukber-bareng.jpg" data-description="Buka puasa bareng kelas, tapi di tahun 2025." onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo6.jpeg" data-full-src="./album/photo6.jpeg" data-description="Foto ini diambil saat saya dan teman-teman saya sedang mengerjakan tugas Bahasa Indonesia!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo7.jpg" data-full-src="./album/photo7.jpg" data-description="Kami merayakan hari Ulang Tahun Nafis ditempat ini" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo8.jpg" data-full-src="./album/photo8.jpg" data-description="Foto bareng sama anak-anak dari SMK yang berbeda. Tapi tujuan kami semua disini sama, Untuk Mengikuti Lomba di SMK KGB 2" onclick="showPreview(this)" loading="lazy">
         <img src="./album/masaSMP.jpeg" data-full-src="./album/masaSMP.jpeg" data-description="Saya bersama teman-teman smp saya ..." onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo9.jpeg" data-full-src="./album/photo9.jpeg" data-description="Saya dan teman teman saya sedang mengerjakan proposal untuk tugas PKK kami di RPS TJKT!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/foto-jas.jpg" data-full-src="./album/foto-jas.jpg" data-description="Tiba-tiba di foto, yaudah pose default aja ✌🏻" onclick="showPreview(this)" loading="lazy">
         <img src="./album/kihajarstem-photo.jpg" data-full-src="./album/kihajarstem-photo.jpg" data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/foto-sekre8-9.jpg" data-full-src="./album/foto-sekre8-9.jpg" data-description="Diajak foto bareng sama sekre dari angkatan 9 sama sekre 1 ceritanya.." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/happy-grad7.jpg" data-full-src="./album/happy-grad7.jpg" data-description="Selamat buat kakak dari angkatan 7 yang menjadi lulusan terbaik!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/juara3OTN.jpg" data-full-src="./album/juara3OTN.jpg" data-description="Alhamdulilah, tim ku setidaknya lolos sebagai juara 3 tingkat nasional di lomba Olimpiade TIK 2026!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/menang-lomba-kelas.jpg" data-full-src="./album/menang-lomba-kelas.jpg" data-description="Alhamdulilah, kelasku dapat 3 hadiah dari 3 lomba! Dan, urutan pemenangnya juga unik; 1,2,3! XD" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/pameran.jpg" data-full-src="./album/pameran.jpg" data-description="Aku dan temanku (camerawomen) ditugaskan untuk menjaga stand pameran milik Angkatan 7! Seruu!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/pulang-dari-icebsd.jpg" data-full-src="./album/pulang-dari-icebsd.jpg" data-description="Tiba-tiba di ajak foto sama adik saat perjalanan pulang. Padahal masih di KRL.." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/selesai-lomba.jpg" data-full-src="./album/selesai-lomba.jpg" data-description="Abaikan saya.. disana sangat pusingg.. seusai lomba kepala masih pusingg.." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/sertijab.jpg" data-full-src="./album/sertijab.jpg" data-description="Selesai sudah masa jabatanku di Pangkalanku sendiri. tepatnya, di Ambalan Sulhastia ini.." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/setelah-demos-ekskul.jpg" data-full-src="./album/setelah-demos-ekskul.jpg" data-description="Diajak foto bareng setelah demos ekskul.. hari ini lelah campur seruu" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/ukom.jpg" data-full-src="./album/ukom.jpg" data-description="Seusai UKOM.. tinggal menunggu hasilnya.. apakah aku Kompeten?" onclick="showPreview(this)" loading="lazy">
         <img src="./album/perbanasmoment.jpeg" data-full-src="./album/perbanasmoment.jpeg" data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku." onclick="showPreview(this)" loading="lazy">
         <img src="./album/perbanas-bareng.jpg" data-full-src="./album/perbanas-bareng.jpg" data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)" loading="lazy">
         <img src="./album/indocomtech.jpg" data-full-src="./album/indocomtech.jpg" data-description="Foto ini di ambil ketika saya pergi untuk mengikuti lomba Olimpiade TIK Nasional 2024." onclick="showPreview(this)" loading="lazy">
         <img src="./album/lks2025.jpg" data-full-src="./album/lks2025.jpg" data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/pahlawan.jpg" data-full-src="./album/pahlawan.jpg" data-description="Kami dari ekskul Pramuka, Ambalan Sulhastia!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/berdebat-perbanas.jpg" data-full-src="./album/berdebat-perbanas.jpg" data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/main-ps.jpg" data-full-src="./album/main-ps.jpg" data-description="Kita kumpul lagi ceritanya setelah PKL dan sekalian buka bersamaa!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/h-1 sebelum lks.jpg" data-full-src="./album/h-1 sebelum lks.jpg" data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah." onclick="showPreview(this)" loading="lazy">
         <img src="./album/tugas-p5.jpg" data-full-src="./album/tugas-p5.jpg" data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)" onclick="showPreview(this)" loading="lazy">
         <img src="./album/latihan-sebelum-upacara.jpg" data-full-src="./album/latihan-sebelum-upacara.jpg" data-description="Ini di ambil ketika latihan sebelum upacara, bersama anggota ambalan lainnya.." onclick="showPreview(this)" loading="lazy">
