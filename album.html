@@ -134,7 +134,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('./foto/background-album.jpg') center/cover no-repeat;
+            background: url('./foto/albumBG.jpg') center/cover no-repeat;
             filter: blur(8px) brightness(0.6);
             transform: scale(1.1);
             z-index: 1;
@@ -357,36 +357,6 @@
             background: white;
             color: #1a1a2e;
             transform: scale(1.05);
-        }
-
-        .hero-shape {
-            position: absolute;
-            right: -5%;
-            top: 10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, rgba(0,0,0,0) 70%);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .hero-image-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow: 0 27px 70px rgba(0, 0, 0, 0.2);
-            border-radius: 32px;
-            padding: 1.25rem;
-            max-width: 560px;
-            margin: 0 auto;
-            backdrop-filter: blur(12px);
-        }
-
-        .hero-image-card .camera-img {
-            width: 100%;
-            max-width: 100%;
-            transform: rotate(0deg);
-            border-radius: 24px;
-            box-shadow: 0 22px 52px rgba(0, 0, 0, 0.22);
         }
 
         /* Override wave biar nyambung sama section putih di bawah */
@@ -656,6 +626,7 @@
     <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 20px; display: none;">Miss this moment..</h1>
 
     <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000" style="display: none;">
+        <img src="./album/pingol.jpg" data-full-src="./album/pingol.jpg data-description="Saya dengan adik kelas saya ketika menjadi tim panitia Pindah Golongan dari Penggalang ke Penegak tahun 2025." onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)" loading="lazy">
@@ -679,12 +650,15 @@
         <img src="./album/diskusi-industri.jpg" data-full-src="./album/diskusi-industri.jpg" data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)" onclick="showPreview(this)" loading="lazy">
         <img src="./album/itcna.jpg" data-full-src="./album/itcna.jpg" data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/dalam-perjalanan.jpg" data-full-src="./album/dalam-perjalanan.jpg" data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/graduate-from-ctech.jpg" data-full-src="./album/graduate-from-ctech.jpg" data-description="Lulus dari masa PKL selama 9 Bulan di PT. Ctech ERP Indonesia." onclick="showPreview(this)" loading="lazy">
         <img src="./album/ujian-guru.jpg" data-full-src="./album/ujian-guru.jpg" data-description="Emm, ini simulasi UKOM-kah? Guruku malah yang takut sama respon aku pas tiap kali nanya waktu isi kuisionernya haha" onclick="showPreview(this)" loading="lazy">
         <img src="./album/penyusunan-proposal-estuel.jpg" data-full-src="./album/penyusunan-proposal-estuel.jpg" data-description="Saya dan tim pengembang ESTUEL sedang menyusun proposal untuk proyek kami!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/iseng.jpg" data-full-src="./album/iseng.jpg" data-description="Kena foto sama temen ketika lagi setup kamera haha.." onclick="showPreview(this)" loading="lazy">
         <img src="./album/foto-berempat.jpg" data-full-src="./album/foto-berempat.jpg" data-description="Tiba-tiba diajak foto sehabis lomba, ya gini deh posenya.. (ICE BSD Tanggerang) " onclick="showPreview(this)" loading="lazy">
         <img src="./album/nonton-svennty.jpg" data-full-src="./album/nonton-svennty.jpg" data-description="Ceritanya nonton bareng, tiba-tiba ada anomali bilang : ehh foto yok!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/lomba-ilmupedia.jpg" data-full-src="./album/lomba-ilmupedia.jpg" data-description="Foto ketika pede padahal belum ngerjain. Kalo pas selesai ngerjain + tau hasilnya beda cerita haha." onclick="showPreview(this)" loading="lazy">
         <img src="./album/hari-guru.jpg" data-full-src="./album/hari-guru.jpg" data-description="Foto bersama dengan organisasi saya ketika merayakan hari guru!" onclick="showPreview(this)" loading="lazy">
+        <img src="./album/main-ke-forest.jpg" data-full-src="./album/main-ke-forest.jpg" data-description="Main ke Taman Sari Forest, nemenin sepupu main kesanaa.." onclick="showPreview(this)" loading="lazy">
         <img src="./album/foto-kedua-hariguru.jpg" data-full-src="./album/foto-kedua-hariguru.jpg" data-description="&quot;Eh kaa, ayo kita foto yuk!&quot; Aku berpose dengan sadar : 🤷🏻" onclick="showPreview(this)" loading="lazy">
         <img src="./album/lomba-mikrotik.jpg" data-full-src="./album/lomba-mikrotik.jpg" data-description="Pertama kalinya lomba di depok + diajak foto sama guru (katanya sih buat- hahaha)" onclick="showPreview(this)" loading="lazy">
         <img src="./album/makan-bareng-svennty.jpg" data-full-src="./album/makan-bareng-svennty.jpg" data-description="Makan bareng sebelum semuanya pada keluar kota (sebelum liburan tahun baru)" onclick="showPreview(this)" loading="lazy">
@@ -693,6 +667,7 @@
         <img src="./album/petugas-trisatya.jpg" data-full-src="./album/petugas-trisatya.jpg" data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)" onclick="showPreview(this)" loading="lazy">
         <img src="./album/buka-puasa-tkj1.jpg" data-full-src="./album/buka-puasa-tkj1.jpg" data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/ebiti-2025.jpg" data-full-src="./album/ebiti-2025.jpg" data-description="Foto bareng Bapak Kaprodi dan juga 1 tim dari sekolahku! ditemenin langsung pas lomba haha.. " onclick="showPreview(this)" loading="lazy">
+        <img src="./album/jalan-jalan.jpg" data-full-src="./album/jalan-jalan.jpg" data-description="Diajak jalan-jalan sama keluarga jauh ke Monas bareng 2 adikkuu.." onclick="showPreview(this)" loading="lazy">
         <img src="./album/industri.jpg" data-full-src="./album/industri.jpg" data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!" onclick="showPreview(this)" loading="lazy">
     </div>
 
