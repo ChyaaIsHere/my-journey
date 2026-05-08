@@ -134,16 +134,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('./album/photo8.jpg') center/cover no-repeat;
+            background: url('./foto/background-album.jpg') center/cover no-repeat;
             filter: blur(8px) brightness(0.6);
             transform: scale(1.1);
             z-index: 1;
             /* Paling belakang */
         }
 
+        .hero-image-desktop {
+        margin-top: -100px; 
+        margin-right: -100px;
+}
+
         .hero-text-wrapper {
             z-index: 10;
-            /* Teks harus jauh di atas gambar dan wave agar bisa di-klik */
             position: relative;
         }
 
@@ -188,8 +192,7 @@
                         <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <!-- FIX NAVBAR: Menambahkan class active dan ubah href agar spesifik -->
-                        <a class="nav-link nunito active" href="./album.html" role="button">
+                        <a class="nav-link nunito active" href="#" role="button">
                             Albumku
                         </a>
                     </li>
@@ -243,7 +246,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* ===== FIX HIGHLIGHT NAVBAR (KOTAK BAWAH) ===== */
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
@@ -277,13 +279,11 @@
         .navbar.scrolled .nav-link.active::after {
             background-color: white;
         }
-        /* ============================================== */
     </style>
 
     <script>
         document.addEventListener("scroll", function () {
             const navbar = document.getElementById("navbar");
-            // Jika scroll lebih dari 10 pixel, ganti ke glassmorphism
             if (window.scrollY > 10) {
                 navbar.classList.add("scrolled");
             } else {
@@ -291,14 +291,12 @@
             }
         });
 
-        // Highlight active nav link based on current page (Backup script)
         document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll(".nav-link");
             const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
             navLinks.forEach(link => {
                 const href = link.getAttribute("href");
-                // Pengecekan aman agar tidak conflict dengan menu Albumku yang sudah kita hardcode
                 if (href && href !== "./album.html" && href !== "#" && (href.includes(currentPage) || (currentPage === "" && href.includes("index.html")))) {
                     link.classList.add("active");
                 }
@@ -311,7 +309,6 @@
     <style>
         #albumBG {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            /* Warna deep navy yang elegan */
             min-height: 80vh;
             display: flex;
             align-items: center;
@@ -362,7 +359,6 @@
             transform: scale(1.05);
         }
 
-        /* Aksen visual di background */
         .hero-shape {
             position: absolute;
             right: -5%;
@@ -530,7 +526,7 @@
                     data-aos-duration="1200">
                     <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
                     <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
-                        <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop"
+                        <img src="./foto/foto.png"
                             alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
                     </div>
                     <p class="hero-subtitle">
@@ -546,7 +542,7 @@
                 <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left"
                     data-aos-duration="1200">
                     <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
-                        <img src="https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=1470&auto=format&fit=crop"
+                        <img src="./foto/foto.png"
                             alt="Vintage Camera Aesthetic" class="img-fluid camera-img">
                     </div>
                 </div>
@@ -673,13 +669,13 @@
         <img src="./album/kihajarstem-photo.jpg" data-full-src="./album/kihajarstem-photo.jpg" data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/perbanasmoment.jpeg" data-full-src="./album/perbanasmoment.jpeg" data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku." onclick="showPreview(this)" loading="lazy">
         <img src="./album/perbanas-bareng.jpg" data-full-src="./album/perbanas-bareng.jpg" data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/nonton-bareng.jpg" data-full-src="./album/" data-description="Foto ini di ambil ketika saya pergi untuk mengikuti lomba Olimpiade TIK Nasional 2024." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/indocomtech.jpg" data-full-src="./album/indocomtech.jpg" data-description="Foto ini di ambil ketika saya pergi untuk mengikuti lomba Olimpiade TIK Nasional 2024." onclick="showPreview(this)" loading="lazy">
         <img src="./album/lks2025.jpg" data-full-src="./album/lks2025.jpg" data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/pahlawan.jpg" data-full-src="./album/pahlawan.jpg" data-description="Kami dari ekskul Pramuka, Ambalan Sulhastia!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/berdebat-perbanas.jpg" data-full-src="./album/berdebat-perbanas.jpg" data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas" onclick="showPreview(this)" loading="lazy">
         <img src="./album/h-1 sebelum lks.jpg" data-full-src="./album/h-1 sebelum lks.jpg" data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah." onclick="showPreview(this)" loading="lazy">
         <img src="./album/tugas-p5.jpg" data-full-src="./album/tugas-p5.jpg" data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/nonton-bareng.jpg" data-full-src="./album/" data-description="Ini di ambil ketika latihan sebelum upacara, bersama anggota ambalan lainnya.." onclick="showPreview(this)" loading="lazy">
+        <img src="./album/latihan-sebelum-upacara.jpg" data-full-src="./album/latihan-sebelum-upacara.jpg" data-description="Ini di ambil ketika latihan sebelum upacara, bersama anggota ambalan lainnya.." onclick="showPreview(this)" loading="lazy">
         <img src="./album/diskusi-industri.jpg" data-full-src="./album/diskusi-industri.jpg" data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)" onclick="showPreview(this)" loading="lazy">
         <img src="./album/itcna.jpg" data-full-src="./album/itcna.jpg" data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!" onclick="showPreview(this)" loading="lazy">
         <img src="./album/dalam-perjalanan.jpg" data-full-src="./album/dalam-perjalanan.jpg" data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)" loading="lazy">
