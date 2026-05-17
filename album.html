@@ -28,90 +28,36 @@
 
 <body style="overflow-x: hidden;">
 
-<!-- Pakai class priority-img untuk gambar yang harus dimuat dulu -->
-<!-- loading -->
 <style>
-/* Wrapper dibuat lebih gelap (Hitam transparan 65%) */
+/* ================== LOADER AWAL ================== */
 #loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center;
+    align-items: center; z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-
-.loader-hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* Container untuk menumpuk teks dan dot */
-.loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* Jarak antara teks dan animasi titik */
-}
-
-/* Styling teks Loading */
+.loader-hidden { opacity: 0; visibility: hidden; }
+.loading-content { display: flex; flex-direction: column; align-items: center; gap: 15px; }
 .loading-text {
-    color: #e0e0e0; /* Warna putih abu-abu agar kontras */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: 2px;
+    color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem; font-weight: 600; margin: 0; letter-spacing: 2px;
     animation: pulse-text 1.5s infinite ease-in-out;
 }
-
-/* Animasi kelap-kelip halus untuk teks */
-@keyframes pulse-text {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-/* Animasi Titik (Dots) */
-.dots-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+@keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.dots-container { display: flex; align-items: center; justify-content: center; }
 .dot {
-    height: 15px; /* Dikecilin dikit biar proporsional dengan teks */
-    width: 15px;
-    margin-right: 8px;
-    border-radius: 50%;
-    background-color: #d0d0d0; /* Titik dibuat lebih terang */
-    animation: pulse 1.5s infinite ease-in-out;
+    height: 15px; width: 15px; margin-right: 8px; border-radius: 50%;
+    background-color: #d0d0d0; animation: pulse 1.5s infinite ease-in-out;
 }
-
 .dot:last-child { margin-right: 0; }
 .dot:nth-child(1) { animation-delay: -0.3s; }
 .dot:nth-child(2) { animation-delay: -0.1s; }
 .dot:nth-child(3) { animation-delay: 0.1s; }
 .dot:nth-child(4) { animation-delay: 0.3s; }
 .dot:nth-child(5) { animation-delay: 0.5s; }
-
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(0.8);
-        background-color: #a0a0a0;
-        box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4);
-    }
-    50% {
-        transform: scale(1.2);
-        background-color: #ffffff;
-        box-shadow: 0 0 0 6px rgba(208, 208, 208, 0);
-    }
+    0%, 100% { transform: scale(0.8); background-color: #a0a0a0; box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4); }
+    50% { transform: scale(1.2); background-color: #ffffff; box-shadow: 0 0 0 6px rgba(208, 208, 208, 0); }
 }
 </style>
  
@@ -119,335 +65,146 @@
     <div class="loading-content">
         <div class="loading-text">Memuat Halaman Album...</div>
         <section class="dots-container">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </section>
     </div>
 </div>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const loader = document.getElementById('loader-wrapper');
-        
         const priorityImages = document.querySelectorAll('.priority-img');
-        let loadedCount = 0;
-        let isLoaded = false; 
-
+        let loadedCount = 0; let isLoaded = false; 
         function hideLoader() {
-            if (isLoaded) return; 
-            isLoaded = true;
-            
+            if (isLoaded) return; isLoaded = true;
             loader.classList.add('loader-hidden');
             loader.addEventListener('transitionend', function() {
-                if(loader.parentNode) {
-                    loader.parentNode.removeChild(loader);
-                }
+                if(loader.parentNode) loader.parentNode.removeChild(loader);
             });
         }
-
-        if (priorityImages.length === 0) {
-            window.addEventListener('load', hideLoader);
-        } else {
+        if (priorityImages.length === 0) window.addEventListener('load', hideLoader);
+        else {
             priorityImages.forEach(img => {
-                if (img.complete) {
-                    loadedCount++;
-                    checkAllLoaded();
-                } else {
-                    img.addEventListener('load', () => { 
-                        loadedCount++; 
-                        checkAllLoaded(); 
-                    });
-                    img.addEventListener('error', () => { 
-                        loadedCount++; 
-                        checkAllLoaded(); 
-                    });
+                if (img.complete) { loadedCount++; checkAllLoaded(); } 
+                else {
+                    img.addEventListener('load', () => { loadedCount++; checkAllLoaded(); });
+                    img.addEventListener('error', () => { loadedCount++; checkAllLoaded(); });
                 }
             });
         }
-
-        function checkAllLoaded() {
-            if (loadedCount >= priorityImages.length) {
-                hideLoader();
-            }
-        }
-
-
+        function checkAllLoaded() { if (loadedCount >= priorityImages.length) hideLoader(); }
         setTimeout(hideLoader, 5000); 
     });
 </script>
-<!-- end loading -->
 
-    <!-- Navbar -->
-    <style>
-        /* Navbar Fix: Seamless ke Glassmorphism */
-        .navbar {
-            transition: all 0.4s ease-in-out;
-            background-color: white !important;
-            /* Fix: Langsung putih di paling atas */
+<style>
+/* ================== NAVBAR & JUMBOTRON ================== */
+        .navbar { transition: all 0.4s ease-in-out; background-color: white !important; }
+        .navbar.scrolled { background: rgba(26, 26, 46, 0.7) !important; backdrop-filter: blur(15px) !important; -webkit-backdrop-filter: blur(15px) !important; }
+        .navbar.scrolled .nav-link, .navbar.scrolled .navbar-brand { color: white !important; }
+        
+        #albumBG { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            min-height: 80vh; display: flex; align-items: center; position: relative; 
+            padding: 100px 0; color: white; 
         }
-
-        .navbar.scrolled {
-            background: rgba(26, 26, 46, 0.7) !important;
-            /* Biru gelap transparan */
-            backdrop-filter: blur(15px) !important;
-            -webkit-backdrop-filter: blur(15px) !important;
-        }
-
-        .navbar.scrolled .nav-link,
-        .navbar.scrolled .navbar-brand {
-            color: white !important;
-        }
-
-        /* Jumbotron Fix */
-        /* Penyesuaian Section Utama */
-        #albumBG {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 100px;
-            padding-bottom: 150px;
-            /* Ruang untuk wave agar tidak menabrak tombol */
-            background-color: #1a1a2e;
-            overflow: hidden;
-        }
-
-        /* Gambar Kamera agar Estetik */
-        .camera-img {
-            max-width: 80%;
-            /* Biar tidak terlalu raksasa */
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-            border-radius: 20px;
-            transform: rotate(3deg);
-            /* Sedikit miring biar estetik */
-            transition: 0.5s ease;
-        }
-
-        .camera-img:hover {
-            transform: rotate(0deg) scale(1.05);
-        }
-
-        /* Memperbaiki Klik Tombol */
-        .btn-upgrade {
-            position: relative;
-            z-index: 102;
-            /* Harus lebih tinggi dari wave */
-            display: inline-block;
-            padding: 10px 25px;
-            text-decoration: none;
-            /* ... style tombol lainnya tetap ... */
-        }
-
-        /* Memperbaiki Wave agar tidak menghalangi klik */
+        
+        .hero-text-wrapper { position: relative; z-index: 99; }
+        .hero-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 10px; background: linear-gradient(to right, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-family: 'Nunito Sans', sans-serif; font-size: 1.1rem; opacity: 0.8; max-width: 500px; margin-bottom: 30px; }
+        .btn-upgrade { padding: 12px 30px; border-radius: 50px; font-weight: 700; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; border: 2px solid #fff; color: white; text-decoration: none; }
+        .btn-upgrade:hover { background: white; color: #1a1a2e; transform: scale(1.05); }
+        
+        #albumBG .row.align-items-center { display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 1.5rem; }
+        #albumBG .hero-copy { flex: 1 1 54%; max-width: 54%; min-width: 260px; }
+        #albumBG .hero-visual { flex: 1 1 42%; max-width: 42%; min-width: 180px; }
+        
+        .bg-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+        .hero-bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('./foto/albumBG.webp') center/cover no-repeat; filter: blur(8px) brightness(0.6); transform: scale(1.1); }
+        .hero-image-desktop { margin-top: -100px; margin-right: -100px; }
+        
+        .camera-img { max-width: 80%; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)); border-radius: 20px; transform: rotate(3deg); transition: 0.5s ease; }
+        .camera-img:hover { transform: rotate(0deg) scale(1.05); }
+        
         .wave-bottom {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-            /* Di atas background tapi di bawah tombol */
-            pointer-events: none;
-            /* KLIK AKAN TEMBUS KE TOMBOL */
-        }
-
-        /* PERBAIKAN MOBILE VIEW */
-        @media (max-width: 991.98px) {
-            #albumBG {
-                padding-top: 120px;
-                padding-bottom: 100px;
-                text-align: center;
-            }
-
-            .camera-img {
-                max-width: 60%;
-                margin-top: 40px;
-                /* Jarak dari teks ke gambar di mobile */
-                transform: rotate(0deg);
-            }
-
-            .hero-btns {
-                flex-direction: column;
-                /* Tombol tumpuk ke bawah di HP */
-                align-items: center;
-            }
-
-            .btn-upgrade {
-                width: 100%;
-                max-width: 280px;
-            }
-        }
-
-        .hero-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('./foto/albumBG.jpg') center/cover no-repeat;
-            filter: blur(8px) brightness(0.6);
-            transform: scale(1.1);
-            z-index: 1;
-            /* Paling belakang */
-        }
-
-        .hero-image-desktop {
-        margin-top: -100px; 
-        margin-right: -100px;
-}
-
-        .hero-text-wrapper {
-            z-index: 10;
-            position: relative;
-        }
-
-        /* Pastikan tombol berada di lapisan paling depan */
-        .btn-upgrade {
-            position: relative;
-            z-index: 20;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: 0.3s;
-            display: inline-block;
-            border: 2px solid #fff;
-            color: white;
-            text-decoration: none;
-        }
-
-        .wave-bottom {
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
+            position: absolute; 
+            bottom: -1px; 
+            left: 0; 
+            width: 100%; 
             z-index: 5;
-            /* Wave di atas background (1) tapi di bawah teks (10) */
-            line-height: 0;
+            line-height: 0; 
+            pointer-events: none;
         }
-    </style>
+        
+        .wave-bottom svg { 
+            display: block; 
+            width: calc(100% + 4px); 
+            margin-left: -2px; 
+            height: auto; 
+            filter: drop-shadow(0px 5px 0px #ffffff); 
+        }
+
+        @media (max-width: 991.98px) {
+            #albumBG { padding: 90px 1rem 40px; text-align: center; }
+            #albumBG .row.align-items-center { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+            #albumBG .hero-copy, #albumBG .hero-visual { flex: 1 1 100%; max-width: 100%; min-width: 100%; }
+            .hero-copy { text-align: center; }
+            .hero-title { font-size: clamp(2rem, 9vw, 3rem); text-align: center; margin-bottom: 0.5rem; line-height: 1.05; overflow-wrap: break-word; word-break: break-word; }
+            .hero-subtitle { font-size: 0.98rem; margin: 0 auto 1.5rem; max-width: 95%; text-align: center; overflow-wrap: break-word; word-break: break-word; }
+            .camera-img { max-width: 60%; margin-top: 5px; transform: rotate(0deg); }
+            .hero-btns { justify-content: center; flex-wrap: wrap; }
+            .btn-upgrade { width: auto; min-width: 160px; padding: 10px 18px; }
+            .hero-image-mobile { display: block; }
+            .hero-image-desktop { display: none !important; }
+        }
+
+        @media (max-width: 640px) {
+            #albumBG { padding: 80px 0 30px; }
+            #albumBG .row.align-items-center { gap: 0.5rem; }
+            #albumBG .hero-copy { max-width: 58%; }
+            #albumBG .hero-visual { max-width: 38%; }
+            .hero-title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+            .hero-subtitle { font-size: 0.95rem; }
+            .camera-img { max-width: 100%; }
+        }
+</style>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
         <div class="container-fluid">
-            <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
-                My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nunito active" href="#" role="button">
-                            Albumku
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nunito" aria-current="page" href="./video.html">Videoku</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link nunito active" href="#" role="button">Albumku</a></li>
+                    <li class="nav-item"><a class="nav-link nunito" aria-current="page" href="./video.html">Videoku</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <style>
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            display: none;
-            float: left;
-            min-width: 160px;
-            padding: 0.5rem 0;
-            margin: 0.125rem 0 0;
-            font-size: 1rem;
-            color: #212529;
-            text-align: left;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.25rem;
-        }
-
-        .dropdown-menu {
-            z-index: 1050;
-        }
-
-        /* Awal transparan */
-        .navbar-transparent {
-            background-color: rgba(255, 255, 255, 0);
-            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        }
-
-        /* Saat discroll */
-        .navbar.scrolled {
-            background: linear-gradient(90deg, rgba(255, 236, 182, 0.3), rgba(117, 105, 113, 0.3));
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        /* Teks Bold untuk menu yang aktif */
-        .nav-link.active {
-            font-weight: 900 !important;
-        }
-
-        /* Styling box underline */
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -8px; /* Jarak dijauhkan sedikit dari teks */
-            left: 50%; /* Taruh di tengah */
-            transform: translateX(-50%); /* Geser agar persis center */
-            width: 0;
-            height: 5px; /* Box lebih tebal */
-            border-radius: 3px; /* Ujung box agak membulat */
-            background-color: currentColor;
-            transition: width 0.3s ease;
-        }
-
-        /* Ukuran box saat aktif (kecil di tengah) */
-        .nav-link.active::after {
-            width: 25px;
-        }
-
-        /* Warna saat terscroll */
-        .navbar.scrolled .nav-link.active::after {
-            background-color: white;
-        }
+        .nav-item.dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu { position: absolute; will-change: transform; transform: translate3d(0, 0, 0); top: 100%; left: 0; z-index: 1000; display: none; float: left; min-width: 160px; padding: 0.5rem 0; margin: 0.125rem 0 0; font-size: 1rem; color: #212529; text-align: left; background-color: #fff; background-clip: padding-box; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 0.25rem; z-index: 1050; }
+        .navbar-transparent { background-color: rgba(255, 255, 255, 0); transition: background-color 0.3s ease, backdrop-filter 0.3s ease; }
+        .navbar.scrolled { background: linear-gradient(90deg, rgba(255, 236, 182, 0.3), rgba(117, 105, 113, 0.3)); backdrop-filter: blur(10px); }
+        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link.active { font-weight: 900 !important; }
+        .nav-link::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 5px; border-radius: 3px; background-color: currentColor; transition: width 0.3s ease; }
+        .nav-link.active::after { width: 25px; }
+        .navbar.scrolled .nav-link.active::after { background-color: white; }
     </style>
 
     <script>
         document.addEventListener("scroll", function () {
             const navbar = document.getElementById("navbar");
-            if (window.scrollY > 10) {
-                navbar.classList.add("scrolled");
-            } else {
-                navbar.classList.remove("scrolled");
-            }
+            if (window.scrollY > 10) navbar.classList.add("scrolled"); else navbar.classList.remove("scrolled");
         });
-
         document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll(".nav-link");
             const currentPage = window.location.pathname.split("/").pop() || "index.html";
-
             navLinks.forEach(link => {
                 const href = link.getAttribute("href");
                 if (href && href !== "./album.html" && href !== "#" && (href.includes(currentPage) || (currentPage === "" && href.includes("index.html")))) {
@@ -456,584 +213,479 @@
             });
         });
     </script>
-    <!-- End Navbar -->
-
-    <!-- jumbotron -->
-    <style>
-        #albumBG {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 100px 0;
-            color: white;
-        }
-
-        .hero-text-wrapper {
-            position: relative;
-            z-index: 99;
-        }
-
-        .hero-title {
-            font-family: 'Josefin Sans', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            font-family: 'Nunito Sans', sans-serif;
-            font-size: 1.1rem;
-            opacity: 0.8;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-
-        .btn-upgrade {
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #fff;
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn-upgrade:hover {
-            background: white;
-            color: #1a1a2e;
-            transform: scale(1.05);
-        }
-
-        /* Override wave biar nyambung sama section putih di bawah */
-        .wave-bottom {
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            z-index: 5;
-            line-height: 0;
-            pointer-events: none;
-        }
-
-        /* Layout hero lebih stabil dan horizontal */
-        #albumBG .row.align-items-center {
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        #albumBG .hero-copy {
-            flex: 1 1 54%;
-            max-width: 54%;
-            min-width: 260px;
-        }
-
-        #albumBG .hero-visual {
-            flex: 1 1 42%;
-            max-width: 42%;
-            min-width: 180px;
-        }
-
-        @media (max-width: 991.98px) {
-            #albumBG {
-                padding: 60px 1rem 40px;
-            }
-
-            #albumBG .row.align-items-center {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
-            }
-
-            #albumBG .hero-copy,
-            #albumBG .hero-visual {
-                flex: 1 1 100%;
-                max-width: 100%;
-                min-width: 100%;
-            }
-
-            .hero-copy {
-                text-align: center;
-            }
-
-            .hero-title {
-                font-size: clamp(2rem, 9vw, 3rem);
-                text-align: center;
-                margin-bottom: 1.2rem;
-                line-height: 1.05;
-                overflow-wrap: break-word;
-                word-break: break-word;
-            }
-
-            .hero-subtitle {
-                font-size: 0.98rem;
-                margin: 0 auto 1.75rem;
-                max-width: 95%;
-                text-align: center;
-                overflow-wrap: break-word;
-                word-break: break-word;
-            }
-
-            .hero-btns {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .btn-upgrade {
-                width: auto;
-                min-width: 160px;
-                padding: 10px 18px;
-            }
-
-            .hero-image-card {
-                padding: 1rem;
-            }
-
-            .hero-image-mobile {
-                display: block;
-            }
-
-            .hero-image-desktop {
-                display: none !important;
-            }
-        }
-
-        @media (max-width: 640px) {
-            #albumBG {
-                padding: 55px 0 30px;
-            }
-
-            #albumBG .row.align-items-center {
-                gap: 0.85rem;
-            }
-
-            #albumBG .hero-copy {
-                max-width: 58%;
-            }
-
-            #albumBG .hero-visual {
-                max-width: 38%;
-            }
-
-            .hero-title {
-                font-size: clamp(1.9rem, 8vw, 2.6rem);
-            }
-
-            .hero-subtitle {
-                font-size: 0.95rem;
-            }
-
-            .camera-img {
-                max-width: 100%;
-            }
-        }
-    </style>
 
     <section id="albumBG">
-        <div class="hero-bg-image priority-img"></div>
-
+        <div class="bg-wrapper">
+            <div class="hero-bg-image priority-img"></div>
+        </div>
         <div class="container hero-text-wrapper">
             <div class="row align-items-center">
-
-                <div class="col-lg-6 col-md-12 hero-copy text-center text-lg-start" data-aos="fade-right"
-                    data-aos-duration="1200">
+                <div class="col-lg-6 col-md-12 hero-copy text-center text-lg-start" data-aos="fade-right" data-aos-duration="1200">
                     <h1 class="hero-title">Eksplorasi Perjalanan & Pencapaiankuu!</h1>
                     <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
                         <img src="./foto/foto.png" class="img-fluid camera-img priority-img">
                     </div>
-                    <p class="hero-subtitle">
-                        Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi,
-                        dan sertifikasi yang telah kuraih.
-                    </p>
+                    <p class="hero-subtitle">Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi, dan sertifikasi yang telah kuraih.</p>
                     <div class="d-flex gap-3 mt-4 mb-5 hero-btns justify-content-center justify-content-lg-start">
                         <a href="#achievements" class="btn-upgrade" id="btnAchievements">Pencapaian</a>
                         <a href="#galeriCuy" class="btn-upgrade" id="btnGallery">Lihat Galeri</a>
                     </div>
                 </div>
-
-                <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left"
-                    data-aos-duration="1200">
+                <div class="col-lg-6 col-md-10 hero-visual text-center" data-aos="fade-left" data-aos-duration="1200">
                     <div class="hero-image-card hero-image-desktop d-none d-lg-inline-block">
                         <img src="./foto/foto.png" class="img-fluid camera-img priority-img">
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div class="wave-bottom">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#ffffff" fill-opacity="1"
-                    d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,154.7C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
+                <path fill="#ffffff" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,154.7C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
             </svg>
         </div>
     </section>
-    <!-- end jumbotron -->
 
-    <section id="achievements" class="achievement-section" data-aos="fade-up" data-aos-duration="1000" style="display: none;">
+    <section id="achievements" class="achievement-section" style="display: none;">
         <div class="container">
             <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
-            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
-                Untuk saat ini, sertifikat belum dapat ditampilkan. Coming Soon! ~
+            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 50px;">
+                Sertifikat, kompetensi, dan penghargaan yang membuktikan langkah perjalananku di dunia teknologi.
             </p>
 
-            <!-- KOMENTAR DIMULAI DARI SINI: Element ini disembunyikan -->
-            <!-- 
-            <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 40px;">
-                Semua sertifikat yang sudah aku dapatkan ditampilkan di sini.
-            </p>
-
-            <div class="achievement-carousel" id="achievementCarousel">
-                <button class="carousel-btn prev-btn" id="prevBtn">&lt;</button>
-                <div class="achievement-track" id="achievementTrack">
-                    <article class="achievement-card">
-                        <div class="achievement-thumbnail">
-                            <img src="https://via.placeholder.com/100x100/007bff/ffffff?text=AWS" alt="AWS Logo">
-                        </div>
-                        <div class="achievement-badge">AWS</div>
-                        <div class="achievement-card-body">
-                            <h3>AWS Certified Cloud Practitioner</h3>
-                            <p>Fundamental cloud knowledge</p>
-                            <span>2025</span>
-                        </div>
-                    </article>
-                    <article class="achievement-card">
-                        <div class="achievement-thumbnail">
-                            <img src="https://via.placeholder.com/100x100/28a745/ffffff?text=AWS" alt="AWS Logo">
-                        </div>
-                        <div class="achievement-badge">AWS</div>
-                        <div class="achievement-card-body">
-                            <h3>AWS Certified Data Engineer</h3>
-                            <p>Associate level certification</p>
-                            <span>2025</span>
-                        </div>
-                    </article>
-                    <article class="achievement-card">
-                        <div class="achievement-thumbnail">
-                            <img src="https://via.placeholder.com/100x100/ffc107/000000?text=re/Start"
-                                alt="re/Start Logo">
-                        </div>
-                        <div class="achievement-badge">re/Start</div>
-                        <div class="achievement-card-body">
-                            <h3>AWS re/Start Graduate</h3>
-                            <p>Technical training & hands-on learning</p>
-                            <span>2024</span>
-                        </div>
-                    </article>
-                    <article class="achievement-card">
-                        <div class="achievement-thumbnail">
-                            <img src="https://via.placeholder.com/100x100/dc3545/ffffff?text=AWS" alt="AWS Logo">
-                        </div>
-                        <div class="achievement-badge">AWS</div>
-                        <div class="achievement-card-body">
-                            <h3>Cloud Excellence</h3>
-                            <p>Continuous learning & growth</p>
-                            <span>2025</span>
-                        </div>
-                    </article>
+            <div class="cert-grid" id="certGrid">
+                <div class="cert-card" data-aos="fade-up" data-aos-duration="800" onclick="showCertPreview(this)"
+                     data-full-src="https://media.licdn.com/dms/image/v2/D562DAQHgWfDQ0_F3RQ/profile-treasury-document-cover-images_480/B56ZzJXNVVKcBI-/0/1772904835625?e=1779613200&v=beta&t=-L_jFyCKlajxf3yh6tsTjG7iOWmzpzMYqKNqD2DzLeM"
+                     data-title="Junior Network Administrator"
+                     data-desc="Sertifikasi kompetensi resmi dari Badan Nasional Sertifikasi Profesi (BNSP) untuk skema Junior Network Administrator.">
+                    <div class="cert-img-container">
+                        <img src="https://media.licdn.com/dms/image/v2/D562DAQHgWfDQ0_F3RQ/profile-treasury-document-cover-images_480/B56ZzJXNVVKcBI-/0/1772904835625?e=1779613200&v=beta&t=-L_jFyCKlajxf3yh6tsTjG7iOWmzpzMYqKNqD2DzLeM" loading="lazy" alt="BNSP">
+                    </div>
+                    <div class="cert-info">
+                        <span class="cert-badge">Cisco</span>
+                        <span class="cert-badge">Routing</span>
+                        <span class="cert-badge">VLSM & FLSM</span>
+                        <span class="cert-badge">Topologi</span>
+                        <h3 class="cert-title">Sertifikasi Junior Network Administrator</h3>
+                    </div>
                 </div>
-                <button class="carousel-btn next-btn" id="nextBtn">&gt;</button>
+
+                <div class="cert-card" data-aos="fade-up" data-aos-duration="1000" onclick="showCertPreview(this)"
+                     data-full-src="https://media.licdn.com/dms/image/v2/D562DAQFA88T3ZF_Utg/profile-treasury-document-cover-images_480/B56ZzI.K1eHUBI-/0/1772898269963?e=1779613200&v=beta&t=Fo_3TOi8LjB_bZ14OxL9tT0GqHPaquSzqN7Gy7MgO2A"
+                     data-title="Juara 3 LKS Cloud Computing"
+                     data-desc="Piagam penghargaan sebagai Juara 3 dalam ajang Lomba Kompetensi Siswa (LKS) bidang Cloud Computing tingkat Kota Bekasi.">
+                    <div class="cert-img-container">
+                        <img src="https://media.licdn.com/dms/image/v2/D562DAQFA88T3ZF_Utg/profile-treasury-document-cover-images_480/B56ZzI.K1eHUBI-/0/1772898269963?e=1779613200&v=beta&t=Fo_3TOi8LjB_bZ14OxL9tT0GqHPaquSzqN7Gy7MgO2A" loading="lazy" alt="LKS">
+                    </div>
+                    <div class="cert-info">
+                        <span class="cert-badge">LKS</span>
+                        <span class="cert-badge">AWS</span>
+                        <span class="cert-badge">Komputasi Awan</span>
+                        <h3 class="cert-title">Juara 3 Cloud Computing</h3>
+                    </div>
+                </div>
+
+                <div class="cert-card" data-aos="fade-up" data-aos-duration="1200" onclick="showCertPreview(this)"
+                     data-full-src="https://media.licdn.com/dms/image/v2/D562DAQGNA4ZsEOUwrQ/profile-treasury-document-images_800/B56ZzI_ULzJMAc-/1/1772898572944?e=1779926400&v=beta&t=6iL3H40WHW-QJDNZbXKv_AAtRvinNvPicwsxc9tUcw8"
+                     data-title="Ilmupedia Berani Jawab Season 5 Sebagai TOP 40 Tingkat Nasional 2024"
+                     data-desc="Mengikuti Lomba Cerdas Cermat yang diadakan oleh pihak Telkomsel dan Kuncie. Tim kami berhasil masuk TOP 40">
+                    <div class="cert-img-container">
+                        <img src="https://media.licdn.com/dms/image/v2/D562DAQGNA4ZsEOUwrQ/profile-treasury-document-images_800/B56ZzI_ULzJMAc-/1/1772898572944?e=1779926400&v=beta&t=6iL3H40WHW-QJDNZbXKv_AAtRvinNvPicwsxc9tUcw8" loading="lazy" alt="PNETLab">
+                    </div>
+                    <div class="cert-info">
+                        <span class="cert-badge">Cerdas Cermat</span>
+                        <h3 class="cert-title">Lomba Cerdas Cermat Ilmupedia Berani Jawab</h3>
+                    </div>
+                </div>
+
+                <div class="cert-card" data-aos="fade-up" data-aos-duration="1400" onclick="showCertPreview(this)"
+                     data-full-src="https://media.licdn.com/dms/image/v2/D562DAQFgoJmdKxq3ew/profile-treasury-document-images_800/B56ZzJP8pdJQAc-/1/1772902931408?e=1779926400&v=beta&t=qRxZG4NAqI3246F1aGHx6b81sjq_uN6N54mIFwt1snI"
+                     data-title="Menjadi Peserta Aktif di Lomba Kompetensi Siswa ITCNA"
+                     data-desc="Saya terpilih kembali menjadi perwakilan Siswa untuk mengikuti lomba di bidang ITCNA."
+                    <div class="cert-img-container">
+                        <img src="https://media.licdn.com/dms/image/v2/D562DAQFgoJmdKxq3ew/profile-treasury-document-images_800/B56ZzJP8pdJQAc-/1/1772902931408?e=1779926400&v=beta&t=qRxZG4NAqI3246F1aGHx6b81sjq_uN6N54mIFwt1snI" loading="lazy" alt="Ctech ERP">
+                    </div>
+                    <div class="cert-info">
+                        <span class="cert-badge">LKS</span>
+                        <span class="cert-badge">Cisco</span>
+                        <span class="cert-badge">Sysadmin</span>
+                        <span class="cert-badge">Linux</span>
+                        <h3 class="cert-title">Peserta Aktif LKS ITCNA</h3>
+                    </div>
+                </div>
             </div>
-
-            <div class="achievement-list row mt-5">
-                <div class="col-md-4">
-                    <div class="achievement-detail-card">
-                        <h4>AWS re/Start Graduate</h4>
-                        <p>Program pelatihan intensif Amazon Web Services yang membangun keterampilan cloud dan
-                            technical mindset.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="achievement-detail-card">
-                        <h4>AWS Certified Data Engineer – Associate</h4>
-                        <p>Sertifikasi ini membuktikan kemampuan dalam membangun, memproses, dan mengamankan data di
-                            AWS.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="achievement-detail-card">
-                        <h4>AWS Certified Cloud Practitioner</h4>
-                        <p>Sertifikasi foundational untuk memahami layanan AWS dan praktik cloud yang baik.</p>
-                    </div>
-                </div>
-            </div> 
-            -->
-            <!-- KOMENTAR SELESAI -->
-
-        </div> <!-- Tag penutup ini dikembalikan agar layout tidak bocor -->
+        </div> 
     </section>
 
-    <h1 class="josefin text-center fade-text" id="galleryTitle" style="margin-bottom: 70px; margin-top: 60px; display: none;">Miss this moment..</h1>
+    <section id="galleryWrapper" class="achievement-section" style="display: none;">
+        <h1 class="josefin text-center" id="galleryTitle" style="margin-bottom: 70px;">Miss this moment..</h1>
+        
+        <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000">
+            <img src="./thumbnail/pingol.webp" data-full-src="./album/pingol.jpg" data-description="Saya dengan adik kelas saya ketika menjadi tim panitia Pindah Golongan dari Penggalang ke Penegak tahun 2025." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo1.webp" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo2.webp" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo3.webp" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo4.webp" data-full-src="./album/photo4.jpeg" data-description="Foto ini diambil sebelum penampilan drama jurusan saya!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo5.webp" data-full-src="./album/photo5.jpeg" data-description="Saya dan teman-teman saya mampir ke MGT setelah kerja kelompok.. Refreshing sebelum ulangan katanya haha..." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/bukber-bareng.webp" data-full-src="./album/bukber-bareng.jpg" data-description="Buka puasa bareng kelas, tapi di tahun 2025." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo6.webp" data-full-src="./album/photo6.jpeg" data-description="Foto ini diambil saat saya dan teman-teman saya sedang mengerjakan tugas Bahasa Indonesia!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo7.webp" data-full-src="./album/photo7.jpg" data-description="Kami merayakan hari Ulang Tahun Nafis ditempat ini" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo8.webp" data-full-src="./album/photo8.jpg" data-description="Foto bareng sama anak-anak dari SMK yang berbeda. Tapi tujuan kami semua disini sama, Untuk Mengikuti Lomba di SMK KGB 2" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/masaSMP.webp" data-full-src="./album/masaSMP.jpeg" data-description="Saya bersama teman-teman smp saya ..." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/photo9.webp" data-full-src="./album/photo9.jpeg" data-description="Saya dan teman teman saya sedang mengerjakan proposal untuk tugas PKK kami di RPS TJKT!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/foto-jas.webp" data-full-src="./album/foto-jas.jpg" data-description="Tiba-tiba di foto, yaudah pose default aja ✌🏻" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/kihajarstem-photo.webp" data-full-src="./album/kihajarstem-photo.jpg" data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/foto-sekre8-9.webp" data-full-src="./album/foto-sekre8-9.jpg" data-description="Diajak foto bareng sama sekre dari angkatan 9 sama sekre 1 ceritanya.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/happy-grad7.webp" data-full-src="./album/happy-grad7.jpg" data-description="Selamat buat kakak dari angkatan 7 yang menjadi lulusan terbaik!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/juara3OTN.webp" data-full-src="./album/juara3OTN.jpg" data-description="Alhamdulilah, tim ku setidaknya lolos sebagai juara 3 tingkat nasional di lomba Olimpiade TIK 2026!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/menang-lomba-kelas.webp" data-full-src="./album/menang-lomba-kelas.jpg" data-description="Alhamdulilah, kelasku dapat 3 hadiah dari 3 lomba! Dan, urutan pemenangnya juga unik; 1,2,3! XD" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/pameran.webp" data-full-src="./album/pameran.jpg" data-description="Aku dan temanku (camerawomen) ditugaskan untuk menjaga stand pameran milik Angkatan 7! Seruu!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/pulang-dari-icebsd.webp" data-full-src="./album/pulang-dari-icebsd.jpg" data-description="Tiba-tiba di ajak foto sama adik saat perjalanan pulang. Padahal masih di KRL.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/selesai-lomba.webp" data-full-src="./album/selesai-lomba.jpg" data-description="Abaikan saya.. disana sangat pusingg.. seusai lomba kepala masih pusingg.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/sertijab.webp" data-full-src="./album/sertijab.jpg" data-description="Selesai sudah masa jabatanku di Pangkalanku sendiri. tepatnya, di Ambalan Sulhastia ini.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/setelah-demos-ekskul.webp" data-full-src="./album/setelah-demos-ekskul.jpg" data-description="Diajak foto bareng setelah demos ekskul.. hari ini lelah campur seruu" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/ukom.webp" data-full-src="./album/ukom.jpg" data-description="Seusai UKOM.. tinggal menunggu hasilnya.. apakah aku Kompeten?" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/perbanasmoment.webp" data-full-src="./album/perbanasmoment.jpeg" data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/perbanas-bareng.webp" data-full-src="./album/perbanas-bareng.jpg" data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/indocomtech.webp" data-full-src="./album/indocomtech.jpg" data-description="Foto ini di ambil ketika saya pergi untuk mengikuti lomba Olimpiade TIK Nasional 2024." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/lks2025.webp" data-full-src="./album/lks2025.jpg" data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/pahlawan.webp" data-full-src="./album/pahlawan.jpg" data-description="Kami dari ekskul Pramuka, Ambalan Sulhastia!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/berdebat-perbanas.webp" data-full-src="./album/berdebat-perbanas.jpg" data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/main-ps.webp" data-full-src="./album/main-ps.jpg" data-description="Kita kumpul lagi ceritanya setelah PKL dan sekalian buka bersamaa!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/h-1 sebelum lks.webp" data-full-src="./album/h-1 sebelum lks.jpg" data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/tugas-p5.webp" data-full-src="./album/tugas-p5.jpg" data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/latihan-sebelum-upacara.webp" data-full-src="./album/latihan-sebelum-upacara.jpg" data-description="Ini di ambil ketika latihan sebelum upacara, bersama anggota ambalan lainnya.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/diskusi-industri.webp" data-full-src="./album/diskusi-industri.jpg" data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/itcna.webp" data-full-src="./album/itcna.jpg" data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/dalam-perjalanan.webp" data-full-src="./album/dalam-perjalanan.jpg" data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/graduate-from-ctech.webp" data-full-src="./album/graduate-from-ctech.jpg" data-description="Lulus dari masa PKL selama 9 Bulan di PT. Ctech ERP Indonesia." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/ujian-guru.webp" data-full-src="./album/ujian-guru.jpg" data-description="Emm, ini simulasi UKOM-kah? Guruku malah yang takut sama respon aku pas tiap kali nanya waktu isi kuisionernya haha" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/penyusunan-proposal-estuel.webp" data-full-src="./album/penyusunan-proposal-estuel.jpg" data-description="Saya dan tim pengembang ESTUEL sedang menyusun proposal untuk proyek kami!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/iseng.webp" data-full-src="./album/iseng.jpg" data-description="Kena foto sama temen ketika lagi setup kamera haha.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/foto-berempat.webp" data-full-src="./album/foto-berempat.jpg" data-description="Tiba-tiba diajak foto sehabis lomba, ya gini deh posenya.. (ICE BSD Tanggerang) " onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/nonton-svennty.webp" data-full-src="./album/nonton-svennty.jpg" data-description="Ceritanya nonton bareng, tiba-tiba ada anomali bilang : ehh foto yok!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/lomba-ilmupedia.webp" data-full-src="./album/lomba-ilmupedia.jpg" data-description="Foto ketika pede padahal belum ngerjain. Kalo pas selesai ngerjain + tau hasilnya beda cerita haha." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/hari-guru.webp" data-full-src="./album/hari-guru.jpg" data-description="Foto bersama dengan organisasi saya ketika merayakan hari guru!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/main-ke-forest.webp" data-full-src="./album/main-ke-forest.jpg" data-description="Main ke Taman Sari Forest, nemenin sepupu main kesanaa.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/foto-kedua-hariguru.webp" data-full-src="./album/foto-kedua-hariguru.jpg" data-description=' "Eh kaa, ayo kita foto yuk!" Aku berpose dengan sadar : 🤷🏻 ' onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/lomba-mikrotik.webp" data-full-src="./album/lomba-mikrotik.jpg" data-description="Pertama kalinya lomba di depok + diajak foto sama guru (katanya sih buat- hahaha)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/makan-bareng-svennty.webp" data-full-src="./album/makan-bareng-svennty.jpg" data-description="Makan bareng sebelum semuanya pada keluar kota (sebelum liburan tahun baru)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/bakar-bakar.webp" data-full-src="./album/bakar-bakar.jpg" data-description="Bakar-bakar Bersama Ambalan Sulhastia! w/ Angkatan 7-9" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/foto-bareng-perpusnas.webp" data-full-src="./album/foto-bareng-perpusnas.jpg" data-description="Pertama kali pergi ke Perpustakaan Nasional Indonesia! baca buku bareng, foto bareng, hari ini seru banget! (Seenggaknya janji itu sudah ditepati, ga cuma omon-omon ajaa)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/petugas-trisatya.webp" data-full-src="./album/petugas-trisatya.jpg" data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/buka-puasa-tkj1.webp" data-full-src="./album/buka-puasa-tkj1.jpg" data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/ebiti-2025.webp" data-full-src="./album/ebiti-2025.jpg" data-description="Foto bareng Bapak Kaprodi dan juga 1 tim dari sekolahku! ditemenin langsung pas lomba haha.. " onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/jalan-jalan.webp" data-full-src="./album/jalan-jalan.jpg" data-description="Diajak jalan-jalan sama keluarga jauh ke Monas bareng 2 adikkuu.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/industri.webp" data-full-src="./album/industri.jpg" data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!" onclick="showPreview(this)" loading="lazy">
+        </div>
+    </section>
 
-    <div class="galeri" id="galeriCuy" data-aos="fade-pop" data-aos-duration="1000" style="display: none;">
-        <img src="./album/pingol.jpg" data-full-src="./album/pingol.jpg" data-description="Saya dengan adik kelas saya ketika menjadi tim panitia Pindah Golongan dari Penggalang ke Penegak tahun 2025." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo1.jpeg" data-full-src="./album/photo1.jpeg" data-description="Foto saya dan teman teman saya saat selesai tampil drama jurusan" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo2.jpg" data-full-src="./album/photo2.jpg" data-description="Ini dengan teman-teman kelas industri saya, kami baru saja menyelesaikan proyek IoT Smart Home!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo3.jpeg" data-full-src="./album/photo3.jpeg" data-description="Saya dan dua teman saya mau bersiap-siap untuk kegiatan 17 Agustus di SMKN 15 Kota Bekasi!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo4.jpeg" data-full-src="./album/photo4.jpeg" data-description="Foto ini diambil sebelum penampilan drama jurusan saya!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo5.jpeg" data-full-src="./album/photo5.jpeg" data-description="Saya dan teman-teman saya mampir ke MGT setelah kerja kelompok.. Refreshing sebelum ulangan katanya haha..." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/bukber-bareng.jpg" data-full-src="./album/bukber-bareng.jpg" data-description="Buka puasa bareng kelas, tapi di tahun 2025." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo6.jpeg" data-full-src="./album/photo6.jpeg" data-description="Foto ini diambil saat saya dan teman-teman saya sedang mengerjakan tugas Bahasa Indonesia!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo7.jpg" data-full-src="./album/photo7.jpg" data-description="Kami merayakan hari Ulang Tahun Nafis ditempat ini" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo8.jpg" data-full-src="./album/photo8.jpg" data-description="Foto bareng sama anak-anak dari SMK yang berbeda. Tapi tujuan kami semua disini sama, Untuk Mengikuti Lomba di SMK KGB 2" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/masaSMP.jpeg" data-full-src="./album/masaSMP.jpeg" data-description="Saya bersama teman-teman smp saya ..." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/photo9.jpeg" data-full-src="./album/photo9.jpeg" data-description="Saya dan teman teman saya sedang mengerjakan proposal untuk tugas PKK kami di RPS TJKT!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/foto-jas.jpg" data-full-src="./album/foto-jas.jpg" data-description="Tiba-tiba di foto, yaudah pose default aja ✌🏻" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/kihajarstem-photo.jpg" data-full-src="./album/kihajarstem-photo.jpg" data-description="Foto ini, diambil setelah kami mengerjakan soal Kihajar Stem!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/foto-sekre8-9.jpg" data-full-src="./album/foto-sekre8-9.jpg" data-description="Diajak foto bareng sama sekretaris dari angkatan 8 dan 9 ceritanya.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/happy-grad7.jpg" data-full-src="./album/happy-grad7.jpg" data-description="Selamat buat kakak dari angkatan 7 yang menjadi lulusan terbaik!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/juara3OTN.jpg" data-full-src="./album/juara3OTN.jpg" data-description="Alhamdulilah, tim ku lolos sebagai juara 3 tingkat nasional di lomba Olimpiade TIK 2026!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/menang-lomba-kelas.jpg" data-full-src="./album/menang-lomba-kelas.jpg" data-description="Alhamdulilah, kelasku dapat 3 hadiah dari 3 lomba! Dan, urutan pemenangnya juga unik; 1,2,3! XD" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/pameran.jpg" data-full-src="./album/pameran.jpg" data-description="Aku dan temanku (camerawomen) ditugaskan untuk menjaga stand pameran milik Angkatan 7! Seruu!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/pulang-dari-icebsd.jpg" data-full-src="./album/pulang-dari-icebsd.jpg" data-description="Tiba-tiba di ajak foto sama adik saat perjalanan pulang. Padahal masih di KRL.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/selesai-lomba.jpg" data-full-src="./album/selesai-lomba.jpg" data-description="Abaikan saya.. disana sangat pusingg.. seusai lomba kepala masih pusingg.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/sertijab.jpg" data-full-src="./album/sertijab.jpg" data-description="Selesai sudah masa jabatanku di Pangkalanku sendiri. tepatnya, di Ambalan Sulhastia ini.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/setelah-demos-ekskul.jpg" data-full-src="./album/setelah-demos-ekskul.jpg" data-description="Diajak foto bareng setelah demos ekskul.. hari ini lelah campur seruu" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/ukom.jpg" data-full-src="./album/ukom.jpg" data-description="Seusai UKOM.. tinggal menunggu hasilnya.. apakah aku Kompeten?" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/perbanasmoment.jpeg" data-full-src="./album/perbanasmoment.jpeg" data-description="Lomba kali ini memberikan banyak pengalaman untukku. Terimakasih teman-teman yang sudah berjuang bersama denganku." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/perbanas-bareng.jpg" data-full-src="./album/perbanas-bareng.jpg" data-description="Main sembari menunggu persiapan acara perbanas dimulai.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/indocomtech.jpg" data-full-src="./album/indocomtech.jpg" data-description="Foto ini di ambil ketika saya pergi untuk mengikuti lomba Olimpiade TIK Nasional 2024." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/lks2025.jpg" data-full-src="./album/lks2025.jpg" data-description="Foto bersama panitia dan semua peserta LKS 2025!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/pahlawan.jpg" data-full-src="./album/pahlawan.jpg" data-description="Kami dari ekskul Pramuka, Ambalan Sulhastia!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/berdebat-perbanas.jpg" data-full-src="./album/berdebat-perbanas.jpg" data-description="Ini tim saya ketika mengikuti lomba Cerdas Cermat di Perbanas" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/main-ps.jpg" data-full-src="./album/main-ps.jpg" data-description="Kita kumpul lagi ceritanya setelah PKL dan sekalian buka bersamaa!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/h-1 sebelum lks.jpg" data-full-src="./album/h-1 sebelum lks.jpg" data-description="H-1 Pembahasan singkat sebelum semua peserta LKS dari sekolah." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/tugas-p5.jpg" data-full-src="./album/tugas-p5.jpg" data-description="Saya dan 9 teman saya sedang mengerjakan tugas P5 (capek uyy)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/latihan-sebelum-upacara.jpg" data-full-src="./album/latihan-sebelum-upacara.jpg" data-description="Ini di ambil ketika latihan sebelum upacara, bersama anggota ambalan lainnya.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/diskusi-industri.jpg" data-full-src="./album/diskusi-industri.jpg" data-description="Hehe, hiraukan saya disana.. saya lagi latihan praktek instalasi linux hehe.. (sedang berdiskusi tentang kegiatan + eval. kelas industri)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/itcna.jpg" data-full-src="./album/itcna.jpg" data-description="Shhh! saya sedang mengerjakan soal LKS ITCNA nih.. biarkan saya fokus dulu ya!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/dalam-perjalanan.jpg" data-full-src="./album/dalam-perjalanan.jpg" data-description="Sedang dalam perjalanan menuju gedung Perbanas Jakarta!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/graduate-from-ctech.jpg" data-full-src="./album/graduate-from-ctech.jpg" data-description="Lulus dari masa PKL selama 9 Bulan di PT. Ctech ERP Indonesia." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/ujian-guru.jpg" data-full-src="./album/ujian-guru.jpg" data-description="Emm, ini simulasi UKOM-kah? Guruku malah yang takut sama respon aku pas tiap kali nanya waktu isi kuisionernya haha" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/penyusunan-proposal-estuel.jpg" data-full-src="./album/penyusunan-proposal-estuel.jpg" data-description="Saya dan tim pengembang ESTUEL sedang menyusun proposal untuk proyek kami!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/iseng.jpg" data-full-src="./album/iseng.jpg" data-description="Kena foto sama temen ketika lagi setup kamera haha.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/foto-berempat.jpg" data-full-src="./album/foto-berempat.jpg" data-description="Tiba-tiba diajak foto sehabis lomba, ya gini deh posenya.. (ICE BSD Tanggerang) " onclick="showPreview(this)" loading="lazy">
-        <img src="./album/nonton-svennty.jpg" data-full-src="./album/nonton-svennty.jpg" data-description="Ceritanya nonton bareng, tiba-tiba ada anomali bilang : ehh foto yok!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/lomba-ilmupedia.jpg" data-full-src="./album/lomba-ilmupedia.jpg" data-description="Foto ketika pede padahal belum ngerjain. Kalo pas selesai ngerjain + tau hasilnya beda cerita haha." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/hari-guru.jpg" data-full-src="./album/hari-guru.jpg" data-description="Foto bersama dengan organisasi saya ketika merayakan hari guru!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/main-ke-forest.jpg" data-full-src="./album/main-ke-forest.jpg" data-description="Main ke Taman Sari Forest, nemenin sepupu main kesanaa.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/foto-kedua-hariguru.jpg" data-full-src="./album/foto-kedua-hariguru.jpg" data-description="&quot;Eh kaa, ayo kita foto yuk!&quot; Aku berpose dengan sadar : 🤷🏻" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/lomba-mikrotik.jpg" data-full-src="./album/lomba-mikrotik.jpg" data-description="Pertama kalinya lomba di depok + diajak foto sama guru (katanya sih buat- hahaha)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/makan-bareng-svennty.jpg" data-full-src="./album/makan-bareng-svennty.jpg" data-description="Makan bareng sebelum semuanya pada keluar kota (sebelum liburan tahun baru)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/bakar-bakar.jpg" data-full-src="./album/bakar-bakar.jpg" data-description="Bakar-bakar Bersama Ambalan Sulhastia! w/ Angkatan 7-9" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/foto-bareng-perpusnas.jpg" data-full-src="./album/foto-bareng-perpusnas.jpg" data-description="Pertama kali pergi ke Perpustakaan Nasional Indonesia! baca buku bareng, foto bareng, hari ini seru banget! (Seenggaknya janji itu sudah ditepati, ga cuma omon-omon ajaa)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/petugas-trisatya.jpg" data-full-src="./album/petugas-trisatya.jpg" data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/buka-puasa-tkj1.jpg" data-full-src="./album/buka-puasa-tkj1.jpg" data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!" onclick="showPreview(this)" loading="lazy">
-        <img src="./album/ebiti-2025.jpg" data-full-src="./album/ebiti-2025.jpg" data-description="Foto bareng Bapak Kaprodi dan juga 2 tim dari sekolahku, termasuk timku! ditemenin langsung pas lomba haha.. " onclick="showPreview(this)" loading="lazy">
-        <img src="./album/jalan-jalan.jpg" data-full-src="./album/jalan-jalan.jpg" data-description="Diajak jalan-jalan sama keluarga jauh ke Monas bareng 2 adikkuu.." onclick="showPreview(this)" loading="lazy">
-        <img src="./album/industri.jpg" data-full-src="./album/industri.jpg" data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!" onclick="showPreview(this)" loading="lazy">
+    <div class="previewImage" id="previewImage">
+        <div id="preview-loader" class="loading-content" style="display: none; position: absolute; z-index: 10002;">
+            <div class="loading-text" style="font-size: 1.1rem; margin-bottom: 15px;">Memuat Gambar..</div>
+            <section class="dots-container">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </section>
+        </div>
+        
+        <span class="nav-btn prev-btn-preview" onclick="prevPreviewImg()"><i class="fa fa-chevron-left"></i></span>
+        <div id="preview-content-wrapper">
+            <img id="previewImg" alt="Preview">
+            <div id="previewDescription"></div>
+        </div>
+        <span class="nav-btn next-btn-preview" onclick="nextPreviewImg()"><i class="fa fa-chevron-right"></i></span>
+        <span class="close-btn" onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
     </div>
 
-    <!-- preview image -->
-    <div class="previewImage" id="previewImage" style="display: none;">
-        <img id="previewImg">
-        <div id="previewDescription"></div>
-        <span onclick="closePreviewImg()"><i class="fa fa-times-circle"></i></span>
-    </div>
-    <!-- end preview image -->
+    <div class="certModalContainer" id="certModal">
+        <div class="cert-modal-bg" onclick="closeCertPreview()"></div>
+        
+        <span class="cert-close-icon" onclick="closeCertPreview()"><i class="fa fa-times"></i></span>
 
-    <!-- styling section -->
+        <div class="cert-modal-content slide-up-anim" id="certContentWrapper">
+            
+            <div class="cert-modal-left">
+                <div id="cert-loader" class="loading-content" style="display: none; position: absolute; z-index: 10002;">
+                    <div class="loading-text" style="font-size: 1.1rem; margin-bottom: 15px;">Memuat Sertifikat..</div>
+                    <section class="dots-container">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </section>
+                </div>
+                <img id="certPreviewImg" src="" alt="Sertifikat">
+            </div>
+
+            <div class="cert-modal-right">
+                <div class="cert-details-top">
+                    <h2 id="certPreviewTitle">Judul</h2>
+                    <p id="certPreviewDesc">Deskripsi lengkap mengenai sertifikat.</p>
+                </div>
+                
+                <div class="cert-modal-nav">
+                    <span class="cert-nav-text" onclick="prevCert()">Previous</span>
+                    <span class="cert-nav-text" onclick="nextCert()">Next</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <style>
-        /* ===== FIX PENGHALANG NAVBAR (SCROLL OFFSET) ===== */
-        /* Menambahkan jarak semu di atas elemen agar saat di-scroll tidak tertutup navbar yang sticky */
-        #galleryTitle, #achievements {
-            scroll-margin-top: 100px;
+        #galleryWrapper, #achievements { scroll-margin-top: 100px; }
+        
+        #galleryWrapper { opacity: 0; transition: opacity 0.4s ease-in-out; padding: 60px 0 30px; }
+        #achievements { opacity: 0; transition: opacity 0.4s ease-in-out; padding: 60px 0 30px; background: rgba(255,255,255,0.03); }
+        
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 15px;
         }
 
-        /* Kembali ke Masonry / Pinterest Style */
-        .galeri {
-            column-count: 2;
-            column-gap: 10px;
-            padding: 0 12px;
-            opacity: 0; /* Untuk animasi fade in */
-            transition: opacity 0.4s ease-in-out;
+        .cert-card {
+            background: #252538; 
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .cert-img-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+        }
+
+        .cert-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transition: transform 0.3s ease;
+        }
+
+        .cert-card:hover .cert-img-container img {
+            transform: scale(1.05);
+        }
+
+        .cert-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .cert-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d4edda;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+
+        .cert-title {
+            color: #fff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .certModalContainer {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: none; align-items: center; justify-content: center;
+            z-index: 99999;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        
+        .certModalContainer.active { opacity: 1; }
+        
+        .cert-modal-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(5px);
+        }
+
+        .cert-close-icon {
+            position: absolute; top: 25px; right: 35px; font-size: 30px; 
+            color: rgba(255,255,255,0.6); cursor: pointer; z-index: 100000;
+            transition: 0.3s;
+        }
+        .cert-close-icon:hover { color: #fff; transform: scale(1.1); }
+
+        .cert-modal-content {
+            position: relative; z-index: 100000;
+            display: flex; width: 90vw; max-width: 1100px; height: 80vh;
+            background: #171821; 
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .slide-up-anim { animation: slideUpModal 0.4s ease forwards; }
+        @keyframes slideUpModal {
+            0% { transform: translateY(50px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .cert-modal-left {
+            flex: 2; 
+            background: #000;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+
+        .cert-modal-left img {
+            max-width: 95%; max-height: 95%; object-fit: contain;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+
+        .cert-modal-right {
+            flex: 1; 
+            padding: 40px; display: flex; flex-direction: column;
+            justify-content: space-between;
+            color: #fff; border-left: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .cert-details-top h2 {
+            font-family: 'Nunito Sans', sans-serif; font-size: 1.5rem;
+            font-weight: 800; margin-bottom: 20px; line-height: 1.3;
+        }
+
+        .cert-details-top p {
+            font-size: 1rem; color: #b3b3b3; line-height: 1.6;
+        }
+
+        .cert-modal-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;
+        }
+
+        .cert-nav-text {
+            color: #5c6bc0; font-weight: 600; cursor: pointer; transition: 0.2s;
+            font-size: 1rem; letter-spacing: 0.5px;
+        }
+        .cert-nav-text:hover { color: #8e9aef; }
+
+        @media (max-width: 991.98px) {
+            /* Di HP, modal numpuk atas bawah dan tinggi dibuat otomatis (fleksibel) */
+            .cert-modal-content { 
+                flex-direction: column; 
+                height: auto; /* Auto agar menyesuaikan tinggi gambar horizontal */
+                max-height: 90vh; 
+            }
+            .cert-modal-left { 
+                flex: none; /* Hilangkan pemaksaan rasio 1.5x */
+                width: 100%;
+                padding: 15px 0; 
+                min-height: 25vh; /* Beri batas minimal */
+            }
+            .cert-modal-left img {
+                max-height: 40vh; /* Maksimal tingginya dibatasi agar tidak kepanjangan */
+                width: 100%;
+                object-fit: contain;
+            }
+            .cert-modal-right { 
+                flex: none; 
+                padding: 20px 25px; 
+                overflow-y: auto; /* Bisa scroll jika deskripsi kepanjangan */
+            }
+            .cert-details-top h2 { font-size: 1.25rem; margin-bottom: 10px; }
+            .cert-details-top p { font-size: 0.9rem; margin-bottom: 0; }
+            .cert-modal-nav { margin-top: 15px; padding-top: 15px; }
+            .cert-close-icon { 
+                top: 10px; right: 15px; font-size: 26px;
+                /* Background membulat agar tombol close tidak nyaru dengan gambar */
+                background: rgba(0,0,0,0.6); width: 36px; height: 36px; 
+                display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            }
+        }
+
+
+        .galeri { column-count: 2; column-gap: 10px; padding: 0 12px; }
         @media (min-width: 576px) { .galeri { column-count: 3; } }
         @media (min-width: 768px) { .galeri { column-count: 4; } }
         @media (min-width: 1200px){ .galeri { column-count: 5; } }
 
-        .galeri img {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            break-inside: avoid;
-            -webkit-column-break-inside: avoid;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            min-height: 120px;
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.6s ease;
+        .animate {
+            animation: shimmer 3s;
+            animation-iteration-count: infinite;
+            background: linear-gradient(to right, #e6e6e6 5%, #cccccc 25%, #e6e6e6 35%);
+            background-size: 1000px 100%;
         }
 
-        .galeri img:hover {
-            transform: scale(0.97);
+        @keyframes shimmer {
+            from { background-position: -1000px 0; }
+            to { background-position: 1000px 0; }
         }
 
-        /* Animasi Fade Section Pencapaian & Teks */
-        #achievements {
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-            padding: 50px 0 30px;
-            background: rgba(255,255,255,0.03);
+        .shimmer-wrapper {
+            display: inline-block; width: 100%; margin-bottom: 10px; border-radius: 12px;
+            break-inside: avoid; -webkit-column-break-inside: avoid;
+            min-height: 150px; overflow: hidden;
         }
+        
+        .cert-card .shimmer-wrapper { margin-bottom: 0; min-height: 100%; border-radius: 0; }
 
-        .fade-text {
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+        .shimmer-wrapper.loaded { animation: none; background: transparent !important; min-height: auto; }
+
+        .galeri img, .cert-img-container img {
+            display: block; cursor: pointer; background-color: transparent; 
+            opacity: 0; transition: transform 0.3s ease, opacity 0.6s ease;
+            transform: translateZ(0); backface-visibility: hidden; will-change: opacity, transform;
         }
+        
+        .galeri img { width: 100%; height: auto; border-radius: 12px; min-height: 120px; }
+        
+        .galeri img.loaded, .cert-img-container img.loaded { opacity: 1; }
+        .galeri img:hover { transform: scale(0.97) translateZ(0); }
 
-        .achievement-carousel {
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0;
-            display: flex;
-            align-items: center;
+        /* PREVIEW MODAL GALERI CSS LAMA */
+        .previewImage {
+            width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.95) !important;
+            position: fixed !important; top: 0 !important; left: 0 !important; display: none; flex-direction: column !important;
+            align-items: center !important; justify-content: center !important; z-index: 99999 !important; overflow: hidden !important; 
+            opacity: 0; transition: opacity 0.4s ease;
         }
-
-        .achievement-track {
-            display: flex;
-            gap: 18px;
-            min-width: 100%;
-            padding-bottom: 10px;
-            transition: transform 0.5s ease;
-        }
-
-        .carousel-btn {
-            background: rgba(255,255,255,0.9);
-            border: 2px solid #ddd;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            transition: background 0.3s ease;
-        }
-
-        .carousel-btn:hover {
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .prev-btn { left: -25px; }
-        .next-btn { right: -25px; }
-
-        .achievement-card {
-            flex: 0 0 280px;
-            border-radius: 24px;
-            background: #ffffff;
-            border: 2px solid #e0e0e0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 24px;
-            color: #333;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .achievement-thumbnail { margin-bottom: 16px; }
-        .achievement-thumbnail img {
-            width: 100px;
-            height: 100px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 2px solid #f0f0f0;
-        }
-
-        .achievement-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 12px;
-            background: #f8f9fa;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #495057;
-            margin-bottom: 12px;
-        }
-
-        .achievement-card-body h3 { font-size: 1.1rem; margin-bottom: 10px; color: #212529; }
-        .achievement-card-body p { color: #6c757d; margin-bottom: 18px; line-height: 1.5; }
-        .achievement-card-body span { display: inline-block; padding: 6px 12px; border-radius: 20px; background: #e9ecef; font-size: 0.85rem; color: #495057; }
-        .achievement-list { gap: 1.4rem; }
-
-        .achievement-detail-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 24px;
-            min-height: 220px;
-            color: #f8f8f8;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .achievement-detail-card h4 { margin-bottom: 12px; font-size: 1.05rem; color: #fff; }
-        .achievement-detail-card p { color: #d3d3d3; line-height: 1.6; }
+        .previewImage.active { opacity: 1; }
+        #preview-content-wrapper { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; height: 100% !important; position: relative !important; }
+        #previewImg { width: auto !important; height: auto !important; max-width: 85vw !important; max-height: 80vh !important; object-fit: contain !important; border-radius: 10px !important; margin: 0 auto !important; opacity: 0; transition: opacity 0.5s ease !important; transform: none !important; }
+        #previewDescription { position: absolute !important; bottom: 30px !important; left: 50% !important; transform: translateX(-50%) !important; background: rgba(0, 0, 0, 0.7) !important; padding: 12px 20px !important; border-radius: 8px !important; text-align: center !important; color: #fff !important; font-size: 16px !important; width: max-content !important; max-width: 85% !important; z-index: 100001 !important; opacity: 0; transition: opacity 0.5s ease; }
+        .slide-right-anim { animation: slideRight 0.5s ease forwards; }
+        .slide-left-anim { animation: slideLeft 0.5s ease forwards; }
+        @keyframes slideRight { 0% { transform: translateX(80px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+        @keyframes slideLeft { 0% { transform: translateX(-80px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+        .nav-btn { position: fixed !important; top: 50% !important; transform: translateY(-50%) !important; font-size: 45px !important; color: rgba(255, 255, 255, 0.6) !important; cursor: pointer !important; z-index: 100000 !important; transition: all 0.3s ease !important; background: transparent !important; border: none !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 70px !important; height: 70px !important; border-radius: 50% !important; }
+        .nav-btn:hover { color: #fff !important; transform: translateY(-50%) scale(1.2) !important; }
+        .prev-btn-preview { left: 2% !important; }
+        .next-btn-preview { right: 2% !important; }
+        .close-btn { position: fixed !important; right: 3% !important; top: 3% !important; font-size: 40px !important; color: rgba(255, 255, 255, 0.7) !important; cursor: pointer !important; z-index: 100000 !important; transition: 0.3s !important; display: flex !important; align-items: center !important; justify-content: center !important; width: 50px !important; height: 50px !important; }
+        .close-btn:hover { color: #fff !important; transform: scale(1.1) !important; }
 
         @media (max-width: 991.98px) {
-            #albumBG { display: block; min-height: auto; padding: 80px 0 60px; text-align: center; }
-            .hero-bg-image { opacity: 0.72; filter: blur(5px) brightness(0.55); }
-            .hero-text-wrapper { z-index: 5; position: relative; }
-            .hero-title { font-size: clamp(2.5rem, 8vw, 3.4rem); margin-bottom: 18px; }
-            .hero-subtitle { font-size: 1rem; max-width: 100%; margin-left: auto; margin-right: auto; padding: 0 1rem; }
-            .hero-btns { flex-direction: column; align-items: center; }
-            .btn-upgrade { width: 100%; max-width: 280px; padding: 14px 22px; }
-            .camera-img { max-width: 88%; margin: 2rem auto 0; transform: rotate(0deg); }
-            #albumBG .row.align-items-center { flex-wrap: nowrap; justify-content: space-between; }
-            #albumBG .col-lg-6, #albumBG .col-md-12, #albumBG .col-md-10 { flex: 0 0 48%; max-width: 48%; }
-            #albumBG .col-lg-6.text-center.text-lg-start { text-align: left; }
-            .hero-subtitle { max-width: 420px; margin-left: 0; margin-right: 0; }
-            .hero-btns { justify-content: flex-start; }
-            .btn-upgrade { width: auto; min-width: 180px; }
-            .camera-img { max-width: 100%; margin: 0; }
-            .previewImage { padding: 16px; justify-content: flex-start; }
-            .previewImage img { max-width: 90%; max-height: 78vh; object-fit: contain; }
-            #previewDescription { position: static; margin-top: 1rem; background: rgba(0, 0, 0, 0.78); width: calc(100% - 32px); max-width: 640px; font-size: 0.95rem; }
-            .previewImage span { right: 16px; top: 18px; bottom: auto; }
-        }
-
-        @media (max-width: 768px) {
-            .achievement-card { flex: 0 0 80%; }
-            .carousel-btn { width: 40px; height: 40px; font-size: 20px; }
-            .prev-btn { left: -20px; }
-            .next-btn { right: -20px; }
-            .achievement-list .col-md-4 { flex: 0 0 100%; max-width: 100%; }
-        }
-
-        @media (max-width: 575.98px) {
-            .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
-            .hero-subtitle { font-size: 0.96rem; padding: 0 1rem; }
-            .btn-upgrade { padding: 12px 20px; font-size: 0.92rem; }
-            .camera-img { max-width: 100%; }
+            #previewImg { max-width: 85vw !important; max-height: 70vh !important; }
+            #previewDescription { bottom: 40px !important; font-size: 13px !important; padding: 10px 15px !important; max-width: 90% !important; }
+            .nav-btn { font-size: 30px !important; width: 50px !important; height: 50px !important; }
+            .prev-btn-preview { left: 1% !important; }
+            .next-btn-preview { right: 1% !important; }
+            .close-btn { top: 2% !important; right: 4% !important; font-size: 32px !important; width: 40px !important; height: 40px !important; }
         }
     </style>
 
-    <!-- Main Logic Script -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Mencegah Auto-Scroll ke bawah saat halaman dimuat
             if (window.location.hash) {
                 window.history.replaceState('', document.title, window.location.pathname + window.location.search);
                 window.scrollTo(0, 0);
@@ -1042,60 +694,34 @@
             const achievementsSection = document.getElementById("achievements");
             const btnAchievements = document.getElementById("btnAchievements");
             const btnGallery = document.getElementById("btnGallery");
-            const achievementCarousel = document.getElementById("achievementCarousel");
-            const achievementTrack = document.getElementById("achievementTrack");
-            const prevBtn = document.getElementById("prevBtn");
-            const nextBtn = document.getElementById("nextBtn");
-            const gallery = document.querySelector("#galeriCuy");
-            const galleryText = document.getElementById("galleryTitle");
+            const galleryWrapper = document.getElementById("galleryWrapper"); 
 
-            // Script Lazy Image enteng
-            const images = gallery.querySelectorAll("img");
-            images.forEach(img => {
+            const allImages = document.querySelectorAll("#galeriCuy img, #certGrid img");
+            
+            allImages.forEach(img => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "shimmer-wrapper animate"; 
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+
                 if (img.complete) {
-                    img.style.opacity = "1";
+                    img.classList.add("loaded");
+                    wrapper.classList.add("loaded");
+                    wrapper.classList.remove("animate"); 
                 } else {
-                    img.addEventListener("load", () => img.style.opacity = "1");
+                    img.addEventListener("load", () => {
+                        img.classList.add("loaded");
+                        wrapper.classList.add("loaded");
+                        wrapper.classList.remove("animate"); 
+                    });
+                    img.addEventListener("error", () => {
+                        wrapper.classList.add("loaded"); 
+                        wrapper.classList.remove("animate");
+                    });
                 }
             });
 
-            // Trik Supaya JS Kebal Error Kalau Element Di-Comment
-            let currentIndex = 0;
-            const totalCards = achievementTrack ? achievementTrack.children.length : 0;
-            let autoScrollInterval;
-
-            function updateCarousel() {
-                if (!achievementTrack) return; // Kalau element dicomment, fungsi ini minggir dulu
-                const cardWidth = 280 + 18;
-                achievementTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }
-
-            function nextCard() {
-                if (totalCards === 0) return;
-                currentIndex = (currentIndex + 1) % totalCards;
-                updateCarousel();
-                resetAutoScroll();
-            }
-
-            function prevCard() {
-                if (totalCards === 0) return;
-                currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-                updateCarousel();
-                resetAutoScroll();
-            }
-
-            function startAutoScroll() {
-                if (totalCards > 0) {
-                    autoScrollInterval = setInterval(nextCard, 6000);
-                }
-            }
-
-            function resetAutoScroll() {
-                clearInterval(autoScrollInterval);
-                startAutoScroll();
-            }
-
-            // FUNGSI CROSSFADE: Transisi hilangnya super mulus
+            // FUNGSI CROSSFADE TABS
             function crossfade(hideElem1, hideElem2, showElem1, showElem2) {
                 if(hideElem1) hideElem1.style.opacity = "0";
                 if(hideElem2) hideElem2.style.opacity = "0";
@@ -1115,132 +741,239 @@
             }
 
             function showAchievements() {
-                crossfade(galleryText, gallery, null, achievementsSection);
-                // Waktu delay pengereman di set 410 supaya lebih presisi dan ngebut sedikit
+                crossfade(galleryWrapper, null, achievementsSection, null);
                 setTimeout(() => achievementsSection.scrollIntoView({ behavior: "smooth", block: "start" }), 410);
-                startAutoScroll();
             }
 
             function showGallery() {
-                crossfade(null, achievementsSection, galleryText, gallery);
-                setTimeout(() => {
-                    if (galleryText) galleryText.scrollIntoView({ behavior: "smooth", block: "start" });
-                    else document.getElementById("galeriCuy").scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 410);
-                clearInterval(autoScrollInterval);
+                crossfade(achievementsSection, null, galleryWrapper, null);
+                setTimeout(() => galleryWrapper.scrollIntoView({ behavior: "smooth", block: "start" }), 410);
             }
 
-            // Default State yang bersih
+            // Default State
             if(achievementsSection) achievementsSection.style.display = "none";
-            if(gallery) gallery.style.display = "none";
-            if(galleryText) galleryText.style.display = "none";
+            if(galleryWrapper) galleryWrapper.style.display = "none";
 
-            btnAchievements?.addEventListener("click", (event) => {
-                event.preventDefault();
-                showAchievements();
-            });
-
-            btnGallery?.addEventListener("click", (event) => {
-                event.preventDefault();
-                showGallery();
-            });
-
-            prevBtn?.addEventListener("click", prevCard);
-            nextBtn?.addEventListener("click", nextCard);
+            btnAchievements?.addEventListener("click", (event) => { event.preventDefault(); showAchievements(); });
+            btnGallery?.addEventListener("click", (event) => { event.preventDefault(); showGallery(); });
         });
     </script>
 
-    <!-- Modal Preview Script -->
     <script>
+
+        let currentPreviewIndex = 0;
+        let galleryImages = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const galeriCuy = document.getElementById('galeriCuy');
+            if (galeriCuy) {
+                galleryImages = Array.from(galeriCuy.querySelectorAll('img'));
+                galleryImages.forEach((img, index) => {
+                    img.setAttribute('data-index', index);
+                });
+            }
+            
+            document.addEventListener('keydown', (e) => {
+                const previewContainer = document.getElementById("previewImage");
+                if (previewContainer && previewContainer.classList.contains("active")) {
+                    if (e.key === "ArrowRight") nextPreviewImg();
+                    if (e.key === "ArrowLeft") prevPreviewImg();
+                    if (e.key === "Escape") closePreviewImg();
+                }
+            });
+        });
+
         function showPreview(imgElement) {
-            const fullSrc = imgElement.getAttribute("data-full-src");
-            const description = imgElement.getAttribute("data-description");
+            currentPreviewIndex = parseInt(imgElement.getAttribute('data-index'));
+            openPreviewModal();
+        }
 
+        function openPreviewModal(animClass = '') {
+            const previewContainer = document.getElementById("previewImage");
+            const contentWrapper = document.getElementById("preview-content-wrapper");
             const previewImg = document.getElementById("previewImg");
-            const previewDescription = document.getElementById("previewDescription");
-            const previewImageContainer = document.getElementById("previewImage");
+            const previewDesc = document.getElementById("previewDescription");
+            const loader = document.getElementById("preview-loader");
+            
+            const targetImg = galleryImages[currentPreviewIndex];
+            const fullSrc = targetImg.getAttribute("data-full-src");
+            const desc = targetImg.getAttribute("data-description");
 
+            document.body.style.overflow = "hidden";
+            previewContainer.style.display = "flex";
+            setTimeout(() => previewContainer.classList.add("active"), 10);
+
+            contentWrapper.classList.remove("slide-right-anim", "slide-left-anim");
+            previewImg.style.opacity = "0"; previewDesc.style.opacity = "0"; loader.style.display = "flex";
+            previewImg.onload = null; previewImg.onerror = null; previewImg.src = ""; 
+
+            previewImg.onload = function() {
+                loader.style.display = "none"; previewDesc.textContent = desc;
+                if (animClass) { void contentWrapper.offsetWidth; contentWrapper.classList.add(animClass); }
+                previewImg.style.opacity = "1"; previewDesc.style.opacity = "1";
+            };
+            previewImg.onerror = function() {
+                loader.style.display = "none"; previewDesc.textContent = "Oops! Gagal memuat foto.";
+                if (animClass) { void contentWrapper.offsetWidth; contentWrapper.classList.add(animClass); }
+                previewDesc.style.opacity = "1";
+            };
             previewImg.src = fullSrc;
-            previewDescription.textContent = description;
-
-            previewImageContainer.style.display = "flex";
         }
 
+        function nextPreviewImg() { currentPreviewIndex = (currentPreviewIndex + 1) % galleryImages.length; openPreviewModal('slide-right-anim'); }
+        function prevPreviewImg() { currentPreviewIndex = (currentPreviewIndex - 1 + galleryImages.length) % galleryImages.length; openPreviewModal('slide-left-anim'); }
         function closePreviewImg() {
-            const previewImageContainer = document.getElementById("previewImage");
-            previewImageContainer.style.display = "none";
+            const previewContainer = document.getElementById("previewImage");
+            previewContainer.classList.remove("active");
+            document.body.style.overflow = "auto";
+            setTimeout(() => { previewContainer.style.display = "none"; document.getElementById("previewImg").src = ""; }, 400); 
+        }
+
+        let currentCertIndex = 0;
+        let certCards = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const certGrid = document.getElementById('certGrid');
+            if (certGrid) {
+                certCards = Array.from(certGrid.querySelectorAll('.cert-card'));
+                certCards.forEach((card, index) => {
+                    card.setAttribute('data-index', index);
+                });
+            }
+            
+            document.addEventListener('keydown', (e) => {
+                const certModal = document.getElementById("certModal");
+                if (certModal && certModal.classList.contains("active")) {
+                    if (e.key === "ArrowRight") nextCert();
+                    if (e.key === "ArrowLeft") prevCert();
+                    if (e.key === "Escape") closeCertPreview();
+                }
+            });
+        });
+
+        function showCertPreview(cardElement) {
+            currentCertIndex = parseInt(cardElement.getAttribute('data-index'));
+            openCertModal();
+        }
+
+        function openCertModal() {
+            const modal = document.getElementById("certModal");
+            const previewImg = document.getElementById("certPreviewImg");
+            const titleEl = document.getElementById("certPreviewTitle");
+            const descEl = document.getElementById("certPreviewDesc");
+            const loader = document.getElementById("cert-loader");
+            
+            const targetCard = certCards[currentCertIndex];
+            const fullSrc = targetCard.getAttribute("data-full-src");
+            const title = targetCard.getAttribute("data-title");
+            const desc = targetCard.getAttribute("data-desc");
+
+            document.body.style.overflow = "hidden"; 
+            modal.style.display = "flex";
+            setTimeout(() => modal.classList.add("active"), 10);
+
+            previewImg.style.opacity = "0"; 
+            loader.style.display = "flex";
+            previewImg.onload = null; previewImg.onerror = null; previewImg.src = ""; 
+
+            titleEl.textContent = title;
+            descEl.textContent = desc;
+
+            previewImg.onload = function() {
+                loader.style.display = "none";
+                previewImg.style.opacity = "1";
+            };
+            previewImg.onerror = function() {
+                loader.style.display = "none";
+                titleEl.textContent = "Oops! Gambar tidak ditemukan.";
+            };
+            
+            previewImg.src = fullSrc;
+        }
+
+        function nextCert() {
+            currentCertIndex = (currentCertIndex + 1) % certCards.length;
+            openCertModal();
+        }
+
+        function prevCert() {
+            currentCertIndex = (currentCertIndex - 1 + certCards.length) % certCards.length;
+            openCertModal();
+        }
+
+        function closeCertPreview() {
+            const modal = document.getElementById("certModal");
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+            setTimeout(() => { 
+                modal.style.display = "none"; 
+                document.getElementById("certPreviewImg").src = ""; 
+            }, 400); 
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            once: true
-        });
-    </script>
+    <script> AOS.init({ once: true }); </script>
 
-    <!-- footer -->
     <hr>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a href="https://www.linkedin.com/in/chyaa7/">
-                                <span class="fa-stack fa-lg icon-color">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://x.com/chyaa30">
-                                <span class="fa-stack fa-lg icon-color">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-brands fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://wa.me/+6289699601650">
-                                <span class="fa-stack fa-lg icon-color">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-brands fa-whatsapp fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a
-                                href="https://open.spotify.com/user/31aj6fsikw22y7vgne3egzmkmwq4?si=0e0baec7dc944e98">
-                                <span class="fa-stack fa-lg icon-color">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-brands fa-spotify fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://discord.com/invite/t35ajJzh">
-                                <span class="fa-stack fa-lg icon-color">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-brands fa-discord fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-center" style="font-size: 13px;">
-                        Copyright &copy; Rivaldo | All right reserved.
-                    </p>
+        <!-- footer -->
+        <hr>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/in/chyaa7/">
+                                    <span class="fa-stack fa-lg icon-color">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://x.com/chyaa30">
+                                    <span class="fa-stack fa-lg icon-color">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-brands fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.instagram.com/chyaa.a30/">
+                                    <span class="fa-stack fa-lg icon-color">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-brands fa-instagram fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a
+                                    href="https://open.spotify.com/user/31aj6fsikw22y7vgne3egzmkmwq4?si=0e0baec7dc944e98">
+                                    <span class="fa-stack fa-lg icon-color">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-brands fa-spotify fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://discord.com/invite/t35ajJzh">
+                                    <span class="fa-stack fa-lg icon-color">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-brands fa-discord fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-center" style="font-size: 13px;">
+                            Copyright &copy; Rivaldo | All right reserved.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- end footer -->
-
-    <!-- any script -->
+        </footer>
+        <!-- end footer -->
     <script src="./script.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
 
