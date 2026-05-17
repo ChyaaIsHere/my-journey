@@ -250,7 +250,7 @@
         <div class="container">
             <h1 class="josefin text-center" style="margin-bottom: 20px;">My Achievement</h1>
             <p class="text-center nunito" style="max-width: 720px; margin: 0 auto 50px;">
-                Sertifikat, kompetensi, dan penghargaan yang membuktikan langkah perjalananku di dunia teknologi.
+                Ini adalah tempat dimana semua sertifikat, kompetensi, dan penghargaan yang membuktikan langkah perjalananku.
             </p>
 
             <div class="cert-grid" id="certGrid">
@@ -262,10 +262,12 @@
                         <img src="https://media.licdn.com/dms/image/v2/D562DAQHgWfDQ0_F3RQ/profile-treasury-document-cover-images_480/B56ZzJXNVVKcBI-/0/1772904835625?e=1779613200&v=beta&t=-L_jFyCKlajxf3yh6tsTjG7iOWmzpzMYqKNqD2DzLeM" loading="lazy" alt="BNSP">
                     </div>
                     <div class="cert-info">
+                        <div class="cert-badges-wrapper">
                         <span class="cert-badge">Cisco</span>
                         <span class="cert-badge">Routing</span>
                         <span class="cert-badge">VLSM & FLSM</span>
                         <span class="cert-badge">Topologi</span>
+                    </div>
                         <h3 class="cert-title">Sertifikasi Junior Network Administrator</h3>
                     </div>
                 </div>
@@ -278,9 +280,11 @@
                         <img src="https://media.licdn.com/dms/image/v2/D562DAQFA88T3ZF_Utg/profile-treasury-document-cover-images_480/B56ZzI.K1eHUBI-/0/1772898269963?e=1779613200&v=beta&t=Fo_3TOi8LjB_bZ14OxL9tT0GqHPaquSzqN7Gy7MgO2A" loading="lazy" alt="LKS">
                     </div>
                     <div class="cert-info">
-                        <span class="cert-badge">LKS</span>
-                        <span class="cert-badge">AWS</span>
-                        <span class="cert-badge">Komputasi Awan</span>
+                        <div class="cert-badges-wrapper">
+                            <span class="cert-badge">LKS</span>
+                            <span class="cert-badge">AWS</span>
+                            <span class="cert-badge">Komputasi Awan</span>
+                        </div>
                         <h3 class="cert-title">Juara 3 Cloud Computing</h3>
                     </div>
                 </div>
@@ -293,12 +297,17 @@
                         <img src="https://media.licdn.com/dms/image/v2/D562DAQGNA4ZsEOUwrQ/profile-treasury-document-images_800/B56ZzI_ULzJMAc-/1/1772898572944?e=1779926400&v=beta&t=6iL3H40WHW-QJDNZbXKv_AAtRvinNvPicwsxc9tUcw8" loading="lazy" alt="PNETLab">
                     </div>
                     <div class="cert-info">
+                        <div class="cert-badges-wrapper">
                         <span class="cert-badge">Cerdas Cermat</span>
+                        <span class="cert-badge">Kuncie</span>
+                        <span class="cert-badge">Telkomsel</span>
+                        </div>
                         <h3 class="cert-title">Lomba Cerdas Cermat Ilmupedia Berani Jawab</h3>
                     </div>
                 </div>
 
-                <div class="cert-card" data-aos="fade-up" data-aos-duration="1400" onclick="showCertPreview(this)"
+                <!-- tampilan untuk sertif ini ngebug. -->
+                <!-- <div class="cert-card" data-aos="fade-up" data-aos-duration="1400" onclick="showCertPreview(this)"
                      data-full-src="https://media.licdn.com/dms/image/v2/D562DAQFgoJmdKxq3ew/profile-treasury-document-images_800/B56ZzJP8pdJQAc-/1/1772902931408?e=1779926400&v=beta&t=qRxZG4NAqI3246F1aGHx6b81sjq_uN6N54mIFwt1snI"
                      data-title="Menjadi Peserta Aktif di Lomba Kompetensi Siswa ITCNA"
                      data-desc="Saya terpilih kembali menjadi perwakilan Siswa untuk mengikuti lomba di bidang ITCNA."
@@ -311,7 +320,7 @@
                         <span class="cert-badge">Sysadmin</span>
                         <span class="cert-badge">Linux</span>
                         <h3 class="cert-title">Peserta Aktif LKS ITCNA</h3>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div> 
@@ -532,6 +541,23 @@
             background: #171821; 
             border-radius: 12px; overflow: hidden;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .cert-badges-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Kalau layar sempit, otomatis turun ke bawah */
+            gap: 8px; /* Jarak antar badge */
+            margin-bottom: 12px; /* Jarak badge dengan judul sertifikat */
+        }
+
+        .cert-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: #d4edda;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            /* margin-bottom dihapus karena sudah diatur oleh 'gap' di wrapper */
         }
 
         .slide-up-anim { animation: slideUpModal 0.4s ease forwards; }
