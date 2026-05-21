@@ -95,6 +95,17 @@
         function checkAllLoaded() { if (loadedCount >= priorityImages.length) hideLoader(); }
         setTimeout(hideLoader, 5000); 
     });
+
+        function openNav() {
+        document.getElementById("mySidepanel").classList.add("active");
+        document.getElementById("sidepanelOverlay").classList.add("active");
+        }
+
+        /* Fungsi untuk menutup sidebar mobile */
+        function closeNav() {
+        document.getElementById("mySidepanel").classList.remove("active");
+        document.getElementById("sidepanelOverlay").classList.remove("active");
+        }
 </script>
 
 <style>
@@ -170,20 +181,43 @@
 </style>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
-        <div class="container-fluid">
-            <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link nunito active" href="#" role="button">Albumku</a></li>
-                    <li class="nav-item"><a class="nav-link nunito" aria-current="page" href="./video.html">Videoku</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
+            My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
+        </a>
+        
+        <button class="openbtn d-lg-none" type="button" onclick="openNav()">
+            <i class="fa fa-solid fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse d-none d-lg-block" style="font-weight: 800;" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito active" href="#">Albumku</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito" href="./video.html">Videoku</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<div id="mySidepanel" class="sidepanel">
+  <div class="sidebar-brand caveat">
+      My Journey! <i class="fa fa-solid fa-paper-plane"></i>
+  </div>
+  <hr class="sidebar-divider">
+
+  <a href="./index.html" class="nunito">Beranda</a>
+  <a href="#" class="nunito active">Albumku</a>
+  <a href="./video.html" class="nunito">Videoku</a>
+</div>
+
+<div id="sidepanelOverlay" class="sidepanel-overlay" onclick="closeNav()"></div>
 
     <style>
         .nav-item.dropdown:hover .dropdown-menu { display: block; }
@@ -191,10 +225,7 @@
         .navbar-transparent { background-color: rgba(255, 255, 255, 0); transition: background-color 0.3s ease, backdrop-filter 0.3s ease; }
         .navbar.scrolled { background: linear-gradient(90deg, rgba(255, 236, 182, 0.3), rgba(117, 105, 113, 0.3)); backdrop-filter: blur(10px); }
         .nav-link { position: relative; transition: color 0.3s ease; }
-        .nav-link.active { font-weight: 900 !important; }
         .nav-link::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 5px; border-radius: 3px; background-color: currentColor; transition: width 0.3s ease; }
-        .nav-link.active::after { width: 25px; }
-        .navbar.scrolled .nav-link.active::after { background-color: white; }
     </style>
 
     <script>
@@ -225,7 +256,7 @@
                     <div class="hero-image-card hero-image-mobile d-lg-none mx-auto mb-4">
                         <img src="./foto/foto.png" class="img-fluid camera-img priority-img">
                     </div>
-                    <p class="hero-subtitle">Halo! Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi, dan sertifikasi yang telah kuraih.</p>
+                    <p class="hero-subtitle">Disinilah ruang digital tempatku mendokumentasikan setiap langkah, proyek teknologi, dan sertifikasi yang telah kuraih.</p>
                     <div class="d-flex gap-3 mt-4 mb-5 hero-btns justify-content-center justify-content-lg-start">
                         <a href="#achievements" class="btn-upgrade" id="btnAchievements">Pencapaian</a>
                         <a href="#galeriCuy" class="btn-upgrade" id="btnGallery">Lihat Galeri</a>
@@ -382,10 +413,15 @@
             <img src="./thumbnail/bakar-bakar.webp" data-full-src="./album/bakar-bakar.jpg" data-description="Bakar-bakar Bersama Ambalan Sulhastia! w/ Angkatan 7-9" onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/foto-bareng-perpusnas.webp" data-full-src="./album/foto-bareng-perpusnas.jpg" data-description="Pertama kali pergi ke Perpustakaan Nasional Indonesia! baca buku bareng, foto bareng, hari ini seru banget! (Seenggaknya janji itu sudah ditepati, ga cuma omon-omon ajaa)" onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/petugas-trisatya.webp" data-full-src="./album/petugas-trisatya.jpg" data-description="Pengalaman pertama kalinya menjadi petugas apel.. (sebelumnya ga pernah sama sekali 😭)" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/diajakfoto.webp" data-full-src="./album/diajakfoto.jpeg" data-description="Trio keren nih.. Izinn.." onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/buka-puasa-tkj1.webp" data-full-src="./album/buka-puasa-tkj1.jpg" data-description="Buka Puasa bersama X TJKT 1... sedih sih belum bisa rame-rame kayak kelas lain.. tapi, gapapa! terimakasih atas waktunya semua!" onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/ebiti-2025.webp" data-full-src="./album/ebiti-2025.jpg" data-description="Foto bareng Bapak Kaprodi dan juga 1 tim dari sekolahku! ditemenin langsung pas lomba haha.. " onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/jalan-jalan.webp" data-full-src="./album/jalan-jalan.jpg" data-description="Diajak jalan-jalan sama keluarga jauh ke Monas bareng 2 adikkuu.." onclick="showPreview(this)" loading="lazy">
             <img src="./thumbnail/industri.webp" data-full-src="./album/industri.jpg" data-description="Foto bareng sama guru industri kitaa, kak Chandra dan kak Ziaa!" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/orangoranganebiti.webp" data-full-src="./album/orangoranganebiti.jpeg" data-description="Kami berempat sudah melewati banyak momen keren kayak EBITI, APBN, Perbanas, Orbit, Kihajar, dan LKS. Tapi sayang, Cerita kita harus selesai sampai disini." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/kecebongcircle.webp" data-full-src="./album/kecebongcircle.jpg" data-description="Ga kerasa. Sudah selesai cerita kita disekolah ber enam ini.." onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/masakbareng.webp" data-full-src="./album/masakbareng.jpg" data-description="Ceritanya lagi masak makanan (padahal cuma gesek gesek wajan doang haha), eh tiba tiba di foto... hadeuh" onclick="showPreview(this)" loading="lazy">
+            <img src="./thumbnail/orangtuaku.webp" data-full-src="./album/orangtuaku.jpg" data-description="Ibuku bilang: &quot;kalo nanti mas udah pulang kerumah, ibu mau foto sama mas yaa..&quot Makasih dukungannya selama ini Ibukuu, dan nenekku! ^^;" onclick="showPreview(this)" loading="lazy">
         </div>
     </section>
 

@@ -347,33 +347,44 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
-            <div class="container-fluid">
-                <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
-                    My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nunito" href="./album.html" role="button">
-                                Albumku
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nunito active" aria-current="page" href="#">Videoku</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
+    <div class="container-fluid">
+        <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
+            My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
+        </a>
+        
+        <button class="openbtn d-lg-none" type="button" onclick="openNav()">
+            <i class="fa fa-solid fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse d-none d-lg-block" style="font-weight: 800;" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link nunito" aria-current="page" href="./index.html">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito" href="./album.html">Albumku</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito active" href="#">Videoku</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="mySidepanel" class="sidepanel">
+  <div class="sidebar-brand caveat">
+      My Journey! <i class="fa fa-solid fa-paper-plane"></i>
+  </div>
+  <hr class="sidebar-divider">
+
+  <a href="./index.html" class="nunito">Beranda</a>
+  <a href="./album.html" class="nunito">Albumku</a>
+  <a href="#" class="nunito active">Videoku</a>
+</div>
+
+<div id="sidepanelOverlay" class="sidepanel-overlay" onclick="closeNav()"></div>
 
         <style>
             .nav-item.dropdown:hover .dropdown-menu {

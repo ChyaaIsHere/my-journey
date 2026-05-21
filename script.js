@@ -240,3 +240,15 @@ window.closePreviewImg = function() {
         document.getElementById("previewImg").src = ""; 
     }, 400); 
 };
+
+/* Fungsi untuk membuka sidebar mobile */
+function openNav() {
+  document.getElementById("mySidepanel").classList.add("active");
+  document.getElementById("sidepanelOverlay").classList.add("active");
+}
+
+/* Fungsi untuk menutup sidebar mobile */
+function closeNav() {
+  document.getElementById("mySidepanel").classList.remove("active");
+  document.getElementById("sidepanelOverlay").classList.remove("active");
+}

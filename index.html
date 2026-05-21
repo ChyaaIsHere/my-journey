@@ -28,90 +28,35 @@
 
 <body style="overflow-x: hidden;">
 
-<!-- Pakai class priority-img untuk gambar yang harus dimuat dulu -->
-<!-- loading -->
 <style>
-/* Wrapper dibuat lebih gelap (Hitam transparan 65%) */
 #loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center;
+    align-items: center; z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-
-.loader-hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* Container untuk menumpuk teks dan dot */
-.loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* Jarak antara teks dan animasi titik */
-}
-
-/* Styling teks Loading */
+.loader-hidden { opacity: 0; visibility: hidden; }
+.loading-content { display: flex; flex-direction: column; align-items: center; gap: 15px; }
 .loading-text {
-    color: #e0e0e0; /* Warna putih abu-abu agar kontras */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: 2px;
+    color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem; font-weight: 600; margin: 0; letter-spacing: 2px;
     animation: pulse-text 1.5s infinite ease-in-out;
 }
-
-/* Animasi kelap-kelip halus untuk teks */
-@keyframes pulse-text {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-/* Animasi Titik (Dots) */
-.dots-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+@keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.dots-container { display: flex; align-items: center; justify-content: center; }
 .dot {
-    height: 15px; /* Dikecilin dikit biar proporsional dengan teks */
-    width: 15px;
-    margin-right: 8px;
-    border-radius: 50%;
-    background-color: #d0d0d0; /* Titik dibuat lebih terang */
-    animation: pulse 1.5s infinite ease-in-out;
+    height: 15px; width: 15px; margin-right: 8px; border-radius: 50%;
+    background-color: #d0d0d0; animation: pulse 1.5s infinite ease-in-out;
 }
-
 .dot:last-child { margin-right: 0; }
 .dot:nth-child(1) { animation-delay: -0.3s; }
 .dot:nth-child(2) { animation-delay: -0.1s; }
 .dot:nth-child(3) { animation-delay: 0.1s; }
 .dot:nth-child(4) { animation-delay: 0.3s; }
 .dot:nth-child(5) { animation-delay: 0.5s; }
-
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(0.8);
-        background-color: #a0a0a0;
-        box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4);
-    }
-    50% {
-        transform: scale(1.2);
-        background-color: #ffffff;
-        box-shadow: 0 0 0 6px rgba(208, 208, 208, 0);
-    }
+    0%, 100% { transform: scale(0.8); background-color: #a0a0a0; box-shadow: 0 0 0 0 rgba(208, 208, 208, 0.4); }
+    50% { transform: scale(1.2); background-color: #ffffff; box-shadow: 0 0 0 6px rgba(208, 208, 208, 0); }
 }
 </style>
  
@@ -119,601 +64,461 @@
     <div class="loading-content">
         <div class="loading-text">Sedang Memuat..</div>
         <section class="dots-container">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </section>
     </div>
 </div>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const loader = document.getElementById('loader-wrapper');
-        
         const priorityImages = document.querySelectorAll('.priority-img');
-        let loadedCount = 0;
-        let isLoaded = false; 
+        let loadedCount = 0; let isLoaded = false; 
 
         function hideLoader() {
-            if (isLoaded) return; 
-            isLoaded = true;
-            
+            if (isLoaded) return; isLoaded = true;
             loader.classList.add('loader-hidden');
             loader.addEventListener('transitionend', function() {
-                if(loader.parentNode) {
-                    loader.parentNode.removeChild(loader);
-                }
+                if(loader.parentNode) loader.parentNode.removeChild(loader);
             });
         }
 
-        if (priorityImages.length === 0) {
-            window.addEventListener('load', hideLoader);
-        } else {
+        if (priorityImages.length === 0) window.addEventListener('load', hideLoader);
+        else {
             priorityImages.forEach(img => {
-                if (img.complete) {
-                    loadedCount++;
-                    checkAllLoaded();
-                } else {
-                    img.addEventListener('load', () => { 
-                        loadedCount++; 
-                        checkAllLoaded(); 
-                    });
-                    img.addEventListener('error', () => { 
-                        loadedCount++; 
-                        checkAllLoaded(); 
-                    });
+                if (img.complete) { loadedCount++; checkAllLoaded(); } 
+                else {
+                    img.addEventListener('load', () => { loadedCount++; checkAllLoaded(); });
+                    img.addEventListener('error', () => { loadedCount++; checkAllLoaded(); });
                 }
             });
         }
 
-        function checkAllLoaded() {
-            if (loadedCount >= priorityImages.length) {
-                hideLoader();
-            }
-        }
-
-
+        function checkAllLoaded() { if (loadedCount >= priorityImages.length) hideLoader(); }
         setTimeout(hideLoader, 5000); 
     });
 </script>
-<!-- end loading -->
-
-
-    <!-- mengaktifkan mode maintenance -->
-    <!-- <meta http-equiv="refresh" content="0;url=maintenance.html"> -->
-    <!-- mengaktifkan mode maintenance -->
-
-
-
-
-       <!-- Navbar -->
-    <style>
-/* Navbar Fix: Seamless ke Glassmorphism */
-.navbar {
-    transition: all 0.4s ease-in-out;
-    background-color: white !important; /* Fix: Langsung putih di paling atas */
-}
-
-.navbar.scrolled {
-    background: rgba(26, 26, 46, 0.7) !important; /* Biru gelap transparan */
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-}
-
-.navbar.scrolled .nav-link, 
-.navbar.scrolled .navbar-brand {
-    color: white !important;
-}
-
-        /* ===== FIX HIGHLIGHT NAVBAR (KOTAK BAWAH) ===== */
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
+<style>
+        .navbar { transition: all 0.4s ease-in-out; background-color: white !important; position: sticky; top: 0; z-index: 1030 !important; }
+        .navbar.scrolled {
+            background: rgba(26, 26, 46, 0.85) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
         }
-
-        /* Teks Bold untuk menu yang aktif */
-        .nav-link.active {
-            font-weight: 900 !important;
-        }
-
-        /* Styling box underline */
+        
+        /* Brand color: dark on white bg, white on scrolled bg */
+        .navbar-brand { color: #1a1a2e !important; transition: color 0.3s ease; font-weight: 700; }
+        .navbar.scrolled .navbar-brand { color: white !important; }
+        
+        /* Nav links color */
+        .nav-link { position: relative; transition: color 0.3s ease; pointer-events: auto; color: #1a1a2e !important; }
+        .navbar.scrolled .nav-link { color: white !important; }
         .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -8px; /* Jarak dijauhkan sedikit dari teks */
-            left: 50%; /* Taruh di tengah */
-            transform: translateX(-50%); /* Geser agar persis center */
-            width: 0;
-            height: 5px; /* Box lebih tebal */
-            border-radius: 3px; /* Ujung box agak membulat */
-            background-color: currentColor;
-            transition: width 0.3s ease;
+            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 5px; border-radius: 3px; background-color: currentColor; transition: width 0.3s ease;
         }
 
-        /* Ukuran box saat aktif (kecil di tengah) */
-        .nav-link.active::after {
-            width: 25px;
+        
+        /* Navbar toggler button styling */
+        .navbar-toggler { pointer-events: auto !important; border: 2px solid #1a1a2e; transition: all 0.3s ease; }
+        .navbar.scrolled .navbar-toggler { border-color: white; }
+        
+        /* Navbar toggler icon (hamburger menu) */
+        .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231a1a2e' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+        .navbar.scrolled .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+        
+        /* Mobile navbar styling */
+        @media (max-width: 991.98px) {
+            .navbar { background-color: white !important; }
+            .navbar.scrolled { background: rgba(26, 26, 46, 0.95) !important; }
+            .navbar-toggler { min-height: 50px; min-width: 50px; padding: 8px; }
+            .nav-item { padding: 8px 0; }
+            .nav-link { padding: 10px 0 !important; }
+            .collapse { z-index: 1020; }
         }
-
-        /* Warna saat terscroll */
-        .navbar.scrolled .nav-link.active::after {
-            background-color: white;
-        }
-        /* ============================================== */
-
-/* Jumbotron Fix */
-/* Penyesuaian Section Utama */
-#albumBG {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-top: 100px;
-    padding-bottom: 150px; /* Ruang untuk wave agar tidak menabrak tombol */
-    background-color: #1a1a2e;
-    overflow: hidden;
-}
-
-/* Gambar Kamera agar Estetik */
-.camera-img {
-    max-width: 80%; /* Biar tidak terlalu raksasa */
-    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-    border-radius: 20px;
-    transform: rotate(3deg); /* Sedikit miring biar estetik */
-    transition: 0.5s ease;
-}
-
-.camera-img:hover {
-    transform: rotate(0deg) scale(1.05);
-}
-
-/* Memperbaiki Klik Tombol */
-.btn-upgrade {
-    position: relative;
-    z-index: 102; /* Harus lebih tinggi dari wave */
-    display: inline-block;
-    padding: 10px 25px;
-    text-decoration: none;
-    /* ... style tombol lainnya tetap ... */
-}
-
-/* Memperbaiki Wave agar tidak menghalangi klik */
-.wave-bottom {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    z-index: 10; /* Di atas background tapi di bawah tombol */
-    pointer-events: none; /* KLIK AKAN TEMBUS KE TOMBOL */
-}
-
-/* PERBAIKAN MOBILE VIEW */
-@media (max-width: 991.98px) {
-    #albumBG {
-        padding-top: 120px;
-        padding-bottom: 100px;
-        text-align: center;
-    }
-    
-    .camera-img {
-        max-width: 60%;
-        margin-top: 40px; /* Jarak dari teks ke gambar di mobile */
-        transform: rotate(0deg);
-    }
-
-    .hero-btns {
-        flex-direction: column; /* Tombol tumpuk ke bawah di HP */
-        align-items: center;
-    }
-
-    .btn-upgrade {
-        width: 100%;
-        max-width: 280px;
-    }
-}
-
-.hero-bg-image {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: url('./album/photo8.jpg') center/cover no-repeat; 
-    filter: blur(8px) brightness(0.6); 
-    transform: scale(1.1);
-    z-index: 1; /* Paling belakang */
-}
-
-.hero-text-wrapper {
-    z-index: 10; /* Teks harus jauh di atas gambar dan wave agar bisa di-klik */
-    position: relative;
-}
-
-/* Pastikan tombol berada di lapisan paling depan */
-.btn-upgrade {
-    position: relative;
-    z-index: 20; 
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 700;
-    transition: 0.3s;
-    display: inline-block;
-    border: 2px solid #fff;
-    color: white;
-    text-decoration: none;
-}
-
-.wave-bottom {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    z-index: 5; /* Wave di atas background (1) tapi di bawah teks (10) */
-    line-height: 0;
-}
     </style>
-    </head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
-            <div class="container-fluid">
-                <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
-                    My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" style="font-weight: 800;" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nunito active" aria-current="page" href="#">
-                                Beranda
+<nav class="navbar navbar-expand-lg sticky-top navbar-transparent" id="navbar">
+    <div class="container-fluid">
+        <a style="margin-left: 0.5em;" class="navbar-brand caveat" id="brand">
+            My Journey! <i class="fa fa-solid fa-paper-plane" style="margin-left: 0.2em;"></i>
+        </a>
+        
+        <button class="openbtn d-lg-none" type="button" onclick="openNav()">
+            <i class="fa fa-solid fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse d-none d-lg-block" style="font-weight: 800;" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link nunito active" aria-current="page" href="#">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito" href="./album.html">Albumku</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nunito" href="./video.html">Videoku</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="mySidepanel" class="sidepanel">
+  <div class="sidebar-brand caveat">
+      My Journey! <i class="fa fa-solid fa-paper-plane"></i>
+  </div>
+  <hr class="sidebar-divider">
+
+  <a href="#" class="nunito active">Beranda</a>
+  <a href="./album.html" class="nunito">Albumku</a>
+  <a href="./video.html" class="nunito">Videoku</a>
+</div>
+
+<div id="sidepanelOverlay" class="sidepanel-overlay" onclick="closeNav()"></div>
+
+    <style>
+        .nav-item.dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; z-index: 1050; display: none; float: left; min-width: 160px; padding: 0.5rem 0; margin: 0.125rem 0 0; font-size: 1rem; color: #212529; text-align: left; background-color: #fff; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 0.25rem; }
+        .navbar-transparent { background-color: rgba(255, 255, 255, 0); transition: background-color 0.3s ease, backdrop-filter 0.3s ease; }
+    </style>
+
+    <script>
+        document.addEventListener("scroll", function () {
+            const navbar = document.getElementById("navbar");
+            if (window.scrollY > 10) navbar.classList.add("scrolled"); else navbar.classList.remove("scrolled");
+        });
+    </script>
+    <style>
+        #hero-modern {
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow: hidden;
+            padding-top: 130px; 
+            padding-bottom: 370px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .bg-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+        
+        .hero-bg-image {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('./foto/profilebg.jpg') center/cover no-repeat;
+            filter: blur(8px) brightness(0.4); z-index: 1; transform: scale(1.1);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #d4edda;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-badge i { color: #4ade80; margin-right: 5px; } 
+
+        .hero-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: clamp(2.5rem, 2vw, 3.5rem); 
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .highlight {
+            color: #fad660; 
+        }
+
+        .hero-desc {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 95%;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-btns-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-blue-solid {
+            background-color: #ebac25;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(246, 243, 59, 0.3);
+        }
+        .btn-blue-solid:hover {
+            color: white;
+            background-color: #f6e33b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(246, 196, 59, 0.4);
+        }
+
+        .btn-outline-text {
+            color: #cbd5e1;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-outline-text:hover { color: #ffffff; text-decoration: underline; }
+
+        /* --- KIRI: Bagian Foto Rounded Box --- */
+        .hero-profile-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center; /* Foto tetap di tengah kolomnya */
+            order: 1; /* Foto di kiri pada desktop */
+        }
+
+        .hero-profile-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 320px; 
+            aspect-ratio: 1 / 1; 
+            border-radius: 15px;
+            padding: 0px; 
+            background: transparent;
+            box-shadow: none;
+            transition: transform 0.5s ease;
+            margin: 0 auto; 
+        }
+
+        .hero-profile-wrapper:hover { transform: scale(1.03) rotate(2deg); }
+
+        .hero-profile-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: none;
+            background-color: transparent; 
+        }
+        
+        /* Teks di kanan pada desktop */
+        .col-lg-7 { order: 2; }
+
+        .wave-bottom-hero {
+            position: absolute; bottom: -2px; left: 0; width: 100%; z-index: 5; pointer-events: none; line-height: 0;
+        }
+        .wave-bottom-hero svg { display: block; width: calc(100% + 4px); margin-left: -2px; height: auto; filter: drop-shadow(0px 5px 0px #ffffff); }
+
+        @media (max-width: 991.98px) {
+            #hero-modern { text-align: center; padding-top: 70px; padding-bottom: 200px; }
+            .hero-title { font-size: clamp(2rem, 7vw, 2.5rem); margin-bottom: 15px; }
+            .hero-desc { max-width: 100%; margin: 0 auto 25px; font-size: 1rem; }
+            .hero-profile-container { justify-content: center; margin-bottom: 30px; order: auto; }
+            .hero-profile-wrapper { max-width: 250px; } 
+            .hero-btns-wrapper { justify-content: center; flex-direction: column; gap: 15px; }
+            .btn-blue-solid { width: 100%; max-width: 250px; }
+            .row-reverse-mobile { flex-direction: column; gap: 20px; }
+            .col-lg-7 { order: auto; }
+        }
+    </style>
+
+    <section id="hero-modern">
+        <div class="bg-wrapper">
+            <div class="hero-bg-image priority-img"></div>
+        </div>
+
+        <div class="container hero-content">
+            <div class="row align-items-center row-reverse-mobile">
+                
+                <div class="col-lg-7 col-md-12 text-center text-lg-start" data-aos="fade-right" data-aos-duration="1200">
+                    <h1 class="hero-title">
+                        Saya <span class="highlight">Rivaldo Cahya Saputra</span>,<br>
+                        Tech Explorer, Cloud, Network Enthusiast.
+                    </h1>
+                    <p class="hero-desc">
+                        Halo! Disini adalah tempat dimana saya menceritakan tentang kehidupan saya, Sertifikat yang pernah saya peroleh, Album Kehidupan saya, Video tugas, dan lain lain! Gulir kebawah untuk lebih mengenal saya!
+                    </p>
+                    <div class="hero-btns-wrapper">
+                        <a href="./album.html" class="btn-blue-solid priority-img">Lihat Albumku <i class="fas fa-chevron-right ms-2"></i></a>
+                        <a href="#Article" class="btn-outline-text">Tentang Diriku <i class="fas fa-arrow-down"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12 hero-profile-container" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="hero-profile-wrapper">
+                        <img src="./foto/profilbaru.webp" alt="Foto Rivaldo Cahya Saputra" class="priority-img">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="wave-bottom-hero">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">
+                <path fill="#ffffff" fill-opacity="1"
+                    d="M0,128L40,112C80,96,160,64,240,96C320,128,400,224,480,224C560,224,640,128,720,90.7C800,53,880,75,960,112C1040,149,1120,203,1200,192C1280,181,1360,107,1400,69.3L1440,32L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+    </section>
+    <section id="Article" style="padding-top: 50px;">
+        <div class="container">
+            <h1 class="tentang text-center josefin" data-aos="fade" data-aos-duration="1000">Tentang Diriku
+            </h1>
+            <div class="row">
+                <div data-aos="fade" data-aos-duration="1000" class="nunito">
+                    Saya Rivaldo Cahya Saputra. Umurku 18 Tahun, dan saya Lulusan dari SMK Negeri 15 Kota Bekasi! Lalu, Hobi saya itu Membaca Buku &
+                    Mendengarkan lagu..
+                </div>
+                <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
+            </div>
+            <h1 class="josefin text-align-left" data-aos="fade-right" data-aos-duration="1000">
+                <i id="DDindexJi" class="far fa-solid fa-user"></i>
+                | Cara Belajar Saya
+            </h1>
+            <div class="row text-align-right">
+                <div data-aos="fade-right" data-aos-duration="1000" class="nunito">
+                    Saya lebih suka belajar sambil melihat atau diberi arahan dari orang yang lebih
+                    berpengalaman atau
+                    yang sudah tau
+                    cara
+                    basic dari melakukan hal itu. Dan saya lebih suka belajar sembari berdiskusi bersama teman teman
+                    tentang cara menyelesaikan masalah tersebut.
+                    Kalau lagi belajar, kadang saya suka sambil dengerin lagu juga sih. Karena lagu dapat membuat diri saya lebih
+                    tenang dan nyaman dalam proses belajar.
+                </div>
+                <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
+            </div>
+            <h1 data-aos="fade-left" class="josefin" data-aos-duration="1000" id="DDindexJ">
+                My Daily Day | <i id="logoIndex" class="far fa-solid fa-calendar"></i></h1>
+            <div class="row">
+                <div data-aos="fade-left" data-aos-duration="1000" class="nunito" id="DDindex">
+                    Keseharian saya sih hampir kebanyakan baca buku novel dan nonton YouTube sih..
+                    Ya kalau udah bosen banget dirumah biasanya saya sempetin buat jalan jalan sebentar.
+                    Tapi biasanya
+                    kalau
+                    ada
+                    waktu senggang, Saya coba hal-hal baru seperti ngoding ini yang sebelumnya saya
+                    ngga
+                    pernah lakuin. Kadang kalau emang waktunya mepet dengan hari ujian praktik jurusan, 
+                    biasanya belajar virtualisasi, praktik pakai alat jaringan langsung, atau ngerancang topologi di cisco sih.
+                </div>
+                <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
+            </div>
+            <h1 class="arahteks2 josefin" data-aos="fade-right" data-aos-duration="1000"><i
+                    class="fas fa-solid fa-code" id="logoIndex"></i>
+                | Pernah coding?</h1>
+            <div class="row">
+                <div data-aos="fade-right" class="nunito" data-aos-duration="1000">
+                    Saya pernah mencoba membuat sebuah coding berbentuk JSON, LUA, dan XML dari salah satu game irama
+                    atau yang biasa
+                    disebut
+                    game
+                    rhythm. Namanya Friday Night
+                    Funkin! Yah saya pernah membuat sebuah lagu cover di game tersebut. dan agar gameplay lebih
+                    seru,
+                    pastinya saya mencari ide agar mod yang aku buat ini terlihat asyik dimainkan oleh siapapun.
+                    Bahkan saya pernah
+                    menghabiskan waktu seharian untuk mencari tahu cara membuat sebuah mekanik atau script
+                    tambahan
+                    untuk UI atau Hud game agar menjadi lebih menarik. Walaupun menghabiskan banyak waktu, itu
+                    menjadi
+                    sebuah tantangan baru untuk-ku.
+                    "Apakah
+                    saya
+                    dapat
+                    menyelesaikan ini? atau akan berhenti sampai sini saja?" kata diri saya sendiri.
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <hr>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/chyaa7/">
+                                <span class="fa-stack fa-lg icon-color">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link nunito" href="./album.html" role="button">
-                                Albumku
+                        <li class="list-inline-item">
+                            <a href="https://x.com/chyaa30">
+                                <span class="fa-stack fa-lg icon-color">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-brands fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link nunito" aria-current="page" href="./video.html">
-                                Videoku
+                        <li class="list-inline-item">
+                            <a href="https://www.instagram.com/chyaa.a30/">
+                                <span class="fa-stack fa-lg icon-color">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-brands fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://open.spotify.com/user/31aj6fsikw22y7vgne3egzmkmwq4?si=0e0baec7dc944e98">
+                                <span class="fa-stack fa-lg icon-color">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-brands fa-spotify fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://discord.com/invite/t35ajJzh">
+                                <span class="fa-stack fa-lg icon-color">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-brands fa-discord fa-stack-1x fa-inverse"></i>
+                                </span>
                             </a>
                         </li>
                     </ul>
+                    <p class="copyright text-center" style="font-size: 13px;">
+                        Copyright © Rivaldo | All right reserved.
+                    </p>
                 </div>
             </div>
-        </nav>
-
-        <style>
-            .nav-item.dropdown:hover .dropdown-menu {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: absolute;
-                will-change: transform;
-                transform: translate3d(0, 0, 0);
-                top: 100%;
-                left: 0;
-                z-index: 1000;
-                display: none;
-                float: left;
-                min-width: 160px;
-                padding: 0.5rem 0;
-                margin: 0.125rem 0 0;
-                font-size: 1rem;
-                color: #212529;
-                text-align: left;
-                background-color: #fff;
-                background-clip: padding-box;
-                border: 1px solid rgba(0, 0, 0, 0.125);
-                border-radius: 0.25rem;
-            }
-
-            .dropdown-menu {
-                z-index: 1050;
-            }
-        </style>
-        <style>
-            /* Awal transparan */
-            .navbar-transparent {
-                background-color: rgba(255, 255, 255, 0);
-                transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-            }
-
-            /* Saat discroll */
-            .navbar.scrolled {
-                background: linear-gradient(90deg, rgba(255, 236, 182, 0.3), rgba(117, 105, 113, 0.3));
-                backdrop-filter: blur(10px);
-            }
-        </style>
-
-<script>
-    document.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        // Jika scroll lebih dari 10 pixel, ganti ke glassmorphism
-        if (window.scrollY > 10) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-    });
-</script>
-
-        <!-- End Navbar -->
-
-        <section id="jumbotron" style="overflow-y: hidden !important; overflow-x: hidden !important;">
-            <div class="container">
-                <div class="row">
-                    <h1 class="bgHitam text-white text-center"
-                        style="font-weight: 755; font-style: italic; margin-top: 3em; text-shadow: 2px 2px 4px #44423d6c;"
-                        data-aos="fade-right" id="welcome" data-aos-duration="1000">
-                        Selamat Datang!
-                    </h1>
-                    <h1 class="text-white text-center"
-                        style="font-size: 20px; font-weight: 755; font-style: italic;margin-bottom: 1.5em; text-shadow: 2px 2px 4px #44423d6c;"
-                        data-aos="fade-left" data-aos-duration="1000">
-                        Inilah dunia kreatifitas milik saya!
-                    </h1>
-                </div>
-            </div>
-            <div class="svg-container">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
-                    <path fill="#ffffff" fill-opacity="1"
-                        d="M0,32L48,32C96,32,192,32,288,69.3C384,107,480,181,576,176C672,171,768,85,864,85.3C960,85,1056,171,1152,186.7C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                    </path>
-                </svg>
-            </div>
-            <div class="container-fluid white-box-container">
-                <div class="row justify-content-center">
-                    <div class="col-12">
-                        <div class="white-box">
-                            <h1 data-aos="fade-pop" id="HaloText" data-aos-duration="1000" class="josefin">Halo!✌</h1>
-                            <h3 class="text-center nunito" id="deskripsi" data-aos="fade" data-aos-duration="1000">
-                                Disini adalah tempat dimana saya
-                                menceritakan<br>tentang kehidupan saya, Materi pembelajaran<br>saya, Album Kehidupan
-                                saya,
-                                dan
-                                lain lain!</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">
-                <path fill="#ffffff" fill-opacity="1"
-                    d="M0,128L40,112C80,96,160,64,240,96C320,128,400,224,480,224C560,224,640,128,720,90.7C800,53,880,75,960,112C1040,149,1120,203,1200,192C1280,181,1360,107,1400,69.3L1440,32L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
-                </path>
-            </svg>
-
-            <div class="container position-relative" id="tentangku">
-                <div class="row">
-                    <h1 id="textS" class="text-white text-center"
-                        style="font-weight: 755; font-style: italic; margin-bottom: 1em; margin-top: 1.5em; text-shadow: 2px 2px 4px #44423d6c;"
-                        id="Welcome-text" data-aos="zoom-in" data-aos-duration="1000">
-                        Perkenalkan, Saya ...
-                    </h1>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-heading">
-                            <div class="pict">
-                                <img style="width: 150px;" class="rounded" src="./foto/foto-profile.jpg" alt=""
-                                    data-aos="fade-right" data-aos-duration="1000" draggable="false">
-                                <div class="text-content">
-                                    <h2 id="textS" data-aos="fade-left" data-aos-duration="1000"
-                                        style="text-align: right; color: white; margin-top: 1em; text-shadow: 2px 2px 4px #44423d6c;"
-                                        class="josefin">
-                                        Rivaldo Cahya Saputra
-                                    </h2>
-                                    <p id="textS" class="text-white josefin"
-                                        style="text-align: right; font-weight: 600; text-shadow: 2px 2px 4px #44423d6c; "
-                                        data-aos="fade-left" data-aos-duration="1000">
-                                        Tech Enthusiast
-                                    </p>
-                                    <hr style="margin-bottom: 2em;" class="text-white" data-aos="fade-left"
-                                        data-aos-duration="1000">
-                                </div>
-                            </div>
-                            <div class="geserwoy"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="svg-container">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">
-                    <path fill="#ffffff" fill-opacity="1"
-                        d="M0,96L40,122.7C80,149,160,203,240,218.7C320,235,400,213,480,192C560,171,640,149,720,138.7C800,128,880,128,960,144C1040,160,1120,192,1200,176C1280,160,1360,96,1400,64L1440,32L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
-                    </path>
-                </svg>
-            </div>
-        </section>
-
-        <style>
-            .svg-container {
-                width: 100%;
-                position: relative;
-            }
-
-            .svg-container svg {
-                width: 100%;
-                height: auto;
-            }
-
-            .white-box-container {
-                background: white;
-                padding: 40px 10;
-                width: 100%;
-                position: relative;
-            }
-
-            .white-box {
-                padding: 20px;
-                text-align: center;
-                margin: 0;
-                color: black;
-            }
-        </style>
-
-
-        <div></div>
-        <section id="Article">
-            <div class="container">
-                <h1 class="tentang text-center josefin" data-aos="fade" data-aos-duration="1000">Tentang Diriku
-                </h1>
-                <div class="row">
-                    <div data-aos="fade" data-aos-duration="1000" class="nunito">
-                        Saya Rivaldo Cahya Saputra. Umurku 18 Tahun, dan saya Lulusan dari SMK Negeri 15 Kota Bekasi! Lalu, Hobi saya itu Membaca Buku &
-                        Mendengarkan lagu..
-                    </div>
-                    <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
-                </div>
-                <h1 class="josefin text-align-left" data-aos="fade-right" data-aos-duration="1000">
-                    <i id="DDindexJi" class="far fa-solid fa-user"></i>
-                    | Cara Belajar Saya
-                </h1>
-                <div class="row text-align-right">
-                    <div data-aos="fade-right" data-aos-duration="1000" class="nunito">
-                        Saya lebih suka belajar sambil melihat atau diberi arahan dari orang yang lebih
-                        berpengalaman atau
-                        yang sudah tau
-                        cara
-                        basic dari melakukan hal itu. Dan saya lebih suka belajar sembari berdiskusi bersama teman teman
-                        tentang cara menyelesaikan masalah tersebut.
-                        Kalau lagi belajar, kadang saya suka sambil dengerin lagu juga sih. Karena lagu dapat membuat diri saya lebih
-                        tenang dan nyaman dalam proses belajar.
-                    </div>
-                    <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
-                </div>
-                <h1 data-aos="fade-left" class="josefin" data-aos-duration="1000" id="DDindexJ">
-                    My Daily Day | <i id="logoIndex" class="far fa-solid fa-calendar"></i></h1>
-                <div class="row">
-                    <div data-aos="fade-left" data-aos-duration="1000" class="nunito" id="DDindex">
-                        Keseharian saya sih hampir kebanyakan baca buku novel dan nonton YouTube sih..
-                        Ya kalau udah bosen banget dirumah biasanya saya sempetin buat jalan jalan sebentar.
-                        Tapi biasanya
-                        kalau
-                        ada
-                        waktu senggang, Saya coba hal-hal baru seperti ngoding ini yang sebelumnya saya
-                        ngga
-                        pernah lakuin. Kadang kalau emang waktunya mepet dengan hari ujian praktik jurusan, 
-                        biasanya belajar virtualisasi, praktik pakai alat jaringan langsung, atau ngerancang topologi di cisco sih.
-                    </div>
-                    <hr id="garisBawah" data-aos="fade" data-aos-duration="1000">
-                </div>
-                <h1 class="arahteks2 josefin" data-aos="fade-right" data-aos-duration="1000"><i
-                        class="fas fa-solid fa-code" id="logoIndex"></i>
-                    | Pernah coding?</h1>
-                <div class="row">
-                    <div data-aos="fade-right" class="nunito" data-aos-duration="1000">
-                        Saya pernah mencoba membuat sebuah coding berbentuk JSON, LUA, dan XML dari salah satu game irama
-                        atau yang biasa
-                        disebut
-                        game
-                        rhythm. Namanya Friday Night
-                        Funkin! Yah saya pernah membuat sebuah lagu cover di game tersebut. dan agar gameplay lebih
-                        seru,
-                        pastinya saya mencari ide agar mod yang aku buat ini terlihat asyik dimainkan oleh siapapun.
-                        Bahkan saya pernah
-                        menghabiskan waktu seharian untuk mencari tahu cara membuat sebuah mekanik atau script
-                        tambahan
-                        untuk UI atau Hud game agar menjadi lebih menarik. Walaupun menghabiskan banyak waktu, itu
-                        menjadi
-                        sebuah tantangan baru untuk-ku.
-                        "Apakah
-                        saya
-                        dapat
-                        menyelesaikan ini? atau akan berhenti sampai sini saja?" kata diri saya sendiri.
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End About Me -->
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
         </div>
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
+    </footer>
+    <script src="./script.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
 
-        <!-- footer -->
-        <hr>
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="https://www.linkedin.com/in/chyaa7/">
-                                    <span class="fa-stack fa-lg icon-color">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://x.com/chyaa30">
-                                    <span class="fa-stack fa-lg icon-color">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-brands fa-twitter fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://www.instagram.com/chyaa.a30/">
-                                    <span class="fa-stack fa-lg icon-color">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-brands fa-instagram fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a
-                                    href="https://open.spotify.com/user/31aj6fsikw22y7vgne3egzmkmwq4?si=0e0baec7dc944e98">
-                                    <span class="fa-stack fa-lg icon-color">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-brands fa-spotify fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://discord.com/invite/t35ajJzh">
-                                    <span class="fa-stack fa-lg icon-color">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-brands fa-discord fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-center" style="font-size: 13px;">
-                            Copyright &copy; Rivaldo | All right reserved.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- end footer -->
-
-        <!-- any script -->
-        <script src="./script.js"></script>
-        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-LtrjvnR4/J8hYM8BfAwap9Naa1MGbq4ka7gv7B/s2jqitSbFU2pbmUhS9KA35n4Q"
-            crossorigin="anonymous"></script>
-        <script>
-            AOS.init({
-                once: true
-            });
-        </script>
-    </body>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-LtrjvnR4/J8hYM8BfAwap9Naa1MGbq4ka7gv7B/s2jqitSbFU2pbmUhS9KA35n4Q"
+        crossorigin="anonymous"></script>
+    <script>
+        AOS.init({
+            once: true
+        });
+    </script>
+</body>
 </html>
